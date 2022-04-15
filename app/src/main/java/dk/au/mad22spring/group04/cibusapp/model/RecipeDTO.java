@@ -1,14 +1,20 @@
 package dk.au.mad22spring.group04.cibusapp.model;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+@Entity
 public class RecipeDTO {
-    private String name;
+    @PrimaryKey(autoGenerate = true)
+    private int idRecipe;
 
-    private Integer id;
+    private String name;
 
     private String thumbnailUrl;
 
@@ -20,11 +26,11 @@ public class RecipeDTO {
 
     private float prepTimeMinutes;
 
-    private Nutrition nutrition;
+    //private Nutrition nutrition;
 
     private String country;
 
-    private TotalTimeTier totalTimeDescription;
+    //private TotalTimeTier totalTimeDescription;
 
     private Integer numServings;
 
@@ -34,46 +40,55 @@ public class RecipeDTO {
 
     private Integer updatedAtUnix;
 
-    private List<Instruction> instructions = null;
+    @Embedded
+    private List<InstructionDTO> instructions = null;
 
     private float userRatings;
 
-    private List<Section> ingredientsWithMeasurement = null;
+  /*  @Embedded
+    private List<SectionDTO> ingredientsWithMeasurement = null;*/
 
     public RecipeDTO(String name,
-                     Integer id,
                      String thumbnailUrl,
                      String videoAdContent,
                      float totalTimeMinutes,
                      float cookTimeMinutes,
                      float prepTimeMinutes,
-                     Nutrition nutrition,
+                     //Nutrition nutrition,
                      String country,
-                     TotalTimeTier totalTimeDescription,
+                     //TotalTimeTier totalTimeDescription,
                      Integer numServings,
                      String description,
                      Integer createdAtUnix,
                      Integer updatedAtUnix,
-                     List<Instruction> instructions,
-                     float userRatings,
-                     List<Section> ingredientsWithMeasurement) {
+                     List<InstructionDTO> instructions,
+                     float userRatings
+                     //List<SectionDTO> ingredientsWithMeasurement
+                     ) {
         this.name = name;
-        this.id = id;
         this.thumbnailUrl = thumbnailUrl;
         this.videoAdContent = videoAdContent;
         this.totalTimeMinutes = totalTimeMinutes;
         this.cookTimeMinutes = cookTimeMinutes;
         this.prepTimeMinutes = prepTimeMinutes;
-        this.nutrition = nutrition;
+        //this.nutrition = nutrition;
         this.country = country;
-        this.totalTimeDescription = totalTimeDescription;
+        //this.totalTimeDescription = totalTimeDescription;
         this.numServings = numServings;
         this.description = description;
         this.createdAtUnix = createdAtUnix;
         this.updatedAtUnix = updatedAtUnix;
         this.instructions = instructions;
         this.userRatings = userRatings;
-        this.ingredientsWithMeasurement = ingredientsWithMeasurement;
+        //this.ingredientsWithMeasurement = ingredientsWithMeasurement;
+    }
+
+    public int getIdRecipe() {
+        return idRecipe;
+    }
+
+    public void setIdRecipe(int idRecipe) {
+        this.idRecipe = idRecipe;
     }
 
     public String getName() {
@@ -82,14 +97,6 @@ public class RecipeDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getThumbnailUrl() {
@@ -132,13 +139,13 @@ public class RecipeDTO {
         this.prepTimeMinutes = prepTimeMinutes;
     }
 
-    public Nutrition getNutrition() {
+/*    public Nutrition getNutrition() {
         return nutrition;
     }
 
     public void setNutrition(Nutrition nutrition) {
         this.nutrition = nutrition;
-    }
+    }*/
 
     public String getCountry() {
         return country;
@@ -148,13 +155,13 @@ public class RecipeDTO {
         this.country = country;
     }
 
-    public TotalTimeTier getTotalTimeDescription() {
+/*    public TotalTimeTier getTotalTimeDescription() {
         return totalTimeDescription;
     }
 
     public void setTotalTimeDescription(TotalTimeTier totalTimeDescription) {
         this.totalTimeDescription = totalTimeDescription;
-    }
+    }*/
 
     public Integer getNumServings() {
         return numServings;
@@ -188,11 +195,11 @@ public class RecipeDTO {
         this.updatedAtUnix = updatedAtUnix;
     }
 
-    public List<Instruction> getInstructions() {
+    public List<InstructionDTO> getInstructions() {
         return instructions;
     }
 
-    public void setInstructions(List<Instruction> instructions) {
+    public void setInstructions(List<InstructionDTO> instructions) {
         this.instructions = instructions;
     }
 
@@ -204,11 +211,11 @@ public class RecipeDTO {
         this.userRatings = userRatings;
     }
 
-    public List<Section> getIngredientsWithMeasurement() {
+/*    public List<SectionDTO> getIngredientsWithMeasurement() {
         return ingredientsWithMeasurement;
     }
 
-    public void setIngredientsWithMeasurement(List<Section> ingredientsWithMeasurement) {
+    public void setIngredientsWithMeasurement(List<SectionDTO> ingredientsWithMeasurement) {
         this.ingredientsWithMeasurement = ingredientsWithMeasurement;
-    }
+    }*/
 }

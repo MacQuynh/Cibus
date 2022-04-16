@@ -32,17 +32,16 @@ public class RecipeListApiFragment extends Fragment {
         binding = RecipeListApiFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        binding.searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getListRecipe();
-            }
-        });
+        initialList();
+
+        //TODO: Make a recycleView listItem
+        //TODO: Make a search call
+        //TODO: Find out what is wrong with constraint in xml.
         return view;
     }
 
-    private void getListRecipe() {
-        vm.getInitialListFromAPI();
+    private void initialList() {
+        binding.searchButton.setOnClickListener(view -> vm.getInitialListFromAPI());
     }
 
     @Override

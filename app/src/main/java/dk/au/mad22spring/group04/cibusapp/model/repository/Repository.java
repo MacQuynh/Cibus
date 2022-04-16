@@ -58,7 +58,7 @@ public class Repository {
     }
 
     public void getInitialListFromAPI() {
-        retrofitClient.getInstance().getJsonApi().getRandomRecipesFromTheLast30mins().enqueue(new Callback<Recipes>() {
+        retrofitClient.getInstance().getJsonApi().getRandomRecipesFromTheLast30min().enqueue(new Callback<Recipes>() {
             @Override
             public void onResponse(@NonNull Call<Recipes> call, @NonNull Response<Recipes> response) {
                 Log.d(TAG, "onResponse: " + response);

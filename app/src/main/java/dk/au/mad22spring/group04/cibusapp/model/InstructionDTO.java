@@ -1,11 +1,7 @@
 package dk.au.mad22spring.group04.cibusapp.model;
 
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
@@ -15,7 +11,7 @@ public class InstructionDTO implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int idInstruction;
 
-    public long recipeCretorId;
+    public long recipeCreatorId;
 
     private String displayText;
 
@@ -41,11 +37,11 @@ public class InstructionDTO implements Serializable {
     }
 
     public long getRecipeId() {
-        return recipeCretorId;
+        return recipeCreatorId;
     }
 
     public void setRecipeId(long recipeId) {
-        this.recipeCretorId = recipeId;
+        this.recipeCreatorId = recipeId;
     }
 
     public String getDisplayText() {

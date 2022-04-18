@@ -12,8 +12,9 @@ import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.helpers.Converters;
 import dk.au.mad22spring.group04.cibusapp.model.InstructionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.RecipeDTO;
+import dk.au.mad22spring.group04.cibusapp.model.SectionDTO;
 
-@Database(entities = {RecipeDTO.class, InstructionDTO.class}, version = 1) //@TypeConverters(Converters.class)
+@Database(entities = {RecipeDTO.class, InstructionDTO.class, SectionDTO.class}, version = 1) //@TypeConverters(Converters.class)
 public abstract class RecipeDatabase extends RoomDatabase {
     public abstract RecipeDAO drinkDAO();
     private static RecipeDatabase instance;

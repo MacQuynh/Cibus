@@ -8,7 +8,7 @@ import androidx.room.Transaction;
 import java.util.List;
 
 import dk.au.mad22spring.group04.cibusapp.model.RecipeDTO;
-import dk.au.mad22spring.group04.cibusapp.model.RecipeWithInstructionsDTO;
+import dk.au.mad22spring.group04.cibusapp.model.RecipeWithSectionsAndInstructionsDTO;
 
 @Dao
 public interface RecipeDAO {
@@ -17,5 +17,5 @@ public interface RecipeDAO {
 
     @Transaction
     @Query("SELECT * FROM RECIPEDTO")
-    public List<RecipeWithInstructionsDTO> getRecipeWithInstructions();
+    public List<RecipeWithSectionsAndInstructionsDTO> getRecipeWithSectionsAndInstructions();
 }

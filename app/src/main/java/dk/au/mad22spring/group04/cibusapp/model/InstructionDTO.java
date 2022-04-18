@@ -9,7 +9,13 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+@Entity
 public class InstructionDTO implements Serializable {
+
+    @PrimaryKey(autoGenerate = true)
+    public int idInstruction;
+
+    public long recipeCretorId;
 
     private String displayText;
 
@@ -24,6 +30,22 @@ public class InstructionDTO implements Serializable {
         this.startTime = startTime;
         this.endTime = endTime;
         this.order = order;
+    }
+
+    public int getIdInstruction() {
+        return idInstruction;
+    }
+
+    public void setIdInstruction(int idInstruction) {
+        this.idInstruction = idInstruction;
+    }
+
+    public long getRecipeId() {
+        return recipeCretorId;
+    }
+
+    public void setRecipeId(long recipeId) {
+        this.recipeCretorId = recipeId;
     }
 
     public String getDisplayText() {

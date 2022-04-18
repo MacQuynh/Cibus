@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 public class RecipeDTO {
     @PrimaryKey(autoGenerate = true)
-    private int idRecipe;
+    public int idRecipe;
 
     private String name;
 
@@ -40,8 +40,8 @@ public class RecipeDTO {
 
     private Integer updatedAtUnix;
 
-    @Embedded
-    private List<InstructionDTO> instructions = null;
+   /* @Embedded
+    public List<InstructionDTO> instructions;// = null;*/
 
     private float userRatings;
 
@@ -61,7 +61,7 @@ public class RecipeDTO {
                      String description,
                      Integer createdAtUnix,
                      Integer updatedAtUnix,
-                     List<InstructionDTO> instructions,
+                     //List<InstructionDTO> instructions,
                      float userRatings
                      //List<SectionDTO> ingredientsWithMeasurement
                      ) {
@@ -78,7 +78,7 @@ public class RecipeDTO {
         this.description = description;
         this.createdAtUnix = createdAtUnix;
         this.updatedAtUnix = updatedAtUnix;
-        this.instructions = instructions;
+        //this.instructions = instructions;
         this.userRatings = userRatings;
         //this.ingredientsWithMeasurement = ingredientsWithMeasurement;
     }
@@ -195,13 +195,13 @@ public class RecipeDTO {
         this.updatedAtUnix = updatedAtUnix;
     }
 
-    public List<InstructionDTO> getInstructions() {
+/*    public List<InstructionDTO> getInstructions() {
         return instructions;
     }
 
     public void setInstructions(List<InstructionDTO> instructions) {
         this.instructions = instructions;
-    }
+    }*/
 
     public float getUserRatings() {
         return userRatings;

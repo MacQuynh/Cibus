@@ -1,4 +1,4 @@
-package dk.au.mad22spring.group04.cibusapp.model;
+package dk.au.mad22spring.group04.cibusapp.model.DTOs;
 
 import androidx.room.Embedded;
 import androidx.room.Relation;

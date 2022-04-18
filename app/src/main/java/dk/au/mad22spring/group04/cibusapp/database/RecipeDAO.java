@@ -7,10 +7,10 @@ import androidx.room.Transaction;
 
 import java.util.List;
 
-import dk.au.mad22spring.group04.cibusapp.model.ComponentWithMeasurementsAndIngredientDTO;
-import dk.au.mad22spring.group04.cibusapp.model.RecipeDTO;
-import dk.au.mad22spring.group04.cibusapp.model.RecipeWithSectionsAndInstructionsDTO;
-import dk.au.mad22spring.group04.cibusapp.model.SectionWithComponentsDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentWithMeasurementsAndIngredientDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionWithComponentsDTO;
 
 @Dao
 public interface RecipeDAO {

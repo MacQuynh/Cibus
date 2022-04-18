@@ -1,4 +1,4 @@
-package dk.au.mad22spring.group04.cibusapp.model;
+package dk.au.mad22spring.group04.cibusapp.model.DTOs;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -12,14 +12,11 @@ public class ComponentDTO {
 
     public long sectionCreatorId;
 
-    private Integer id;
-
     private Integer position;
 
     private String rawText;
 
-    public ComponentDTO(Integer id, Integer position, String rawText) {
-        this.id = id;
+    public ComponentDTO(Integer position, String rawText) {
         this.position = position;
         this.rawText = rawText;
     }
@@ -38,14 +35,6 @@ public class ComponentDTO {
 
     public void setSectionCreatorId(long sectionCreatorId) {
         this.sectionCreatorId = sectionCreatorId;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Integer getPosition() {

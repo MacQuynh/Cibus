@@ -26,11 +26,7 @@ public class RecipeDTO {
 
     private float prepTimeMinutes;
 
-    //private Nutrition nutrition;
-
     private String country;
-
-    //private TotalTimeTier totalTimeDescription;
 
     private Integer numServings;
 
@@ -40,13 +36,7 @@ public class RecipeDTO {
 
     private Integer updatedAtUnix;
 
-   /* @Embedded
-    public List<InstructionDTO> instructions;// = null;*/
-
-    private float userRatings;
-
-  /*  @Embedded
-    private List<SectionDTO> ingredientsWithMeasurement = null;*/
+    private double userRatings;
 
     public RecipeDTO(String name,
                      String thumbnailUrl,
@@ -54,33 +44,24 @@ public class RecipeDTO {
                      float totalTimeMinutes,
                      float cookTimeMinutes,
                      float prepTimeMinutes,
-                     //Nutrition nutrition,
                      String country,
-                     //TotalTimeTier totalTimeDescription,
                      Integer numServings,
                      String description,
                      Integer createdAtUnix,
                      Integer updatedAtUnix,
-                     //List<InstructionDTO> instructions,
-                     float userRatings
-                     //List<SectionDTO> ingredientsWithMeasurement
-                     ) {
+                     double userRatings) {
         this.name = name;
         this.thumbnailUrl = thumbnailUrl;
         this.videoAdContent = videoAdContent;
         this.totalTimeMinutes = totalTimeMinutes;
         this.cookTimeMinutes = cookTimeMinutes;
         this.prepTimeMinutes = prepTimeMinutes;
-        //this.nutrition = nutrition;
         this.country = country;
-        //this.totalTimeDescription = totalTimeDescription;
         this.numServings = numServings;
         this.description = description;
         this.createdAtUnix = createdAtUnix;
         this.updatedAtUnix = updatedAtUnix;
-        //this.instructions = instructions;
         this.userRatings = userRatings;
-        //this.ingredientsWithMeasurement = ingredientsWithMeasurement;
     }
 
     public int getIdRecipe() {
@@ -139,14 +120,6 @@ public class RecipeDTO {
         this.prepTimeMinutes = prepTimeMinutes;
     }
 
-/*    public Nutrition getNutrition() {
-        return nutrition;
-    }
-
-    public void setNutrition(Nutrition nutrition) {
-        this.nutrition = nutrition;
-    }*/
-
     public String getCountry() {
         return country;
     }
@@ -154,14 +127,6 @@ public class RecipeDTO {
     public void setCountry(String country) {
         this.country = country;
     }
-
-/*    public TotalTimeTier getTotalTimeDescription() {
-        return totalTimeDescription;
-    }
-
-    public void setTotalTimeDescription(TotalTimeTier totalTimeDescription) {
-        this.totalTimeDescription = totalTimeDescription;
-    }*/
 
     public Integer getNumServings() {
         return numServings;
@@ -195,27 +160,11 @@ public class RecipeDTO {
         this.updatedAtUnix = updatedAtUnix;
     }
 
-/*    public List<InstructionDTO> getInstructions() {
-        return instructions;
-    }
-
-    public void setInstructions(List<InstructionDTO> instructions) {
-        this.instructions = instructions;
-    }*/
-
-    public float getUserRatings() {
+    public double getUserRatings() {
         return userRatings;
     }
 
-    public void setUserRatings(float userRatings) {
+    public void setUserRatings(double userRatings) {
         this.userRatings = userRatings;
     }
-
-/*    public List<SectionDTO> getIngredientsWithMeasurement() {
-        return ingredientsWithMeasurement;
-    }
-
-    public void setIngredientsWithMeasurement(List<SectionDTO> ingredientsWithMeasurement) {
-        this.ingredientsWithMeasurement = ingredientsWithMeasurement;
-    }*/
 }

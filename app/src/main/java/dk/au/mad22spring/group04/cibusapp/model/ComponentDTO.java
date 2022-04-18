@@ -16,12 +16,7 @@ public class ComponentDTO {
 
     private Integer position;
 
-    //private List<Measurement> measurements = null;
-
     private String rawText;
-
-    //private Ingredient ingredient;
-
 
     public ComponentDTO(Integer id, Integer position, String rawText) {
         this.id = id;

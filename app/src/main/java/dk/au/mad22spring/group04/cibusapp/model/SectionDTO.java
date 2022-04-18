@@ -16,25 +16,14 @@ public class SectionDTO implements Serializable {
 
     public long recipeCreatorIdForSection;
 
-    //private List<Component> components = null;
-
     private String name;
 
     private Integer order;
 
     public SectionDTO(String name, Integer order) {
-        //this.components = components;
         this.name = name;
         this.order = order;
     }
-
-/*    public List<Component> getComponents() {
-        return components;
-    }
-
-    public void setComponents(List<Component> components) {
-        this.components = components;
-    }*/
 
     public String getName() {
         return name;

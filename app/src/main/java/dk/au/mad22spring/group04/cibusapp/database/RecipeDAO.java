@@ -7,6 +7,7 @@ import androidx.room.Transaction;
 
 import java.util.List;
 
+import dk.au.mad22spring.group04.cibusapp.model.ComponentWithMeasurementsAndIngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.RecipeWithSectionsAndInstructionsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.SectionWithComponentsDTO;
@@ -24,4 +25,8 @@ public interface RecipeDAO {
     @Transaction
     @Query("SELECT * FROM SectionDTO")
     public List<SectionWithComponentsDTO> getSectionWithComponents();
+
+    @Transaction
+    @Query("SELECT * FROM ComponentDTO")
+    public List<ComponentWithMeasurementsAndIngredientDTO> getComponentWithMeasurementsAndIngredient();
 }

@@ -16,7 +16,7 @@ import dk.au.mad22spring.group04.cibusapp.R;
 
 public class UserRecipesListFragment extends Fragment {
 
-    private UserRecipesListViewModel mViewModel;
+    private UserRecipesListViewModel userRecipeVM;
 
     public static UserRecipesListFragment newInstance() {
         return new UserRecipesListFragment();
@@ -31,7 +31,7 @@ public class UserRecipesListFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(UserRecipesListViewModel.class);
+        userRecipeVM = new ViewModelProvider(this).get(UserRecipesListViewModel.class);
         // TODO: Use the ViewModel
     }
 

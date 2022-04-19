@@ -21,7 +21,7 @@ import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
         MeasurementDTO.class,
         IngredientDTO.class}, version = 1)
 public abstract class RecipeDatabase extends RoomDatabase {
-    public abstract RecipeDAO drinkDAO();
+    public abstract RecipeDAO recipeDAO();
     private static RecipeDatabase instance;
 
     public static RecipeDatabase getDatabase(final Context context){

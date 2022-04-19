@@ -2,13 +2,19 @@ package dk.au.mad22spring.group04.cibusapp.model;
 
 import android.app.Application;
 
-import java.util.ArrayList;
+import androidx.lifecycle.LiveData;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import dk.au.mad22spring.group04.cibusapp.database.RecipeDatabase;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 
 public class Repository {
 
     private static Repository repoInstance;
+    private RecipeDatabase db;
 
     public Repository(Application application) {
 
@@ -19,6 +25,10 @@ public class Repository {
             repoInstance = new Repository(application);
         }
         return repoInstance;
+    }
+
+    public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> getAllUserRecipes(){
+        return db.recipeDAO().getRecipeWithSectionsAndInstructions();
     }
 
     public void addRecipesDefault() {

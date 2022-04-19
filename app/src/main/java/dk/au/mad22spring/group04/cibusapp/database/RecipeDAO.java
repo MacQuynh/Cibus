@@ -20,7 +20,7 @@ public interface RecipeDAO {
     // Entity relation: https://developer.android.com/training/data-storage/room/relationships
     @Transaction
     @Query("SELECT * FROM RECIPEDTO")
-    public List<RecipeWithSectionsAndInstructionsDTO> getRecipeWithSectionsAndInstructions();
+    public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> getRecipeWithSectionsAndInstructions();
 
     @Transaction
     @Query("SELECT * FROM SectionDTO")

@@ -21,7 +21,8 @@ public class InstructionDTO implements Serializable {
 
     private Integer order;
 
-    public InstructionDTO(String displayText, Integer startTime, Integer endTime, Integer order) {
+    public InstructionDTO(long recipeCreatorId, String displayText, Integer startTime, Integer endTime, Integer order) {
+        this.recipeCreatorId = recipeCreatorId;
         this.displayText = displayText;
         this.startTime = startTime;
         this.endTime = endTime;

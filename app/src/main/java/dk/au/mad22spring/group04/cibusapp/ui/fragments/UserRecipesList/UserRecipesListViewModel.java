@@ -25,6 +25,7 @@ public class UserRecipesListViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> getUserRecipes(){
+        //repoInstance.addRecipesDefault();
         recipes = repoInstance.getAllUserRecipes();
         if(recipes == null){
             recipes = new MutableLiveData<List<RecipeWithSectionsAndInstructionsDTO>>();

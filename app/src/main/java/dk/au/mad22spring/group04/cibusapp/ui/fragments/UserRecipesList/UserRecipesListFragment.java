@@ -40,7 +40,7 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
 
         rcvUserRecipes = view.findViewById(R.id.rcvUserRecipes);
         txtHeader = view.findViewById(R.id.txtHeaderUserRecipes);
-
+        txtHeader.setText("This is the header");
         return view;
     }
 
@@ -61,7 +61,7 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
         rcvUserRecipes.setAdapter(adapter);
 
         userRecipeVM = new ViewModelProvider(this).get(UserRecipesListViewModel.class);
-        userRecipeVM.getUserRecipes().observe(this, new Observer<List<RecipeWithSectionsAndInstructionsDTO>>() {
+        userRecipeVM.getUserRecipes().observe(getViewLifecycleOwner(), new Observer<List<RecipeWithSectionsAndInstructionsDTO>>() {
             @Override
             public void onChanged(List<RecipeWithSectionsAndInstructionsDTO> recipeWithSectionsAndInstructionsDTOS) {
                 adapter.updateUserRecipeList(recipeWithSectionsAndInstructionsDTOS);

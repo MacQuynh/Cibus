@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dk.au.mad22spring.group04.cibusapp.database.RecipeDatabase;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 
@@ -17,6 +18,7 @@ public class Repository {
     private RecipeDatabase db;
 
     public Repository(Application application) {
+        db = RecipeDatabase.getDatabase(application.getApplicationContext());
 
     }
 
@@ -32,8 +34,7 @@ public class Repository {
     }
 
     public void addRecipesDefault() {
-        ArrayList<RecipeDTO> recipeArray = new ArrayList<RecipeDTO>();
-        recipeArray.add(new RecipeDTO("Lasagne",
+        db.recipeDAO().addRecipe(new RecipeDTO("Lasagne",
                 "",
                 "",
                 120,

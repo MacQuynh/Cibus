@@ -5,18 +5,23 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverter;
-import androidx.room.TypeConverters;
 
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
-import dk.au.mad22spring.group04.cibusapp.helpers.Converters;
-import dk.au.mad22spring.group04.cibusapp.model.InstructionDTO;
-import dk.au.mad22spring.group04.cibusapp.model.RecipeDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.MeasurementDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
 
-/*
-@Database(entities = {RecipeDTO.class, InstructionDTO.class}, version = 1) @TypeConverters(Converters.class)
+@Database(entities = {RecipeDTO.class,
+        InstructionDTO.class,
+        SectionDTO.class,
+        ComponentDTO.class,
+        MeasurementDTO.class,
+        IngredientDTO.class}, version = 1)
 public abstract class RecipeDatabase extends RoomDatabase {
-    public abstract RecipeDAO drinkDAO();
+    public abstract RecipeDAO recipeDAO();
     private static RecipeDatabase instance;
 
     public static RecipeDatabase getDatabase(final Context context){
@@ -33,4 +38,3 @@ public abstract class RecipeDatabase extends RoomDatabase {
         return instance;
     }
 }
-*/

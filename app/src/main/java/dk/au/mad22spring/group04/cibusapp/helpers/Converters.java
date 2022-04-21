@@ -5,8 +5,8 @@ import androidx.room.TypeConverter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import dk.au.mad22spring.group04.cibusapp.model.InstructionDTO;
-import dk.au.mad22spring.group04.cibusapp.model.SectionDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
 
 public class Converters {
 

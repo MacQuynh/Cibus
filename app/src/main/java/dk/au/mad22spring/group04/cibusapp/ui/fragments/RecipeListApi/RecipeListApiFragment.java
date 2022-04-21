@@ -20,7 +20,6 @@ public class RecipeListApiFragment extends Fragment {
     private RecipeListApiFragmentBinding binding;
     private RecipeListApiViewModel vm;
 
-    private int currentIndex, currentValue;
 
     public static RecipeListApiFragment newInstance() {
         return new RecipeListApiFragment();

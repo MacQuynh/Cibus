@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "610683313941",
+    "project_id": "cibus-8822b",
+    "storage_bucket": "cibus-8822b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610683313941:android:eb054d536587baab62931c",
+        "android_client_info": {
+          "package_name": "dk.au.mad22spring.group04.cibusapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610683313941-5iorugh0egq5oavdj78isu8601uk7pc4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqwjvJyp9T3cPfB2scn1Onppwer1W88oA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "610683313941-5iorugh0egq5oavdj78isu8601uk7pc4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

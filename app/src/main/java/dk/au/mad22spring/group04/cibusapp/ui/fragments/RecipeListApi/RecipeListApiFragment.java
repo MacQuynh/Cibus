@@ -34,13 +34,11 @@ public class RecipeListApiFragment extends Fragment {
         initialList();
 
         //TODO: Make a recycleView listItem
-        //TODO: Make a search call
-        //TODO: Find out what is wrong with constraint in xml.
         return view;
     }
 
     private void initialList() {
-        binding.searchButton.setOnClickListener(view -> vm.getInitialListFromAPI());
+        binding.searchButton.setOnClickListener(view -> vm.getInitialList());
     }
 
     @Override

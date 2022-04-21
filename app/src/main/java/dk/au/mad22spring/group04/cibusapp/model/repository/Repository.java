@@ -15,6 +15,7 @@ import java.util.concurrent.Executors;
 
 import dk.au.mad22spring.group04.cibusapp.API.RetrofitClient;
 import dk.au.mad22spring.group04.cibusapp.database.RecipeDAO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.Recipes;
 import dk.au.mad22spring.group04.cibusapp.model.Result;
 import retrofit2.Call;
@@ -30,7 +31,7 @@ public class Repository {
     private ExecutorService executor;       //for asynch processing
     private LiveData<List<RecipeDAO>> recipesLiveData; //livedata
     private static Repository instance;     //for Singleton pattern
-    private MutableLiveData<List<RecipeDAO>> recipeList;
+    private MutableLiveData<List<Result>> recipeList;
     private MutableLiveData<RecipeDAO> recipeMutable;
 
     private RetrofitClient retrofitClient;
@@ -50,7 +51,7 @@ public class Repository {
     private Repository(Application app) {
         this.context = app;
 //        db = DrinkDatabase.getDatabase(app.getApplicationContext());  //initialize database
-        recipeList = new MutableLiveData<List<RecipeDAO>>();
+        recipeList = new MutableLiveData<List<Result>>();
         recipeMutable = new MutableLiveData<>();
         executor = Executors.newSingleThreadExecutor();                //executor for background processing
 //        recipesLiveData = db.drinkDAO().getAllDrinks();                             //get LiveData reference to all entries
@@ -58,25 +59,43 @@ public class Repository {
     }
 
     public void getInitialListFromAPI() {
+        getInitialList();
+    }
+
+    public LiveData<List<Result>> getInitialListBack() {
+        return recipeList;
+    }
+
+    public void getInitialList() {
         retrofitClient.getInstance().getJsonApi().getRandomRecipesFromTheLast30min().enqueue(new Callback<Recipes>() {
             @Override
             public void onResponse(@NonNull Call<Recipes> call, @NonNull Response<Recipes> response) {
-                Log.d(TAG, "onResponse: " + response);
                 if (response.isSuccessful() && response.body() != null) {
 
                     List<Result> list = new ArrayList<>();
 
                     for (Result r : response.body().getResults()) {
                         Result rm = new Result();
-                        rm.setSeoTitle(r.getSeoTitle());
+                        rm.setName(r.getName());
+                        rm.setThumbnailUrl(r.getThumbnailUrl());
+                        rm.setTotalTimeMinutes(r.getTotalTimeMinutes());
+                        rm.setCookTimeMinutes(r.getCookTimeMinutes());
+                        rm.setPrepTimeMinutes(r.getPrepTimeMinutes());
+                        rm.setCountry(r.getCountry());
+                        rm.setNumServings(r.getNumServings());
+                        rm.setDescription(r.getDescription());
+                        rm.setCreatedAt(r.getCreatedAt());
+                        rm.setUpdatedAt(r.getUpdatedAt());
                         rm.setInstructions(r.getInstructions());
-                        //TODO insert the rest
-
                         list.add(rm);
                     }
-//                    recipeList.postValue(list); //TODO: Re-insert again.
-                } else {
-                    Log.d(TAG, "onResponse: " + "Something went wrong in DB");
+                    //recipeList.postValue(list);
+                    Log.d(TAG, "onResponse: " + list);
+                    Log.d(TAG, "  list.add(rm); " + list.get(0).getName() + list.get(0).getThumbnailUrl()
+                            + list.get(0).getTotalTimeMinutes() + list.get(0).getCookTimeMinutes() + list.get(0).getPrepTimeMinutes() + list.get(0).getCountry()
+                            + list.get(0).getDescription() + list.get(0).getNumServings() + list.get(0).getCreatedAt() + list.get(0).getUpdatedAt() + list.get(0).getInstructions()
+                            + list.get(0).getUpdatedAt()
+                    );
                 }
             }
 

@@ -4,11 +4,11 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import dk.au.mad22spring.group04.cibusapp.model.RecipeDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
+import dk.au.mad22spring.group04.cibusapp.model.Result;
 import dk.au.mad22spring.group04.cibusapp.model.repository.Repository;
 
 public class RecipeListApiViewModel extends AndroidViewModel {
@@ -21,7 +21,11 @@ public class RecipeListApiViewModel extends AndroidViewModel {
         repository = Repository.getInstance(application);
     }
 
-    public void getInitialListFromAPI() {
+    public void getInitialList() {
         repository.getInitialListFromAPI();
+    }
+
+    public LiveData<List<Result>> getInitialListBack() {
+        return repository.getInitialListBack();
     }
 }

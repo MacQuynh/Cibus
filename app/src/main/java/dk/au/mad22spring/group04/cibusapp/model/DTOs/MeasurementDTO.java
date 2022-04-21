@@ -13,7 +13,8 @@ public class MeasurementDTO {
 
     private String quantity;
 
-    public MeasurementDTO(String quantity) {
+    public MeasurementDTO(long componentCreatorId, String quantity) {
+        this.componentCreatorId = componentCreatorId;
         this.quantity = quantity;
     }
 

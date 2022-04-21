@@ -89,7 +89,7 @@ public class Repository {
                         rm.setInstructions(r.getInstructions());
                         list.add(rm);
                     }
-                    //recipeList.postValue(list);
+                    recipeList.postValue(list);
                     Log.d(TAG, "onResponse: " + list);
                     Log.d(TAG, "  list.add(rm); " + list.get(0).getName() + list.get(0).getThumbnailUrl()
                             + list.get(0).getTotalTimeMinutes() + list.get(0).getCookTimeMinutes() + list.get(0).getPrepTimeMinutes() + list.get(0).getCountry()

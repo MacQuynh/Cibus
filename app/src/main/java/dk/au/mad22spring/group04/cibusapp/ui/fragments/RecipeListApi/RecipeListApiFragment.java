@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import java.util.List;
 
@@ -26,10 +27,10 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
     // Used View binding here bc - laziness: https://developer.android.com/topic/libraries/view-binding#java
     private RecipeListApiFragmentBinding binding;
     private RecipeListApiViewModel vm;
-    private RecyclerView recyclerView;
     private ApiListAdapter adapter;
     private List<Result> resultList;
 
+    private RecyclerView recyclerView;
 
     public static RecipeListApiFragment newInstance() {
         return new RecipeListApiFragment();
@@ -43,18 +44,14 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
 
         vm = new ViewModelProvider(this).get(RecipeListApiViewModel.class);
         vm.getInitialListBack().observe(getViewLifecycleOwner(), results -> adapter.updateListOfRecipe(results));
-        initialList();
         recyclerView = binding.recycleviewListAPI;
         return view;
-    }
-
-    private void initialList() {
-        binding.searchButton.setOnClickListener(view -> vm.getInitialList());
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        vm.getInitialList();
         adapter = new ApiListAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);

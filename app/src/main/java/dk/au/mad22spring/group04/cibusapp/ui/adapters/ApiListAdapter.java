@@ -49,6 +49,7 @@ public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListV
     public void onBindViewHolder(@NonNull ApiListViewHolder holder, int position) {
         holder.recipe_title.setText(listOfRecipes.get(position).getName());
         //TODO error here.
+        holder.total_cooking_time.setText(listOfRecipes.get(position).getCountry());
         //holder.total_cooking_time.setText((Integer) listOfRecipes.get(position).getTotalTimeMinutes());
         Glide.with(holder.imgRecipe.getContext()).load(listOfRecipes.get(position).getThumbnailUrl()).into(holder.imgRecipe);
 

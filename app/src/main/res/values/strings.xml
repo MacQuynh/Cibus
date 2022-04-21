@@ -9,4 +9,8 @@
     <string name="password_textView">Password</string>
     <string name="back_btn">Back</string>
     <string name="signup_btn">Signup</string>
+    <string name="nav_bar_user">User</string>
+    <string name="nav_bar_api_list">Home</string>
+    <string name="nav_bar_add_recipe">Add new</string>
+    <string name="search">Search</string>
 </resources>

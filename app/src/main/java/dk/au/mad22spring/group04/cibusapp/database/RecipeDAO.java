@@ -9,10 +9,14 @@ import androidx.room.Transaction;
 
 import java.util.List;
 
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentWithMeasurementsAndIngredientDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.MeasurementDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionWithComponentsDTO;
 
 @Dao
@@ -34,8 +38,20 @@ public interface RecipeDAO {
     public List<ComponentWithMeasurementsAndIngredientDTO> getComponentWithMeasurementsAndIngredient();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addRecipe(RecipeDTO recipeDTO);
+    long addRecipe(RecipeDTO recipeDTO);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void  addInstruction(InstructionDTO instructionDTO);
+    void addInstruction(InstructionDTO instructionDTO);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long addSection(SectionDTO sectionDTO);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long addComponent(ComponentDTO componentDTO);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void addIngredient(IngredientDTO ingredientDTO);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void addMeasurement(MeasurementDTO measurementDTO);
 }

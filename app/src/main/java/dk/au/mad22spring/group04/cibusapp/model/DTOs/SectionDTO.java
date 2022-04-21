@@ -20,7 +20,8 @@ public class SectionDTO implements Serializable {
 
     private Integer order;
 
-    public SectionDTO(String name, Integer order) {
+    public SectionDTO(long recipeCreatorIdForSection, String name, Integer order) {
+        this.recipeCreatorIdForSection = recipeCreatorIdForSection;
         this.name = name;
         this.order = order;
     }

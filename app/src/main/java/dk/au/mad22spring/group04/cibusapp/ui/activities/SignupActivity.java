@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,15 +27,12 @@ public class SignupActivity extends AppCompatActivity {
 
     private SignupViewModel signupViewModel;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        signupViewModel = new ViewModelProvider
-                .AndroidViewModelFactory(getApplication())
-                .create(SignupViewModel.class);
+        signupViewModel = new ViewModelProvider(this).get(SignupViewModel.class);
 
         setupUIWidgets();
         setupOnClickListeners();
@@ -64,10 +62,10 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    private void createUserAccount(){
+    private void createUserAccount() {
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
-        if (email.length() < 1 || password.length() < 6){
+        if (email.length() < 1 || password.length() < 6) {
             displayToast(getString(R.string.msg_email_is_invalid));
             return;
         }
@@ -75,12 +73,13 @@ public class SignupActivity extends AppCompatActivity {
         signupViewModel.createUserAccount(email, password, new SignupHandler() {
             @Override
             public void onSuccess(String email) {
+                Log.d(TAG, "onSuccess: " + email);
                 displayToast(getString(R.string.msg_you_are_now_signed_up));
                 goToStartPage();
             }
 
             @Override
-            public void onError(String error) {
+            public void onError() {
                 displayToast("Signup failed");
             }
         });

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,6 +28,7 @@ public class FirebaseRepository {
 
     public static synchronized FirebaseRepository getInstance(Application application){
         if (firebaseRepository == null){
+            FirebaseApp.initializeApp(application);
             firebaseRepository = new FirebaseRepository(application);
         }
         return  firebaseRepository;
@@ -51,10 +53,12 @@ public class FirebaseRepository {
                     if (task.isSuccessful()){
                         Log.d(TAG, "createUser: success");
                         FirebaseUser user = mAuth.getCurrentUser();
+                        signupHandler.onSuccess(email);
 
                     } else{
                         Log.d(TAG, "onComplete: failure", task.getException());
                         displayToast(context.getString(R.string.msg_authentication_failed));
+                        signupHandler.onError();
                     }
                 });
 

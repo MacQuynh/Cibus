@@ -7,6 +7,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
+import com.google.common.util.concurrent.ListenableFuture;
+
 import java.util.List;
 
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
@@ -28,6 +30,10 @@ public interface RecipeDAO {
     @Transaction
     @Query("SELECT * FROM RECIPEDTO")
     public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> getRecipeWithSectionsAndInstructions();
+
+    @Transaction
+    @Query("SELECT * FROM RECIPEDTO WHERE name like :searchText")
+    public ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> getRecipesWithSectionsAndInstructionsFromSearch(String searchText);
 
     @Transaction
     @Query("SELECT * FROM SectionDTO")

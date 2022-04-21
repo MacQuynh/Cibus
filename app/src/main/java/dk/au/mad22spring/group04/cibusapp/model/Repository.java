@@ -3,14 +3,18 @@ package dk.au.mad22spring.group04.cibusapp.model;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import dk.au.mad22spring.group04.cibusapp.database.RecipeDatabase;
+import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
@@ -24,11 +28,15 @@ public class Repository {
     private static Repository repoInstance;
     private RecipeDatabase db;
     private ExecutorService executer;
+    private Application application;
 
+    final MutableLiveData<List<RecipeWithSectionsAndInstructionsDTO>> recipesDB;
 
     public Repository(Application application) {
         db = RecipeDatabase.getDatabase(application.getApplicationContext());
         executer = Executors.newSingleThreadExecutor();
+        recipesDB = new MutableLiveData<List<RecipeWithSectionsAndInstructionsDTO>>();
+        this.application = application;
     }
 
     public static Repository getRepositoryInstance(Application application){
@@ -39,7 +47,20 @@ public class Repository {
     }
 
     public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> getAllUserRecipes(){
-        return db.recipeDAO().getRecipeWithSectionsAndInstructions();
+        return recipesDB;
+    }
+
+    public void searchAllUserRecipes(String searchText){
+        ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> list = db.recipeDAO().getRecipesWithSectionsAndInstructionsFromSearch(searchText);
+        list.addListener(()->{
+            try {
+                recipesDB.postValue(list.get());
+
+            } catch (Exception e) {
+                Log.e(Constants.TAG_REPOSITORY, "searchAllUserRecipes: ", e);
+            }
+        }, ContextCompat.getMainExecutor(application.getApplicationContext()));
+
     }
 
     public void addRecipesDefault() {

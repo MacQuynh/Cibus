@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Fragments:
     private UserRecipesListFragment userRecipesListFragment;
+    private RecipeListApiFragment recipeListApiFragment;
 
     //Containers for fragments:
     private FragmentContainerView userRecipeListContainer;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         //view setup:
         userRecipeListContainer = findViewById(R.id.fragConViewUserRecipesList);
         bottomNavigationMenuView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationMenuView.setSelectedItemId(R.id.home);
 
         //https://stackoverflow.com/questions/67641594/bottomnavigation-view-onnavigationitemselectedlistener-is-deprecated
         bottomNavigationMenuView.setOnClickListener(item ->{
@@ -45,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.user:
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragConViewUserRecipesList, UserRecipesListFragment.newInstance())
+                            .commit();
+                case R.id.home:
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.recipe_list_api, RecipeListApiFragment.newInstance())
                             .commit();
             }
         });

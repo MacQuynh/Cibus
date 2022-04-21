@@ -16,7 +16,8 @@ public class ComponentDTO {
 
     private String rawText;
 
-    public ComponentDTO(Integer position, String rawText) {
+    public ComponentDTO(long sectionCreatorId, Integer position, String rawText) {
+        this.sectionCreatorId = sectionCreatorId;
         this.position = position;
         this.rawText = rawText;
     }

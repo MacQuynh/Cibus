@@ -27,7 +27,6 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
     private UserRecipesListViewModel userRecipeVM;
     private UserRecipesListAdapter adapter;
     private RecyclerView rcvUserRecipes;
-    private TextView txtHeader;
 
     public static UserRecipesListFragment newInstance() {
         return new UserRecipesListFragment();
@@ -39,8 +38,6 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
         View view = inflater.inflate(R.layout.user_recipes_list_fragment, container, false);
 
         rcvUserRecipes = view.findViewById(R.id.rcvUserRecipes);
-        txtHeader = view.findViewById(R.id.txtHeaderUserRecipes);
-        txtHeader.setText("This is the header");
         return view;
     }
 

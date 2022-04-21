@@ -42,8 +42,15 @@ public class UserRecipesListAdapter extends RecyclerView.Adapter<UserRecipesList
 
     @Override
     public void onBindViewHolder(@NonNull UserRecipeViewHolder holder, int position) {
+        if(recipeDTOList.get(position).instructions.size() > 0){
+            holder.txtTotalCookTime.setText(recipeDTOList.get(position).recipe.getTotalTimeMinutes() + " " + recipeDTOList.get(position).instructions.get(0).getDisplayText());
+
+        } else{
+            holder.txtTotalCookTime.setText(recipeDTOList.get(position).recipe.getTotalTimeMinutes() + "");
+
+        }
         holder.txtName.setText(recipeDTOList.get(position).recipe.getName());
-        holder.txtTotalCookTime.setText(recipeDTOList.get(position).recipe.getTotalTimeMinutes() + "");
+
     }
 
     @Override

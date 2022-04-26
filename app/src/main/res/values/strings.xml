@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">CibusApp</string>
-    <string name="msg_authentication_failed">Authentication failed</string>
     <string name="msg_email_is_invalid">Email is invalid</string>
     <string name="msg_password_is_invalid">Password is invalid</string>
     <string name="msg_email_or_password_is_invalid">Invalid email or password, password must be at least 6 characters</string>
@@ -14,4 +13,16 @@
     <string name="nav_bar_add_recipe">Add new</string>
     <string name="search">Search</string>
     <string name="user_list_header">My recipes</string>
+    <string name="email_editText">Enter email</string>
+    <string name="password_editText">Enter password</string>
+    <string name="login_btn">Login</string>
+    <string name="signup_here_btn">Signup here!</string>
+    <string name="msg_login_was_successful">Login was successful</string>
+    <string name="msg_login_failed">Login failed</string>
+    <string name="msg_signup_failed">Signup failed</string>
+    <string name="msg_email_is_already_in_use">Email is already in use</string>
+    <string name="name_textView">Name</string>
+    <string name="name_editText">Enter name</string>
+    <string name="Signup_header_textView">Sign Up</string>
+    <string name="login_header_textview">Login</string>
 </resources>

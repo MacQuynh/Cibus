@@ -6,18 +6,20 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
 import dk.au.mad22spring.group04.cibusapp.model.FirebaseRepository;
-import dk.au.mad22spring.group04.cibusapp.ui.interfaces.SignupHandler;
+import dk.au.mad22spring.group04.cibusapp.ui.interfaces.LoginHandler;
 
-public class SignupViewModel extends AndroidViewModel {
+public class LoginViewModel extends AndroidViewModel {
 
     private final FirebaseRepository firebaseRepository;
 
-    public SignupViewModel(@NonNull Application application) {
+    public LoginViewModel(@NonNull Application application) {
         super(application);
         firebaseRepository = FirebaseRepository.getInstance(application);
     }
 
-    public void createUserAccount(String name, String email, String password, SignupHandler signupHandler){
-        firebaseRepository.createUserAccount(name, email, password, signupHandler);
+    public void login(String email, String password, final LoginHandler loginHandler){
+        firebaseRepository.loginUser(email, password,loginHandler);
+
     }
+
 }

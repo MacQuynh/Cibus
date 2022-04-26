@@ -1,6 +1,5 @@
 package dk.au.mad22spring.group04.cibusapp.ui.activities;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -22,7 +21,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private static final String TAG = "SignupActivity";
 
-    private EditText emailEditText, passwordEditText;
+    private EditText nameEditText, emailEditText, passwordEditText;
     private Button backBtn, signupBtn;
 
     private SignupViewModel signupViewModel;
@@ -39,6 +38,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void setupUIWidgets(){
+        nameEditText = findViewById(R.id.signup_name_editText);
         emailEditText = findViewById(R.id.signup_email_editText);
         passwordEditText = findViewById(R.id.signup_password_editText);
         backBtn = findViewById(R.id.signup_back_btn);
@@ -56,21 +56,22 @@ public class SignupActivity extends AppCompatActivity {
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { goToLoginActivity();
 
             }
         });
     }
 
     private void createUserAccount() {
+        String name = nameEditText.getText().toString();
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         if (email.length() < 1 || password.length() < 6) {
-            displayToast(getString(R.string.msg_email_is_invalid));
+            displayToast(getString(R.string.msg_email_or_password_is_invalid));
             return;
         }
 
-        signupViewModel.createUserAccount(email, password, new SignupHandler() {
+        signupViewModel.createUserAccount(name, email, password, new SignupHandler() {
             @Override
             public void onSuccess(String email) {
                 Log.d(TAG, "onSuccess: " + email);
@@ -80,7 +81,7 @@ public class SignupActivity extends AppCompatActivity {
 
             @Override
             public void onError() {
-                displayToast("Signup failed");
+                displayToast(getString(R.string.msg_signup_failed));
             }
         });
 
@@ -92,6 +93,10 @@ public class SignupActivity extends AppCompatActivity {
         finish();
     }
 
+    private void goToLoginActivity() {
+        Intent intent =  new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 
     private void displayToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();

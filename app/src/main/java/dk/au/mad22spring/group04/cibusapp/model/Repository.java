@@ -25,17 +25,20 @@ import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
 
 public class Repository {
 
+    public static final String TAG = "REPOSITORY_TAG";
     private static Repository repoInstance;
     private RecipeDatabase db;
     private ExecutorService executer;
     private Application application;
 
     final MutableLiveData<List<RecipeWithSectionsAndInstructionsDTO>> recipesDB;
+    final MutableLiveData<RecipeWithSectionsAndInstructionsDTO> recipeDB;
 
     public Repository(Application application) {
         db = RecipeDatabase.getDatabase(application.getApplicationContext());
         executer = Executors.newSingleThreadExecutor();
         recipesDB = new MutableLiveData<List<RecipeWithSectionsAndInstructionsDTO>>();
+        recipeDB = new MutableLiveData<RecipeWithSectionsAndInstructionsDTO>();
         this.application = application;
     }
 
@@ -64,11 +67,28 @@ public class Repository {
 
     }
 
+    public void setFullRecipeByName(String name){
+        ListenableFuture<RecipeWithSectionsAndInstructionsDTO> recipe = db.recipeDAO().getFullRecipeByName(name);
+
+        recipe.addListener(() -> {
+            try {
+                recipeDB.postValue(recipe.get());
+            } catch (Exception e){
+                Log.e(TAG, "Error loading Recipe: ", e);
+            }
+
+        }, ContextCompat.getMainExecutor(application.getApplicationContext()));
+    }
+
+    public LiveData<RecipeWithSectionsAndInstructionsDTO> getFullRecipeFromDB(){
+        return recipeDB;
+    }
+
     public void addRecipesDefault() {
         executer.execute(new Runnable() {
             @Override
             public void run() {
-                RecipeDTO recipe1 = new RecipeDTO("Lasagne",
+                RecipeDTO recipe1 = new RecipeDTO("Risotto",
                         "",
                         "",
                         120,
@@ -84,19 +104,24 @@ public class Repository {
                 );
                 long idRecipe1 = db.recipeDAO().addRecipe(recipe1);
 
-                InstructionDTO instruc1 = new InstructionDTO(idRecipe1, "Instruction text 1", 1111, 2222, 1);
+                InstructionDTO instruc1 = new InstructionDTO("Instruction text 1", 1111, 2222, 1);
+                instruc1.recipeCreatorId = idRecipe1;
                 db.recipeDAO().addInstruction(instruc1);
 
-                SectionDTO section1 = new SectionDTO(idRecipe1, "Section 1", 1);
+                SectionDTO section1 = new SectionDTO("Section 1", 1);
+                section1.recipeCreatorIdForSection = idRecipe1;
                 long idSection1 = db.recipeDAO().addSection(section1);
 
-                ComponentDTO component1 = new ComponentDTO(idSection1, 1, "Component 1");
+                ComponentDTO component1 = new ComponentDTO(1, "Component 1");
+                component1.sectionCreatorId = idSection1;
                 long idComponent1 = db.recipeDAO().addComponent(component1);
 
-                MeasurementDTO measure1 = new MeasurementDTO(idComponent1, "2");
+                MeasurementDTO measure1 = new MeasurementDTO("2");
+                measure1.componentCreatorId = idComponent1;
                 db.recipeDAO().addMeasurement(measure1);
 
-                IngredientDTO ingre1 = new IngredientDTO(idComponent1, "Meat", "Meat","Meat");
+                IngredientDTO ingre1 = new IngredientDTO("Meat", "Meat","Meat");
+                ingre1.componentCreatorIdForIngredient = idComponent1;
                 db.recipeDAO().addIngredient(ingre1);
             }
         });

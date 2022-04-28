@@ -36,6 +36,10 @@ public interface RecipeDAO {
     public ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> getRecipesWithSectionsAndInstructionsFromSearch(String searchText, String userId);
 
     @Transaction
+    @Query("SELECT * FROM RECIPEDTO WHERE name like :name")
+    public ListenableFuture<RecipeWithSectionsAndInstructionsDTO> getFullRecipeByName(String name);
+
+    @Transaction
     @Query("SELECT * FROM SectionDTO")
     public List<SectionWithComponentsDTO> getSectionWithComponents();
 

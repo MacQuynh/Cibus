@@ -36,9 +36,9 @@
         android:layout_marginLeft="24dp"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="@string/search"
         android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:text="Name" />
+        android:minHeight="48dp" />
 
     <Button
         android:id="@+id/userRecipeList_searchBtn"
@@ -48,7 +48,8 @@
         android:layout_alignBottom="@+id/userRecipeList_txtSearch"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="0dp"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="0dp"
-        android:text="Button" />
+        android:text="@string/search" />
 
 </RelativeLayout>

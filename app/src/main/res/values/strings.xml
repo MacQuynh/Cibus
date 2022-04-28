@@ -36,4 +36,5 @@
     <string name="instructionsHeading_textView">Instructions:</string>
     <string name="instructions_editText">Enter instructions</string>
     <string name="addBtn">Add</string>
+    <string name="recipeName_hint">Enter name of recipe</string>
 </resources>

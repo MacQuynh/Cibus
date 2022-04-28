@@ -101,4 +101,8 @@ public class Repository {
 
         Log.d("TAG", "addRecipesDefault: ");
     }
+
+    public void addNewRecipe(){
+
+    }
 }

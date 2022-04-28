@@ -12,8 +12,10 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 
 import dk.au.mad22spring.group04.cibusapp.R;
+import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.ui.interfaces.LoginHandler;
 import dk.au.mad22spring.group04.cibusapp.ui.interfaces.SignupHandler;
 
@@ -55,6 +57,11 @@ public class FirebaseRepository {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener((task)-> {
                     if (task.isSuccessful()){
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null){
+                            String uid = user.getUid();
+                            Constants.USER_ID = uid;
+                        }
                         Log.d(TAG, "createUser: success");
                         signupHandler.onSuccess(email);
 
@@ -74,6 +81,11 @@ public class FirebaseRepository {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null){
+                            String uid = user.getUid();
+                            Constants.USER_ID = uid;
+                        }
                         loginHandler.onSuccess();
                         displayToast(context.getString(R.string.msg_login_was_successful));
                     } else{

@@ -52,7 +52,7 @@ public class Repository {
 
     public void searchAllUserRecipes(String searchText){
         //inspiration for searching for part of word https://stackoverflow.com/questions/61948455/android-room-query-text-matches-exactly-the-search-string-or-start-with-search
-        ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> list = db.recipeDAO().getRecipesWithSectionsAndInstructionsFromSearch(searchText + "%");
+        ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> list = db.recipeDAO().getRecipesWithSectionsAndInstructionsFromSearch(searchText + "%", Constants.USER_ID);
         list.addListener(()->{
             try {
                 recipesDB.postValue(list.get());
@@ -68,7 +68,7 @@ public class Repository {
         executer.execute(new Runnable() {
             @Override
             public void run() {
-                RecipeDTO recipe1 = new RecipeDTO("Vegetar ret",
+                RecipeDTO recipe1 = new RecipeDTO("Lasagne",
                         "",
                         "",
                         120,
@@ -80,7 +80,7 @@ public class Repository {
                         1543254,
                         26352454,
                         0.0,
-                        ""
+                        Constants.USER_ID
                 );
                 long idRecipe1 = db.recipeDAO().addRecipe(recipe1);
 

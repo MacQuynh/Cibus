@@ -32,8 +32,8 @@ public interface RecipeDAO {
     public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> getRecipeWithSectionsAndInstructions();
 
     @Transaction
-    @Query("SELECT * FROM RECIPEDTO WHERE name like :searchText")
-    public ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> getRecipesWithSectionsAndInstructionsFromSearch(String searchText);
+    @Query("SELECT * FROM RECIPEDTO WHERE name like :searchText AND userId like :userId")
+    public ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> getRecipesWithSectionsAndInstructionsFromSearch(String searchText, String userId);
 
     @Transaction
     @Query("SELECT * FROM SectionDTO")

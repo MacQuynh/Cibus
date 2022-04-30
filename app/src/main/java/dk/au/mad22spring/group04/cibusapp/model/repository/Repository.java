@@ -166,7 +166,7 @@ public class Repository {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                RecipeDTO recipe1 = new RecipeDTO("lasagna2",
+                RecipeDTO recipe1 = new RecipeDTO("Kage",
                         "",
                         120,
                         100,
@@ -176,7 +176,7 @@ public class Repository {
                         "Let’s make the viral TikTok green goddess salad, but purple! With additions like purple kale and purple cabbage, this salad has all of the elements to make a delicious and colorful meal!",
                         1543254,
                         26352454,
-                        0.0,
+                        0,
                         Constants.USER_ID
                 );
                 long idRecipe1 = db.recipeDAO().addRecipe(recipe1);
@@ -224,5 +224,14 @@ public class Repository {
 
     public ListenableFuture<SectionWithComponentsDTO> getSectionWithComponent(int sectionId){
         return db.recipeDAO().getSectionWithComponentsById(sectionId);
+    }
+
+    public void updateFullRecipe(RecipeDTO recipe){
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                db.recipeDAO().updateRecipe(recipe);
+            }
+        });
     }
 }

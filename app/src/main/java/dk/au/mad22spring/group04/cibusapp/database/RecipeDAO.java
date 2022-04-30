@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import androidx.room.Update;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -68,4 +69,7 @@ public interface RecipeDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addMeasurement(MeasurementDTO measurementDTO);
+
+    @Update
+    void updateRecipe(RecipeDTO recipeDTO);
 }

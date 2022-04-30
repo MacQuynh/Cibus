@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -41,11 +42,9 @@ public class UserRecipeDetailsFragment extends Fragment {
             txtCookTime,
             txtTotalTime,
             txtIngredients,
-            txtInstructions,
-            txtRating;
+            txtInstructions;
     private Button btnDelete, btnSave, btnShare;
-    private SeekBar skbRating;
-
+    private RatingBar ratingBar;
 
     private UserRecipeDetailsViewModel detailsViewModel;
     private static String recipeName;
@@ -80,6 +79,7 @@ public class UserRecipeDetailsFragment extends Fragment {
                 setUIData();
             }
         });
+        listeners();
     }
 
     private void setUIWidgets(View view){
@@ -92,13 +92,32 @@ public class UserRecipeDetailsFragment extends Fragment {
         txtTotalTime = view.findViewById(R.id.userRecipeDetail_totalTime);
         txtIngredients = view.findViewById(R.id.userRecipeDetail_Ingredients);
         txtInstructions = view.findViewById(R.id.userRecipeDetail_Instructions);
-        txtRating = view.findViewById(R.id.userRecipeDetail_Rating);
 
-        skbRating = view.findViewById(R.id.userRecipeDetail_skbRating);
+        ratingBar = view.findViewById(R.id.userRecipeDetail_ratingBar);
 
         btnDelete = view.findViewById(R.id.userRecipeDetail_btnDelete);
         btnSave = view.findViewById(R.id.userRecipeDetail_btnSave);
         btnShare = view.findViewById(R.id.userRecipeDetail_btnShare);
+    }
+
+    private void listeners(){
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.setUserRatings(v);
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSave();
+            }
+        });
+    }
+
+    private void onSave() {
+        detailsViewModel.updateFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe);
     }
 
     private void setUIData(){
@@ -109,7 +128,8 @@ public class UserRecipeDetailsFragment extends Fragment {
         txtPrepTime.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getPrepTimeMinutes() + " min");
         txtCookTime.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getCookTimeMinutes() + " min");
         txtTotalTime.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getTotalTimeMinutes() + " min");
-        txtRating.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getUserRatings() + "");
+
+        ratingBar.setRating(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getUserRatings());
 
         String instructionText = "";
         for (int i = 0; i < detailsViewModel.recipeWithSectionsAndInstructionsDTO.instructions.size(); i++) {

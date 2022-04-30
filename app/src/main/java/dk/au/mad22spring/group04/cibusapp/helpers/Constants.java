@@ -7,6 +7,7 @@ public class Constants {
     public static String USER_ID = "USER_ID";
     public static final long RECIPE_NAME = 0;
 
-
+    public static String RECIPE_OBJECT = "RECIPE_OBJECT";
+    public static String INDEX_OBJECT = "INDEX_OBJECT";
 
 }

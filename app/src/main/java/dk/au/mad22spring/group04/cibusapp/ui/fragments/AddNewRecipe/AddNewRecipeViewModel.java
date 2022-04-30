@@ -1,7 +1,29 @@
 package dk.au.mad22spring.group04.cibusapp.ui.fragments.AddNewRecipe;
 
-import androidx.lifecycle.ViewModel;
+import android.app.Application;
 
-public class AddNewRecipeViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+
+import java.util.ArrayList;
+
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.MeasurementDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
+import dk.au.mad22spring.group04.cibusapp.model.repository.Repository;
+
+public class AddNewRecipeViewModel extends AndroidViewModel {
+    private final Repository repository;
+
+    public AddNewRecipeViewModel(@NonNull Application application) {
+        super(application);
+        repository = Repository.getRepositoryInstance(application);
+    }
+
+    public void addNewRecipe(RecipeDTO recipeDTO, InstructionDTO instructionDTO, SectionDTO sectionDTO, ComponentDTO componentDTO, ArrayList<MeasurementDTO> listOfMeasurementDTO, ArrayList<IngredientDTO> listOfIngredientDTO){
+        repository.addNewRecipeToDb(recipeDTO, instructionDTO, sectionDTO, componentDTO, listOfMeasurementDTO, listOfIngredientDTO);
+    }
 }

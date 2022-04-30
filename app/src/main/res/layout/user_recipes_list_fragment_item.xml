@@ -17,10 +17,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/rectangle_list_background" />
+        app:srcCompat="@drawable/rectangle_list_background"
+        />
 
     <ImageView
-        android:id="@+id/imgUserRecipeList"
+        android:id="@+id/recipe_img"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="16dp"
@@ -30,15 +31,15 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/txtHeaderUserRecipeList"
+        android:id="@+id/header_recipe_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="TextView"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imgUserRecipeList"
-        app:layout_constraintTop_toTopOf="@+id/imgUserRecipeList" />
+        app:layout_constraintStart_toEndOf="@+id/recipe_img"
+        app:layout_constraintTop_toTopOf="@+id/recipe_img" />
 
     <TextView
         android:id="@+id/txtTotalCookTimeUserRecipeList"

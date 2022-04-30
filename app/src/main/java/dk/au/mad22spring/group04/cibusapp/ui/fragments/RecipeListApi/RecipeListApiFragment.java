@@ -44,7 +44,7 @@ public class RecipeListApiFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        vm = new ViewModelProvider(this).get(RecipeListApiViewModel.class);
+        //vm = new ViewModelProvider(this).get(RecipeListApiViewModel.class);
     }
 
     @Override

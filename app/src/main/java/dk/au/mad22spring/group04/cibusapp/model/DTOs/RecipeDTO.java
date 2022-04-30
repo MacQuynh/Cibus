@@ -18,8 +18,6 @@ public class RecipeDTO {
 
     private String thumbnailUrl;
 
-    private String videoAdContent;
-
     private float totalTimeMinutes;
 
     private float cookTimeMinutes;
@@ -50,7 +48,6 @@ public class RecipeDTO {
 
     public RecipeDTO(String name,
                      String thumbnailUrl,
-                     String videoAdContent,
                      float totalTimeMinutes,
                      float cookTimeMinutes,
                      float prepTimeMinutes,
@@ -63,7 +60,6 @@ public class RecipeDTO {
                      String userID) {
         this.name = name;
         this.thumbnailUrl = thumbnailUrl;
-        this.videoAdContent = videoAdContent;
         this.totalTimeMinutes = totalTimeMinutes;
         this.cookTimeMinutes = cookTimeMinutes;
         this.prepTimeMinutes = prepTimeMinutes;
@@ -73,7 +69,7 @@ public class RecipeDTO {
         this.createdAtUnix = createdAtUnix;
         this.updatedAtUnix = updatedAtUnix;
         this.userRatings = userRatings;
-        this.userID  =userID;
+        this.userID = userID;
     }
 
     public int getIdRecipe() {
@@ -98,14 +94,6 @@ public class RecipeDTO {
 
     public void setThumbnailUrl(String thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
-    }
-
-    public String getVideoAdContent() {
-        return videoAdContent;
-    }
-
-    public void setVideoAdContent(String videoAdContent) {
-        this.videoAdContent = videoAdContent;
     }
 
     public float getTotalTimeMinutes() {

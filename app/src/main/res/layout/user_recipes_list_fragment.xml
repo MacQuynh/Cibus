@@ -11,9 +11,9 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/userRecipeList_txtSearch"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="0dp"
         tools:listitem="@layout/user_recipes_list_fragment_item" />
 
     <TextView
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="0dp"
         android:text="@string/user_list_header"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -33,7 +33,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtHeaderUserRecipes"
-        android:layout_marginLeft="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
         android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/search"
@@ -48,7 +50,7 @@
         android:layout_alignBottom="@+id/userRecipeList_txtSearch"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="0dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="0dp"
         android:layout_marginBottom="0dp"
         android:text="@string/search" />
 

@@ -5,11 +5,9 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
-import dk.au.mad22spring.group04.cibusapp.model.Repository;
+import dk.au.mad22spring.group04.cibusapp.model.repository.Repository;
 
 public class UserRecipeDetailsViewModel extends AndroidViewModel {
     Repository repoInstance;

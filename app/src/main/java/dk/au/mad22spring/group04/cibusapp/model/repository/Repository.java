@@ -289,7 +289,7 @@ public class Repository {
                                 response.body().getResults().get(0).getDescription(),
                                 response.body().getResults().get(0).getCreatedAt(),
                                 response.body().getResults().get(0).getUpdatedAt(),
-                                response.body().getResults().get(0).getUserRatings().getCountPositive(),
+                                response.body().getResults().get(0).getUserRatings().getCountPositive().floatValue(),
                                 response.body().getResults().get(0).getId().toString()
                         );
                     }

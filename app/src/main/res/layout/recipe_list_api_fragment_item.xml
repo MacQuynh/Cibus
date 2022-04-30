@@ -41,6 +41,24 @@
         app:layout_constraintTop_toTopOf="@+id/api_recipe_img" />
 
     <TextView
+        android:id="@+id/country_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="code"
+        app:layout_constraintStart_toStartOf="@+id/cooking_time"
+        app:layout_constraintTop_toBottomOf="@+id/cooking_time" />
+
+    <TextView
+        android:id="@+id/rating_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Rating"
+        app:layout_constraintEnd_toEndOf="@+id/list_img"
+        app:layout_constraintTop_toTopOf="@+id/list_img" />
+
+    <TextView
         android:id="@+id/cooking_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

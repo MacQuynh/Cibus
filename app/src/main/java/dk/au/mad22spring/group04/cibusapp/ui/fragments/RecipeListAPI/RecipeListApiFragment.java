@@ -1,6 +1,5 @@
-package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi;
+package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPI;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import java.util.List;
 
@@ -42,10 +40,22 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
         binding = RecipeListApiFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        searchButton();
+
         vm = new ViewModelProvider(this).get(RecipeListApiViewModel.class);
         vm.getInitialListBack().observe(getViewLifecycleOwner(), results -> adapter.updateListOfRecipe(results));
         recyclerView = binding.recycleviewListAPI;
         return view;
+    }
+
+    private void searchButton() {
+        binding.searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String search_text = binding.apiEditText.getText().toString();
+                vm.searchRecipes(search_text);
+            }
+        });
     }
 
     @Override
@@ -65,6 +75,12 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
 
     @Override
     public void onApiItemClicked(int index) {
-
+        /*
+        Intent i = new Intent(this, DetailsActivity.class);
+        DrinkModel drinksObj = adapter.getDrinkByIndex(index);
+        i.putExtra(Constant.DRINK, drinksObj.drinksName);
+        i.putExtra(Constant.INDEX, index);
+        launcher.launch(i);
+        * */
     }
 }

@@ -11,7 +11,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipesList.UserRecipesListFragment;
 
-import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiFragment;
+import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPI.RecipeListApiFragment;
 
 //Navigation bar: https://www.geeksforgeeks.org/bottom-navigation-bar-in-android/
 // https://material.io/components/bottom-navigation/android#using-bottom-navigation

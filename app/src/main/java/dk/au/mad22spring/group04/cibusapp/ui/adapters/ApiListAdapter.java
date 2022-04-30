@@ -47,10 +47,21 @@ public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListV
 
     @Override
     public void onBindViewHolder(@NonNull ApiListViewHolder holder, int position) {
+
         holder.recipe_title.setText(listOfRecipes.get(position).getName());
-        //TODO error here.
         holder.total_cooking_time.setText(listOfRecipes.get(position).getCountry());
-        //holder.total_cooking_time.setText((Integer) listOfRecipes.get(position).getTotalTimeMinutes());
+        if (listOfRecipes.get(position).getCookTimeMinutes() == null) {
+            holder.total_cooking_time.setText("No total cooking time");
+        } else
+            holder.total_cooking_time.setText("Total time: " + listOfRecipes.get(position).getCookTimeMinutes().toString() + "H");
+        holder.country_code.setText(listOfRecipes.get(position).getCountry());
+        if (listOfRecipes.get(position).getUserRatings().getCountPositive() != null) {
+            holder.rating.setText(listOfRecipes.get(position).getUserRatings().getCountPositive().toString());
+        } else
+            holder.rating.setText("0.0");
+
+        holder.rating.setText(listOfRecipes.get(position).getUserRatings().getCountPositive().toString());
+        //TODO: May needs more fields
         Glide.with(holder.imgRecipe.getContext()).load(listOfRecipes.get(position).getThumbnailUrl()).into(holder.imgRecipe);
 
     }
@@ -62,10 +73,9 @@ public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListV
         } else return 0;
     }
 
-
     public class ApiListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         //Init activity
-        TextView recipe_title, total_cooking_time;
+        TextView recipe_title, total_cooking_time, country_code, rating;
         ImageView imgRecipe;
 
         IApiItemClickedListener listener;
@@ -75,6 +85,8 @@ public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListV
 
             recipe_title = itemView.findViewById(R.id.header_recipe_title);
             total_cooking_time = itemView.findViewById(R.id.cooking_time);
+            country_code = itemView.findViewById(R.id.country_code);
+            rating = itemView.findViewById(R.id.rating_details);
             imgRecipe = itemView.findViewById(R.id.api_recipe_img);
 
             listener = apiItemClickedListener;

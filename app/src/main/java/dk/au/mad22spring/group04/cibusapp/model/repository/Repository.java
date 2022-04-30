@@ -3,6 +3,7 @@ package dk.au.mad22spring.group04.cibusapp.model.repository;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -72,30 +73,8 @@ public class Repository {
             public void onResponse(@NonNull Call<Recipes> call, @NonNull Response<Recipes> response) {
                 if (response.isSuccessful() && response.body() != null) {
 
-                    List<Result> list = new ArrayList<>();
-
-                    for (Result r : response.body().getResults()) {
-                        Result rm = new Result();
-                        rm.setName(r.getName());
-                        rm.setThumbnailUrl(r.getThumbnailUrl());
-                        rm.setTotalTimeMinutes(r.getTotalTimeMinutes());
-                        rm.setCookTimeMinutes(r.getCookTimeMinutes());
-                        rm.setPrepTimeMinutes(r.getPrepTimeMinutes());
-                        rm.setCountry(r.getCountry());
-                        rm.setNumServings(r.getNumServings());
-                        rm.setDescription(r.getDescription());
-                        rm.setCreatedAt(r.getCreatedAt());
-                        rm.setUpdatedAt(r.getUpdatedAt());
-                        rm.setInstructions(r.getInstructions());
-                        list.add(rm);
-                    }
+                    List<Result> list = getResults(response);
                     recipeList.postValue(list);
-                    Log.d(TAG, "onResponse: " + list);
-                    Log.d(TAG, "  list.add(rm); " + list.get(0).getName() + list.get(0).getThumbnailUrl()
-                            + list.get(0).getTotalTimeMinutes() + list.get(0).getCookTimeMinutes() + list.get(0).getPrepTimeMinutes() + list.get(0).getCountry()
-                            + list.get(0).getDescription() + list.get(0).getNumServings() + list.get(0).getCreatedAt() + list.get(0).getUpdatedAt() + list.get(0).getInstructions()
-                            + list.get(0).getUpdatedAt()
-                    );
                 }
             }
 
@@ -104,5 +83,56 @@ public class Repository {
                 Log.d(TAG, "onFailure: " + t);
             }
         });
+    }
+
+    public void searchDrinks(String search_text) {
+        searchRecipesFromString(search_text);
+    }
+
+    public LiveData<List<Result>> searchDrinks() {
+        return recipeList;
+    }
+
+    private void searchRecipesFromString(String search_text) {
+        RetrofitClient.getInstance().getJsonApi().getRecipeFromSearchString(search_text).enqueue(new Callback<Recipes>() {
+            @Override
+            public void onResponse(@NonNull Call<Recipes> call, @NonNull Response<Recipes> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Result> list = getResults(response);
+                    recipeList.postValue(list);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Recipes> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: " + t);
+                Toast.makeText(context, "Something went wrong while searching", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @NonNull
+    private List<Result> getResults(@NonNull Response<Recipes> response) {
+        List<Result> list = new ArrayList<>();
+        try {
+            for (Result r : response.body().getResults()) {
+                Result rm = new Result();
+                rm.setName(r.getName());
+                rm.setThumbnailUrl(r.getThumbnailUrl());
+                rm.setTotalTimeMinutes(r.getTotalTimeMinutes());
+                rm.setCookTimeMinutes(r.getCookTimeMinutes());
+                rm.setPrepTimeMinutes(r.getPrepTimeMinutes());
+                rm.setCountry(r.getCountry());
+                rm.setNumServings(r.getNumServings());
+                rm.setDescription(r.getDescription());
+                rm.setCreatedAt(r.getCreatedAt());
+                rm.setUpdatedAt(r.getUpdatedAt());
+                rm.setInstructions(r.getInstructions());
+                list.add(rm);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

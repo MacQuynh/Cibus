@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import dk.au.mad22spring.group04.cibusapp.R;
@@ -43,14 +45,20 @@ public class UserRecipesListAdapter extends RecyclerView.Adapter<UserRecipesList
     @Override
     public void onBindViewHolder(@NonNull UserRecipeViewHolder holder, int position) {
         if(recipeDTOList.get(position).instructions.size() > 0){
-            holder.txtTotalCookTime.setText(recipeDTOList.get(position).recipe.getTotalTimeMinutes() + " " + recipeDTOList.get(position).instructions.get(0).getDisplayText());
+            holder.txtTotalCookTime.setText(recipeDTOList.get(position).recipe.getTotalTimeMinutes() + " min");
 
         } else{
-            holder.txtTotalCookTime.setText(recipeDTOList.get(position).recipe.getTotalTimeMinutes() + "");
+            holder.txtTotalCookTime.setText(recipeDTOList.get(position).recipe.getTotalTimeMinutes() + " min");
 
         }
         holder.txtName.setText(recipeDTOList.get(position).recipe.getName());
-
+        holder.txtRating.setText(recipeDTOList.get(position).recipe.getUserRatings() + "");
+        holder.txtNumberOfServings.setText(recipeDTOList.get(position).recipe.getNumServings() + "");
+        if(recipeDTOList.get(position).recipe.getThumbnailUrl().equals("") || recipeDTOList.get(position).recipe.getThumbnailUrl() == null){
+            holder.imgRecipe.setImageResource(R.drawable.default_recipe_image);
+        } else {
+            Glide.with(holder.imgRecipe.getContext()).load(recipeDTOList.get(position).recipe.getThumbnailUrl()).into(holder.imgRecipe);
+        }
     }
 
     @Override
@@ -65,7 +73,7 @@ public class UserRecipesListAdapter extends RecyclerView.Adapter<UserRecipesList
 
         //viewHolder UI widget references:
         ImageView imgRecipe;
-        TextView txtName, txtTotalCookTime;
+        TextView txtName, txtTotalCookTime, txtRating, txtNumberOfServings;
 
         IUserRecipeItemClickListener listener;
 
@@ -76,6 +84,8 @@ public class UserRecipesListAdapter extends RecyclerView.Adapter<UserRecipesList
             imgRecipe = itemView.findViewById(R.id.imgUserRecipeList);
             txtName = itemView.findViewById(R.id.txtHeaderUserRecipeList);
             txtTotalCookTime = itemView.findViewById(R.id.txtTotalCookTimeUserRecipeList);
+            txtRating = itemView.findViewById(R.id.txtRatingUserRecipeList);
+            txtNumberOfServings = itemView.findViewById(R.id.txtNumberOfServingsUserRecipeList);
 
             //Click listener for whole item
             itemView.setOnClickListener(this);

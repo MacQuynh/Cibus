@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/addNew_header_textView"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="32dp"
             android:text="@string/recipeName_textView"
             android:textSize="@dimen/text_textView"

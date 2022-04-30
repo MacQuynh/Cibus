@@ -15,8 +15,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import dk.au.mad22spring.group04.cibusapp.R;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.MeasurementDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
 
 //Code for using scrollView adapted from https://stackoverflow.com/questions/6674341/how-to-use-scrollview-in-android
 
@@ -75,8 +79,19 @@ public class AddNewRecipeFragment extends Fragment {
         String ingredient5 = ingredient5EditText.getText().toString();
         String instructions = instructionsEditText.getText().toString();
 
-        RecipeDTO recipeDTO = new RecipeDTO(recipeName,"","",75, 30,45, "", 4, "", 	1619608605, 1651144605,0.0);
-        InstructionDTO instructionDTO = new InstructionDTO( recipeDTO)
+        RecipeDTO recipeDTO = new RecipeDTO(recipeName,"", "", 60, 30, 30 , "", 4,"",1619608605, 1651144605,0.0,"");
+
+        InstructionDTO instructionDTO = new InstructionDTO(instructions, 00,00, 1);
+
+        SectionDTO sectionDTO = new SectionDTO("",1 );
+
+        ComponentDTO componentDTO = new ComponentDTO(1, "");
+
+        MeasurementDTO measurementDTO1 = new MeasurementDTO(measure1);
+
+        IngredientDTO ingredientDTO1 = new IngredientDTO(ingredient1,"", "");
+
+
 
         addNewRecipeViewModel.addNewRecipe(recipeName, measure1, measure2, measure3, measure4, measure5, ingredient1, ingredient2, ingredient3, ingredient4,ingredient5,instructions );
 

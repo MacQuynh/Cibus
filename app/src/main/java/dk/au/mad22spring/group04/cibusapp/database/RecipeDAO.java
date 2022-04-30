@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import androidx.room.Update;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -36,12 +37,16 @@ public interface RecipeDAO {
     public ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> getRecipesWithSectionsAndInstructionsFromSearch(String searchText, String userId);
 
     @Transaction
-    @Query("SELECT * FROM RECIPEDTO WHERE name like :name")
-    public ListenableFuture<RecipeWithSectionsAndInstructionsDTO> getFullRecipeByName(String name);
+    @Query("SELECT * FROM RECIPEDTO WHERE idRecipe like :id")
+    public ListenableFuture<RecipeWithSectionsAndInstructionsDTO> getFullRecipeById(long id);
 
     @Transaction
     @Query("SELECT * FROM SectionDTO")
     public List<SectionWithComponentsDTO> getSectionWithComponents();
+
+    @Transaction
+    @Query("SELECT * FROM SectionDTO WHERE idSection like :id")
+    public ListenableFuture<SectionWithComponentsDTO> getSectionWithComponentsById(int id);
 
     @Transaction
     @Query("SELECT * FROM ComponentDTO")
@@ -64,4 +69,7 @@ public interface RecipeDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addMeasurement(MeasurementDTO measurementDTO);
+
+    @Update
+    void updateRecipe(RecipeDTO recipeDTO);
 }

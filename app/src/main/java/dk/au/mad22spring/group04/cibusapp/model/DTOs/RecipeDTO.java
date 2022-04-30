@@ -34,7 +34,7 @@ public class RecipeDTO {
 
     private Integer updatedAtUnix;
 
-    private double userRatings;
+    private float userRatings;
 
     public String getUserID() {
         return userID;
@@ -56,7 +56,7 @@ public class RecipeDTO {
                      String description,
                      Integer createdAtUnix,
                      Integer updatedAtUnix,
-                     double userRatings,
+                     float userRatings,
                      String userID) {
         this.name = name;
         this.thumbnailUrl = thumbnailUrl;
@@ -160,11 +160,11 @@ public class RecipeDTO {
         this.updatedAtUnix = updatedAtUnix;
     }
 
-    public double getUserRatings() {
+    public float getUserRatings() {
         return userRatings;
     }
 
-    public void setUserRatings(double userRatings) {
+    public void setUserRatings(float userRatings) {
         this.userRatings = userRatings;
     }
 }

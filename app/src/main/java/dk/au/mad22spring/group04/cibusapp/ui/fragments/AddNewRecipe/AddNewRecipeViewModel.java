@@ -5,7 +5,15 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import dk.au.mad22spring.group04.cibusapp.model.Repository;
+import java.util.ArrayList;
+
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.MeasurementDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
+import dk.au.mad22spring.group04.cibusapp.model.repository.Repository;
 
 public class AddNewRecipeViewModel extends AndroidViewModel {
     private final Repository repository;
@@ -15,7 +23,7 @@ public class AddNewRecipeViewModel extends AndroidViewModel {
         repository = Repository.getRepositoryInstance(application);
     }
 
-    public void addNewRecipe(String recipeName, String measure1, String measure2, String measure3, String measure4, String measure5, String ingredient1, String ingredient2, String ingredient3, String ingredient4, String ingredient5, String instructions  ){
-
+    public void addNewRecipe(RecipeDTO recipeDTO, InstructionDTO instructionDTO, SectionDTO sectionDTO, ComponentDTO componentDTO, ArrayList<MeasurementDTO> listOfMeasurementDTO, ArrayList<IngredientDTO> listOfIngredientDTO){
+        repository.addNewRecipeToDb(recipeDTO, instructionDTO, sectionDTO, componentDTO, listOfMeasurementDTO, listOfIngredientDTO);
     }
 }

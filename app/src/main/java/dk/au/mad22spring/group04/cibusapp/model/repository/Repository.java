@@ -203,4 +203,36 @@ public class Repository {
 
         Log.d("TAG", "addRecipesDefault: ");
     }
+
+    public void addNewRecipeToDb(RecipeDTO recipeDTO, InstructionDTO instructionDTO, SectionDTO sectionDTO, ComponentDTO componentDTO, ArrayList<MeasurementDTO> listOfMeasurementDTO, ArrayList<IngredientDTO> listOfIngredientDTO ){
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                long idRecipe = db.recipeDAO().addRecipe(recipeDTO);
+
+                instructionDTO.recipeCreatorId = idRecipe;
+                db.recipeDAO().addInstruction(instructionDTO);
+
+                sectionDTO.recipeCreatorIdForSection = idRecipe;
+                long idSection = db.recipeDAO().addSection(sectionDTO);
+
+                componentDTO.sectionCreatorId = idSection;
+                long idComponent = db.recipeDAO().addComponent(componentDTO);
+
+                for (MeasurementDTO measurementDTO : listOfMeasurementDTO){
+                    measurementDTO.componentCreatorId = idComponent;
+                    db.recipeDAO().addMeasurement(measurementDTO);
+                }
+
+                for (IngredientDTO ingredientDTO : listOfIngredientDTO){
+                    ingredientDTO.componentCreatorIdForIngredient = idComponent;
+                    db.recipeDAO().addIngredient(ingredientDTO);
+
+                }
+
+
+            }
+        });
+
+    }
 }

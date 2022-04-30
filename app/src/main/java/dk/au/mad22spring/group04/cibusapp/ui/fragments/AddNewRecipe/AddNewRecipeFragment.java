@@ -2,6 +2,7 @@ package dk.au.mad22spring.group04.cibusapp.ui.fragments.AddNewRecipe;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.graphics.LinearGradient;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,7 +15,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
 import dk.au.mad22spring.group04.cibusapp.R;
+import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
@@ -29,6 +33,7 @@ public class AddNewRecipeFragment extends Fragment {
     private AddNewRecipeViewModel addNewRecipeViewModel;
     private EditText recipeNameEditText, measure1EditText,measure2EditText,measure3EditText,measure4EditText,measure5EditText;
     private EditText ingredient1EditText, ingredient2EditText, ingredient3EditText, ingredient4EditText, ingredient5EditText, instructionsEditText;
+    private EditText totalTimeEditText, cookTimeEditText, prepTimeEditText, numberOfServingsEditText;
     private Button addBtn;
 
     public static AddNewRecipeFragment newInstance() {
@@ -46,6 +51,10 @@ public class AddNewRecipeFragment extends Fragment {
 
     private void setupUIWidgets(View view) {
         recipeNameEditText = view.findViewById(R.id.addNew_recipeName_editText);
+        numberOfServingsEditText = view.findViewById(R.id.addNew_numberOf_editText);
+        totalTimeEditText = view.findViewById(R.id.addNew_total_editText);
+        cookTimeEditText = view.findViewById(R.id.addNew_cookTime_editText);
+        prepTimeEditText = view.findViewById(R.id.addNew_prepTime_editText);
         measure1EditText = view.findViewById(R.id.addNew_measure1_editText);
         measure2EditText = view.findViewById(R.id.addNew_measure2_editText);
         measure3EditText = view.findViewById(R.id.addNew_measure3_editText);
@@ -56,6 +65,7 @@ public class AddNewRecipeFragment extends Fragment {
         ingredient3EditText = view.findViewById(R.id.addNew_ingredient3_editText);
         ingredient4EditText = view.findViewById(R.id.addNew_ingredient4_editText);
         ingredient5EditText = view.findViewById(R.id.addNew_ingredient5_editText);
+        instructionsEditText = view.findViewById(R.id.addNew_instructions_editText);
         addBtn = view.findViewById(R.id.addNew_add_btn);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +77,11 @@ public class AddNewRecipeFragment extends Fragment {
 
     private void addRecipeToLibrary() {
         String recipeName = recipeNameEditText.getText().toString();
+        Integer numberOfServings = Integer.valueOf(numberOfServingsEditText.getText().toString());
+        Float cookTime = Float.valueOf(cookTimeEditText.getText().toString());
+        Float prepTime = Float.valueOf(prepTimeEditText.getText().toString());
+        Float totalTime = cookTime+prepTime;
+        totalTimeEditText.setText("" + totalTime);
         String measure1 = measure1EditText.getText().toString();
         String measure2 = measure2EditText.getText().toString();
         String measure3 = measure3EditText.getText().toString();
@@ -79,7 +94,7 @@ public class AddNewRecipeFragment extends Fragment {
         String ingredient5 = ingredient5EditText.getText().toString();
         String instructions = instructionsEditText.getText().toString();
 
-        RecipeDTO recipeDTO = new RecipeDTO(recipeName,"", "", 60, 30, 30 , "", 4,"",1619608605, 1651144605,0.0,"");
+        RecipeDTO recipeDTO = new RecipeDTO(recipeName,"", totalTime, cookTime, prepTime, "", numberOfServings, "",1619608605, 1651144605,0.0, Constants.USER_ID);
 
         InstructionDTO instructionDTO = new InstructionDTO(instructions, 00,00, 1);
 
@@ -88,12 +103,32 @@ public class AddNewRecipeFragment extends Fragment {
         ComponentDTO componentDTO = new ComponentDTO(1, "");
 
         MeasurementDTO measurementDTO1 = new MeasurementDTO(measure1);
+        MeasurementDTO measurementDTO2 = new MeasurementDTO(measure2);
+        MeasurementDTO measurementDTO3 = new MeasurementDTO(measure3);
+        MeasurementDTO measurementDTO4 = new MeasurementDTO(measure4);
+        MeasurementDTO measurementDTO5 = new MeasurementDTO(measure5);
+
+        ArrayList<MeasurementDTO> listOfMeasures = new ArrayList<MeasurementDTO>();
+        listOfMeasures.add(measurementDTO1);
+        listOfMeasures.add(measurementDTO2);
+        listOfMeasures.add(measurementDTO3);
+        listOfMeasures.add(measurementDTO4);
+        listOfMeasures.add(measurementDTO5);
 
         IngredientDTO ingredientDTO1 = new IngredientDTO(ingredient1,"", "");
+        IngredientDTO ingredientDTO2 = new IngredientDTO(ingredient2,"", "");
+        IngredientDTO ingredientDTO3 = new IngredientDTO(ingredient3,"", "");
+        IngredientDTO ingredientDTO4 = new IngredientDTO(ingredient4,"", "");
+        IngredientDTO ingredientDTO5 = new IngredientDTO(ingredient5,"", "");
 
+        ArrayList<IngredientDTO> listOfIngredients = new ArrayList<IngredientDTO>();
+        listOfIngredients.add(ingredientDTO1);
+        listOfIngredients.add(ingredientDTO2);
+        listOfIngredients.add(ingredientDTO3);
+        listOfIngredients.add(ingredientDTO4);
+        listOfIngredients.add(ingredientDTO5);
 
-
-        addNewRecipeViewModel.addNewRecipe(recipeName, measure1, measure2, measure3, measure4, measure5, ingredient1, ingredient2, ingredient3, ingredient4,ingredient5,instructions );
+        addNewRecipeViewModel.addNewRecipe(recipeDTO,instructionDTO,sectionDTO,componentDTO,listOfMeasures,listOfIngredients);
 
     }
 

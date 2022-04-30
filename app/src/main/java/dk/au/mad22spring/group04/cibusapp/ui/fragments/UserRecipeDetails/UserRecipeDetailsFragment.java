@@ -1,8 +1,10 @@
 package dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipeDetails;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -93,6 +95,7 @@ public class UserRecipeDetailsFragment extends Fragment {
         btnDelete = view.findViewById(R.id.userRecipeDetail_btnDelete);
         btnSave = view.findViewById(R.id.userRecipeDetail_btnSave);
         btnShare = view.findViewById(R.id.userRecipeDetail_btnShare);
+
     }
 
     private void listeners(){
@@ -109,6 +112,17 @@ public class UserRecipeDetailsFragment extends Fragment {
                 onSave();
             }
         });
+
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onShare();
+            }
+        });
+    }
+
+    private void onShare() {
+        //TODO
     }
 
     private void onSave() {
@@ -119,6 +133,12 @@ public class UserRecipeDetailsFragment extends Fragment {
     }
 
     private void setUIData(){
+        if(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getApiId() == null){
+            //get color resource: https://www.codegrepper.com/code-examples/java/get+color+resource+android
+            btnShare.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.disabledGrey));
+            btnShare.setClickable(false);
+        }
+
         txtRecipeName.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getName());
         txtNumOfServings.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getNumServings() + "");
         txtCountry.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getCountry());

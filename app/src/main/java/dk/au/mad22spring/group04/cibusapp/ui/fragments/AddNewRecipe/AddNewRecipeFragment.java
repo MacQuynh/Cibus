@@ -94,7 +94,7 @@ public class AddNewRecipeFragment extends Fragment {
         String ingredient5 = ingredient5EditText.getText().toString();
         String instructions = instructionsEditText.getText().toString();
 
-        RecipeDTO recipeDTO = new RecipeDTO(recipeName,"", totalTime, cookTime, prepTime, "", numberOfServings, "",1619608605, 1651144605,0, Constants.USER_ID);
+        RecipeDTO recipeDTO = new RecipeDTO(null, recipeName,"", totalTime, cookTime, prepTime, "", numberOfServings, "",1619608605, 1651144605,0, Constants.USER_ID);
 
         InstructionDTO instructionDTO = new InstructionDTO(instructions, 00,00, 1);
 

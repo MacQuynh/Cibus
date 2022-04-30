@@ -12,5 +12,7 @@
     <color name="primaryMedium">#6AAE64</color>
     <color name="secondaryDark">#395885</color>
     <color name="secondaryLight">#86A4D1</color>
+    <color name="disabledGrey">#888888</color>
+
 
 </resources>

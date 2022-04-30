@@ -5,6 +5,7 @@ public class Constants {
     public static final String USER_RECIPE_LIST_FRAG = "USER_RECIPE_LIST_FRAG";
     public static final String TAG_REPOSITORY = "TAG_REPOSITORY";
     public static String USER_ID = "USER_ID";
+    public static final String RECIPE_NAME = "RECIPE_NAME";
 
 
 

@@ -44,6 +44,10 @@ public interface RecipeDAO {
     public List<SectionWithComponentsDTO> getSectionWithComponents();
 
     @Transaction
+    @Query("SELECT * FROM SectionDTO WHERE idSection like :id")
+    public ListenableFuture<SectionWithComponentsDTO> getSectionWithComponentsById(int id);
+
+    @Transaction
     @Query("SELECT * FROM ComponentDTO")
     public List<ComponentWithMeasurementsAndIngredientDTO> getComponentWithMeasurementsAndIngredient();
 

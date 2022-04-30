@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import dk.au.mad22spring.group04.cibusapp.API.RetrofitClient;
 import dk.au.mad22spring.group04.cibusapp.database.RecipeDAO;
@@ -27,6 +28,7 @@ import dk.au.mad22spring.group04.cibusapp.model.DTOs.MeasurementDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionWithComponentsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.Recipes;
 import dk.au.mad22spring.group04.cibusapp.model.Result;
 import retrofit2.Call;
@@ -35,7 +37,6 @@ import retrofit2.Response;
 
 public class Repository {
 
-    private final String TAG = "Repository";
 
     // Code inspired by code demo from the lecture: "Room Demo"
 //    private RecipeDatabase db;              //database
@@ -49,6 +50,7 @@ public class Repository {
     private MutableLiveData<RecipeDAO> recipeMutable;
     final MutableLiveData<List<RecipeWithSectionsAndInstructionsDTO>> recipesDB;
     final MutableLiveData<RecipeWithSectionsAndInstructionsDTO> recipeDB;
+    final MutableLiveData<SectionWithComponentsDTO> sectionWithComponentDB;
 
     private RetrofitClient retrofitClient;
 
@@ -73,6 +75,7 @@ public class Repository {
         retrofitClient = new RetrofitClient();
         recipesDB = new MutableLiveData<List<RecipeWithSectionsAndInstructionsDTO>>();
         recipeDB = new MutableLiveData<RecipeWithSectionsAndInstructionsDTO>();
+        sectionWithComponentDB = new MutableLiveData<SectionWithComponentsDTO>();
         this.application = app;
     }
 
@@ -108,8 +111,8 @@ public class Repository {
                         list.add(rm);
                     }
                     //recipeList.postValue(list);
-                    Log.d(TAG, "onResponse: " + list);
-                    Log.d(TAG, "  list.add(rm); " + list.get(0).getName() + list.get(0).getThumbnailUrl()
+                    Log.d(Constants.TAG_REPOSITORY, "onResponse: " + list);
+                    Log.d(Constants.TAG_REPOSITORY, "  list.add(rm); " + list.get(0).getName() + list.get(0).getThumbnailUrl()
                             + list.get(0).getTotalTimeMinutes() + list.get(0).getCookTimeMinutes() + list.get(0).getPrepTimeMinutes() + list.get(0).getCountry()
                             + list.get(0).getDescription() + list.get(0).getNumServings() + list.get(0).getCreatedAt() + list.get(0).getUpdatedAt() + list.get(0).getInstructions()
                             + list.get(0).getUpdatedAt()
@@ -119,7 +122,7 @@ public class Repository {
 
             @Override
             public void onFailure(@NonNull Call<Recipes> call, @NonNull Throwable t) {
-                Log.d(TAG, "onFailure: " + t);
+                Log.d(Constants.TAG_REPOSITORY, "onFailure: " + t);
             }
         });
     }
@@ -149,7 +152,7 @@ public class Repository {
             try {
                 recipeDB.postValue(recipe.get());
             } catch (Exception e){
-                Log.e(TAG, "Error loading Recipe: ", e);
+                Log.e(Constants.TAG_REPOSITORY, "Error loading Recipe: ", e);
             }
 
         }, ContextCompat.getMainExecutor(application.getApplicationContext()));
@@ -163,14 +166,14 @@ public class Repository {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                RecipeDTO recipe1 = new RecipeDTO("Risotto",
+                RecipeDTO recipe1 = new RecipeDTO("lasagna2",
                         "",
                         120,
                         100,
                         10,
                         "Italy",
                         4,
-                        "Very good lasagna",
+                        "Let’s make the viral TikTok green goddess salad, but purple! With additions like purple kale and purple cabbage, this salad has all of the elements to make a delicious and colorful meal!",
                         1543254,
                         26352454,
                         0.0,
@@ -201,6 +204,25 @@ public class Repository {
         });
 
 
-        Log.d("TAG", "addRecipesDefault: ");
+        Log.d(Constants.TAG_REPOSITORY, "addRecipesDefault: ");
+    }
+
+    public SectionWithComponentsDTO setSectionWithComponent(int sectionId){
+        ListenableFuture<SectionWithComponentsDTO> section = db.recipeDAO().getSectionWithComponentsById(sectionId);
+        final SectionWithComponentsDTO scetion;
+        section.addListener(()->{
+            try {
+                //scetion = section.get(100, TimeUnit.SECONDS);
+                sectionWithComponentDB.postValue(section.get(10, TimeUnit.SECONDS));
+            } catch (Exception e){
+                Log.e(Constants.TAG_REPOSITORY, "Error getting Section with Components", e);
+            }
+        }, ContextCompat.getMainExecutor(application.getApplicationContext()));
+        while (sectionWithComponentDB.getValue() == null){};
+        return sectionWithComponentDB.getValue();
+    }
+
+    public ListenableFuture<SectionWithComponentsDTO> getSectionWithComponent(int sectionId){
+        return db.recipeDAO().getSectionWithComponentsById(sectionId);
     }
 }

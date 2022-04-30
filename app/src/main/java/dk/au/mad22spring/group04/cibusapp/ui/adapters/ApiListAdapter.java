@@ -36,6 +36,10 @@ public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListV
         notifyDataSetChanged();
     }
 
+    public Result getRecipeByIndex(int index) {
+        return listOfRecipes.get(index);
+    }
+
     @NonNull
     @Override
     public ApiListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -54,13 +58,13 @@ public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListV
             holder.total_cooking_time.setText("No total cooking time");
         } else
             holder.total_cooking_time.setText("Total time: " + listOfRecipes.get(position).getCookTimeMinutes().toString() + "H");
-        holder.country_code.setText(listOfRecipes.get(position).getCountry());
-        if (listOfRecipes.get(position).getUserRatings().getCountPositive() != null) {
-            holder.rating.setText(listOfRecipes.get(position).getUserRatings().getCountPositive().toString());
-        } else
+       /* if (listOfRecipes.get(position).getUserRatings().getCountPositive().toString() == null) {
             holder.rating.setText("0.0");
+        }*/
+        //holder.rating.setText(listOfRecipes.get(position).getUserRatings().getCountPositive().toString());
+        holder.country_code.setText(listOfRecipes.get(position).getCountry());
 
-        holder.rating.setText(listOfRecipes.get(position).getUserRatings().getCountPositive().toString());
+//        holder.rating.setText(listOfRecipes.get(position).getUserRatings().getCountPositive().toString());
         //TODO: May needs more fields
         Glide.with(holder.imgRecipe.getContext()).load(listOfRecipes.get(position).getThumbnailUrl()).into(holder.imgRecipe);
 

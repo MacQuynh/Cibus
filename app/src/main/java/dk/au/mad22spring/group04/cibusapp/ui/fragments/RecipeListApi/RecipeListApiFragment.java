@@ -1,27 +1,33 @@
 package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPI;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
+import dk.au.mad22spring.group04.cibusapp.R;
 import dk.au.mad22spring.group04.cibusapp.databinding.RecipeListApiFragmentBinding;
+import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
+import dk.au.mad22spring.group04.cibusapp.model.Recipes;
 import dk.au.mad22spring.group04.cibusapp.model.Result;
 import dk.au.mad22spring.group04.cibusapp.ui.adapters.ApiListAdapter;
+import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPIDetails.RecipeListApiDetailsFragment;
 
 public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IApiItemClickedListener {
 
+    public static final String TAG = "RecipeListApiFragment";
     // Used View binding here bc - laziness: https://developer.android.com/topic/libraries/view-binding#java
     private RecipeListApiFragmentBinding binding;
     private RecipeListApiViewModel vm;
@@ -29,6 +35,10 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
     private List<Result> resultList;
 
     private RecyclerView recyclerView;
+
+    //Fragments
+    private RecipeListApiFragment recipeListApiFragment;
+    private RecipeListApiDetailsFragment recipeListApiDetailsFragment;
 
     public static RecipeListApiFragment newInstance() {
         return new RecipeListApiFragment();
@@ -73,14 +83,24 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
         binding = null;
     }
 
+    //Reference: https://stackoverflow.com/questions/28984879/how-to-open-a-different-fragment-on-recyclerview-onclick
     @Override
     public void onApiItemClicked(int index) {
-        /*
-        Intent i = new Intent(this, DetailsActivity.class);
-        DrinkModel drinksObj = adapter.getDrinkByIndex(index);
-        i.putExtra(Constant.DRINK, drinksObj.drinksName);
-        i.putExtra(Constant.INDEX, index);
-        launcher.launch(i);
-        * */
+        Log.d(TAG, "onApiItemClicked: " + index);
+
+        Result result = adapter.getRecipeByIndex(index);
+
+        Bundle bundle = new Bundle();
+        if (result != null) {
+            bundle.putString(Constants.RECIPE_OBJECT, result.getName());
+            bundle.putInt(Constants.INDEX_OBJECT, index);
+        }
+
+        AppCompatActivity activity = (AppCompatActivity) recyclerView.getContext();
+        Fragment fragment = new RecipeListApiDetailsFragment();
+        fragment.setArguments(bundle);
+
+        activity.getSupportFragmentManager().beginTransaction()
+                .replace(R.id.mainActitvityFragmentHolder, fragment).addToBackStack(null).commit();
     }
 }

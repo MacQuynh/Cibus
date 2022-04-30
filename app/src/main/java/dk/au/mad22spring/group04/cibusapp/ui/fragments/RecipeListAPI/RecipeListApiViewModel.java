@@ -30,6 +30,6 @@ public class RecipeListApiViewModel extends AndroidViewModel {
     }
 
     public void searchRecipes(String search_text) {
-        //repository.searchDrinks(search_text);
+        repository.searchDrinks(search_text);
     }
 }

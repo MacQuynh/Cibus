@@ -6,6 +6,7 @@ public class Constants {
     public static final String TAG_REPOSITORY = "TAG_REPOSITORY";
     public static String USER_ID = "USER_ID";
 
-
+    public static String RECIPE_OBJECT = "RECIPE_OBJECT";
+    public static String INDEX_OBJECT = "INDEX_OBJECT";
 
 }

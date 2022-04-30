@@ -73,8 +73,8 @@ public class UserRecipesListAdapter extends RecyclerView.Adapter<UserRecipesList
             super(itemView);
             this.listener = listener;
 
-            imgRecipe = itemView.findViewById(R.id.imgUserRecipeList);
-            txtName = itemView.findViewById(R.id.txtHeaderUserRecipeList);
+            imgRecipe = itemView.findViewById(R.id.recipe_img);
+            txtName = itemView.findViewById(R.id.header_recipe_title);
             txtTotalCookTime = itemView.findViewById(R.id.txtTotalCookTimeUserRecipeList);
 
             //Click listener for whole item

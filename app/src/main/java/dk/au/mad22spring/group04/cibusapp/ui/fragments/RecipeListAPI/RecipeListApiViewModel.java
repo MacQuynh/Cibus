@@ -1,4 +1,4 @@
-package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi;
+package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPI;
 
 import android.app.Application;
 
@@ -27,5 +27,9 @@ public class RecipeListApiViewModel extends AndroidViewModel {
 
     public LiveData<List<Result>> getInitialListBack() {
         return repository.getInitialListBack();
+    }
+
+    public void searchRecipes(String search_text) {
+        repository.searchDrinks(search_text);
     }
 }

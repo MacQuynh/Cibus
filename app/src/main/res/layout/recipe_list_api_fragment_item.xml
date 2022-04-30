@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/list_img"
         android:layout_width="0dp"
         android:layout_height="104dp"
         android:layout_marginStart="4dp"
@@ -17,11 +17,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/rectangle_list_background"
-        />
+        app:srcCompat="@drawable/rectangle_list_background" />
 
     <ImageView
-        android:id="@+id/recipe_img"
+        android:id="@+id/api_recipe_img"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="16dp"
@@ -35,18 +34,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="TextView"
+        android:text="Test"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/recipe_img"
-        app:layout_constraintTop_toTopOf="@+id/recipe_img" />
+        app:layout_constraintStart_toEndOf="@+id/api_recipe_img"
+        app:layout_constraintTop_toTopOf="@+id/api_recipe_img" />
 
     <TextView
-        android:id="@+id/txtTotalCookTimeUserRecipeList"
+        android:id="@+id/country_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="code"
+        app:layout_constraintStart_toStartOf="@+id/cooking_time"
+        app:layout_constraintTop_toBottomOf="@+id/cooking_time" />
+
+    <TextView
+        android:id="@+id/rating_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Rating"
+        app:layout_constraintEnd_toEndOf="@+id/list_img"
+        app:layout_constraintTop_toTopOf="@+id/list_img" />
+
+    <TextView
+        android:id="@+id/cooking_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="Test"
         app:layout_constraintStart_toStartOf="@+id/header_recipe_title"
         app:layout_constraintTop_toBottomOf="@+id/header_recipe_title" />
 

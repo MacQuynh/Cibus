@@ -19,7 +19,7 @@ import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
         SectionDTO.class,
         ComponentDTO.class,
         MeasurementDTO.class,
-        IngredientDTO.class}, version = 1)
+        IngredientDTO.class}, version = 2)
 public abstract class RecipeDatabase extends RoomDatabase {
     public abstract RecipeDAO recipeDAO();
     private static RecipeDatabase instance;

@@ -38,6 +38,16 @@ public class RecipeDTO {
 
     private double userRatings;
 
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    private String userID;
+
     public RecipeDTO(String name,
                      String thumbnailUrl,
                      String videoAdContent,
@@ -49,7 +59,8 @@ public class RecipeDTO {
                      String description,
                      Integer createdAtUnix,
                      Integer updatedAtUnix,
-                     double userRatings) {
+                     double userRatings,
+                     String userID) {
         this.name = name;
         this.thumbnailUrl = thumbnailUrl;
         this.videoAdContent = videoAdContent;
@@ -62,6 +73,7 @@ public class RecipeDTO {
         this.createdAtUnix = createdAtUnix;
         this.updatedAtUnix = updatedAtUnix;
         this.userRatings = userRatings;
+        this.userID  =userID;
     }
 
     public int getIdRecipe() {

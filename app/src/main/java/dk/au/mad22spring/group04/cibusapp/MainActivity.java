@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationBarView;
 
+import dk.au.mad22spring.group04.cibusapp.ui.fragments.AddNewRecipe.AddNewRecipeFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipesList.UserRecipesListFragment;
 
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPI.RecipeListApiFragment;
@@ -57,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.home:
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.mainActitvityFragmentHolder, RecipeListApiFragment.newInstance())
+                                .commit();
+                        return true;
+                    case R.id.add:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.mainActitvityFragmentHolder, AddNewRecipeFragment.newInstance())
                                 .commit();
                         return true;
                 }

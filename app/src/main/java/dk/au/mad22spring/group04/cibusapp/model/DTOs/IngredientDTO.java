@@ -16,8 +16,7 @@ public class IngredientDTO {
 
     private String displaySingular;
 
-    public IngredientDTO(long componentCreatorIdForIngredient, String name, String displayPlural, String displaySingular) {
-        this.componentCreatorIdForIngredient = componentCreatorIdForIngredient;
+    public IngredientDTO(String name, String displayPlural, String displaySingular) {
         this.name = name;
         this.displayPlural = displayPlural;
         this.displaySingular = displaySingular;

@@ -32,4 +32,8 @@ public class UserRecipesListViewModel extends AndroidViewModel {
         }
         return recipes;
     }
+
+    public void searchRecipes(String searchText){
+        repoInstance.searchAllUserRecipes(searchText);
+    }
 }

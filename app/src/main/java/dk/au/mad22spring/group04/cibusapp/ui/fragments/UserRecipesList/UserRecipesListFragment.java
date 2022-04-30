@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -27,6 +28,8 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
     private UserRecipesListViewModel userRecipeVM;
     private UserRecipesListAdapter adapter;
     private RecyclerView rcvUserRecipes;
+    private TextView searchText;
+    private Button searchBtn;
 
     public static UserRecipesListFragment newInstance() {
         return new UserRecipesListFragment();
@@ -38,14 +41,9 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
         View view = inflater.inflate(R.layout.user_recipes_list_fragment, container, false);
 
         rcvUserRecipes = view.findViewById(R.id.rcvUserRecipes);
+        searchText = view.findViewById(R.id.userRecipeList_txtSearch);
+        searchBtn = view.findViewById(R.id.userRecipeList_searchBtn);
         return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        userRecipeVM = new ViewModelProvider(this).get(UserRecipesListViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     //TODO: Find link, som sagde man skal bruge onViewCreated nu hvor onActivityCreated er deprecated
@@ -65,6 +63,20 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
             }
         });
 
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSearch();
+            }
+        });
+
+
+    }
+
+    //TODO: Kan søge, men skal være på hele navnet... skal gerne kunne på dele af navn
+    private void onSearch() {
+        String text = searchText.getText().toString();
+        userRecipeVM.searchRecipes(text);
     }
 
     @Override

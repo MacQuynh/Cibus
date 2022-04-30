@@ -1,6 +1,5 @@
 package dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipeDetails;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -10,16 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
-
-import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.List;
 
@@ -47,7 +42,7 @@ public class UserRecipeDetailsFragment extends Fragment {
     private RatingBar ratingBar;
 
     private UserRecipeDetailsViewModel detailsViewModel;
-    private static String recipeName;
+    private static long recipeId;
 
     public static UserRecipeDetailsFragment newInstance() {
         return new UserRecipeDetailsFragment();
@@ -60,7 +55,7 @@ public class UserRecipeDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.user_recipe_details_fragment, container, false);
 
         //Pass arguments inspiration: https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
-        recipeName = getArguments().getString(Constants.RECIPE_NAME);
+        recipeId = getArguments().getLong(String.valueOf(Constants.RECIPE_NAME));
         setUIWidgets(view);
         return view;
     }
@@ -70,10 +65,10 @@ public class UserRecipeDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         detailsViewModel = new ViewModelProvider(this).get(UserRecipeDetailsViewModel.class);
 
-        detailsViewModel.getFullRecipeByName(recipeName).observe(getViewLifecycleOwner(), new Observer<RecipeWithSectionsAndInstructionsDTO>() {
+        detailsViewModel.getFullRecipeById(recipeId).observe(getViewLifecycleOwner(), new Observer<RecipeWithSectionsAndInstructionsDTO>() {
             @Override
             public void onChanged(RecipeWithSectionsAndInstructionsDTO recipeWithSectionsAndInstructionsDTO) {
-                if(detailsViewModel.recipeWithSectionsAndInstructionsDTO == null || !recipeName.equals(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getName())){
+                if(detailsViewModel.recipeWithSectionsAndInstructionsDTO == null || recipeId != detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getIdRecipe()){
                     detailsViewModel.recipeWithSectionsAndInstructionsDTO = recipeWithSectionsAndInstructionsDTO;
                 }
                 setUIData();
@@ -118,6 +113,9 @@ public class UserRecipeDetailsFragment extends Fragment {
 
     private void onSave() {
         detailsViewModel.updateFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe);
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.mainActitvityFragmentHolder, UserRecipesListFragment.newInstance())
+                .commit();
     }
 
     private void setUIData(){

@@ -82,11 +82,11 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
 
     @Override
     public void onUserRecipeClicked(int index) {
-        String recipeName = userRecipeVM.getRecipeByIndex(index).recipe.getName();
+        long recipeId = userRecipeVM.getRecipeByIndex(index).recipe.getIdRecipe();
 
         //Pass arguments inspiration: https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.RECIPE_NAME, recipeName);
+        bundle.putLong(String.valueOf(Constants.RECIPE_NAME), recipeId);
         UserRecipeDetailsFragment userRecipeDetailsFragment = new UserRecipeDetailsFragment().newInstance();
         userRecipeDetailsFragment.setArguments(bundle);
 

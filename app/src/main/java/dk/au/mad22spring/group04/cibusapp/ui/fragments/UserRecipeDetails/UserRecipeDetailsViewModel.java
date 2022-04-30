@@ -27,8 +27,8 @@ public class UserRecipeDetailsViewModel extends AndroidViewModel {
         repoInstance = Repository.getRepositoryInstance(application);
     }
 
-    public LiveData<RecipeWithSectionsAndInstructionsDTO> getFullRecipeByName(String name){
-        repoInstance.setFullRecipeByName(name);
+    public LiveData<RecipeWithSectionsAndInstructionsDTO> getFullRecipeById(long recipeId){
+        repoInstance.setFullRecipeByName(recipeId);
         return repoInstance.getFullRecipeFromDB();
     }
 

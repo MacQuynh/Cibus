@@ -145,8 +145,8 @@ public class Repository {
 
     }
 
-    public void setFullRecipeByName(String name){
-        ListenableFuture<RecipeWithSectionsAndInstructionsDTO> recipe = db.recipeDAO().getFullRecipeByName(name);
+    public void setFullRecipeByName(long recipeId){
+        ListenableFuture<RecipeWithSectionsAndInstructionsDTO> recipe = db.recipeDAO().getFullRecipeById(recipeId);
 
         recipe.addListener(() -> {
             try {

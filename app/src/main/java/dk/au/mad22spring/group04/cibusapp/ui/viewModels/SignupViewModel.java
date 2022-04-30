@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import dk.au.mad22spring.group04.cibusapp.model.FirebaseRepository;
+import dk.au.mad22spring.group04.cibusapp.model.repository.FirebaseRepository;
 import dk.au.mad22spring.group04.cibusapp.ui.interfaces.SignupHandler;
 
 public class SignupViewModel extends AndroidViewModel {

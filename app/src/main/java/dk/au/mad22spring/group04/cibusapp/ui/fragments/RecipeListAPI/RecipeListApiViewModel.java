@@ -18,7 +18,7 @@ public class RecipeListApiViewModel extends AndroidViewModel {
 
     public RecipeListApiViewModel(Application application) {
         super(application);
-        repository = Repository.getInstance(application);
+        repository = Repository.getRepositoryInstance(application);
     }
 
     public void getInitialList() {

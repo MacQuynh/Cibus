@@ -25,6 +25,7 @@ import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionWithComponentsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.UnitDTO;
 import dk.au.mad22spring.group04.cibusapp.model.Section;
+import dk.au.mad22spring.group04.cibusapp.model.Unit;
 
 @Dao
 public interface RecipeDAO {
@@ -49,10 +50,6 @@ public interface RecipeDAO {
     public List<SectionWithComponentsDTO> getSectionWithComponents();
 
     @Transaction
-    @Query("SELECT * FROM SectionDTO WHERE idSection like :id")
-    public ListenableFuture<SectionWithComponentsDTO> getSectionWithComponentsById(int id);
-
-    @Transaction
     @Query("SELECT * FROM ComponentDTO WHERE sectionCreatorId like :id")
     public List<ComponentDTO> getComponentsFromSectionId(int id);
 
@@ -65,12 +62,28 @@ public interface RecipeDAO {
     public IngredientDTO getIngredientFromComponentId(int id);
 
     @Transaction
+    @Query("SELECT * FROM IngredientDTO WHERE componentCreatorIdForIngredient like :id")
+    public ListenableFuture<IngredientDTO> getIngredientFromComponentIdFuture(int id);
+
+    @Transaction
     @Query("SELECT * FROM MeasurementDTO")
     public List<MeasurementWithUnitDTO> getMeasurementWithUnit();
 
     @Transaction
     @Query("SELECT * FROM MeasurementDTO WHERE componentCreatorId like :id")
     public List<MeasurementDTO> getMeasurementsFromComponentId(int id);
+
+    @Transaction
+    @Query("SELECT * FROM MeasurementDTO WHERE componentCreatorId like :id")
+    public ListenableFuture<List<MeasurementDTO>> getMeasurementsFromComponentIdFuture(int id);
+
+    @Transaction
+    @Query("SELECT * FROM UnitDTO WHERE measurementCreatorId like :id")
+    public UnitDTO getUnitFromMeasurementId(int id);
+
+    @Transaction
+    @Query("SELECT * FROM UnitDTO WHERE measurementCreatorId like :id")
+    public ListenableFuture<UnitDTO> getUnitFromMeasurementIdFuture(int id);
 
     @Transaction
     @Query("SELECT * FROM ComponentDTO")
@@ -92,7 +105,7 @@ public interface RecipeDAO {
     void addIngredient(IngredientDTO ingredientDTO);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addMeasurement(MeasurementDTO measurementDTO);
+    long addMeasurement(MeasurementDTO measurementDTO);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addUnit(UnitDTO unitDTO);

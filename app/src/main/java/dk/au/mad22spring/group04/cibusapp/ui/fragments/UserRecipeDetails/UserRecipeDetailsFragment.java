@@ -183,26 +183,17 @@ public class UserRecipeDetailsFragment extends Fragment {
         }
         txtInstructions.setText(instructionText);
 
-        //getIngredients2();
+        getIngredients();
     }
 
     //Fejler med timing...
     private void getIngredients(){
-        String ingredientText = "";
-        for (SectionDTO section:
-             detailsViewModel.recipeWithSectionsAndInstructionsDTO.sections) {
-/*            int id = section.idSection;
-            List<ComponentDTO> componentDTOS = detailsViewModel.getSectionWithComponent(id);
-            for (ComponentDTO component :
-                    componentDTOS) {*/
-               /* List<IngredientDTO> ingredientDTOS = detailsViewModel.getIngredientFromComponentId(section.idSection);
-                for (IngredientDTO ingredient :
-                        ingredientDTOS) {
-                    ingredientText += ingredient.getName() + "\n";
-                }*/
-            /*}*/
-        };
-        txtIngredients.setText(ingredientText);
+        detailsViewModel.getIngredientMeasurementText(detailsViewModel.recipeWithSectionsAndInstructionsDTO).observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                txtIngredients.setText(s);
+            }
+        });
     }
 
     private void getIngredients2(){

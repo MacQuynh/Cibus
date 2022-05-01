@@ -10,7 +10,7 @@ public class UnitDTO {
     @PrimaryKey(autoGenerate = true)
     public int idUnit;
 
-    public int measurementCreatorId;
+    public long measurementCreatorId;
 
     private String name;
 
@@ -32,11 +32,11 @@ public class UnitDTO {
         this.idUnit = idUnit;
     }
 
-    public int getMeasurementCreatorId() {
+    public long getMeasurementCreatorId() {
         return measurementCreatorId;
     }
 
-    public void setMeasurementCreatorId(int measurementCreatorId) {
+    public void setMeasurementCreatorId(long measurementCreatorId) {
         this.measurementCreatorId = measurementCreatorId;
     }
 

@@ -347,28 +347,19 @@ public class Repository {
                     long idComponent = db.recipeDAO().addComponent(componentDTO);
                     MeasurementDTO measurementDTO = listOfMeasurementDTO.get(i);
                     measurementDTO.componentCreatorId = idComponent;
-                    //long idMeasurement = db.recipeDAO().addMeasurement(measurementDTO);
-
+                    long idMeasurement = db.recipeDAO().addMeasurement(measurementDTO);
                     UnitDTO unitDTO = listOfUnitsDTO.get(i);
-                    //unitDTO.measurementCreatorId = idMeasurement;
+                    unitDTO.measurementCreatorId = idMeasurement;
+                    db.recipeDAO().addUnit(unitDTO);
 
                     if (listOfIngredientDTO.size() <= i + 1){
                         IngredientDTO ingredientDTO = listOfIngredientDTO.get(i);
                         ingredientDTO.componentCreatorIdForIngredient = idComponent;
                         db.recipeDAO().addIngredient(ingredientDTO);
                     }
-
-
                 }
-
-              /*  for (IngredientDTO ingredientDTO : listOfIngredientDTO){
-                    ingredientDTO.componentCreatorIdForIngredient = idComponent;
-                    db.recipeDAO().addIngredient(ingredientDTO);
-
-                }*/
             }
         });
-
     }
 
     public void deleteFullRecipe(RecipeWithSectionsAndInstructionsDTO recipe){

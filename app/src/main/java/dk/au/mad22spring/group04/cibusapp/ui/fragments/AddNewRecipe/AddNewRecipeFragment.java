@@ -211,6 +211,11 @@ public class AddNewRecipeFragment extends Fragment {
         measure3EditText.setText("");
         measure4EditText.setText("");
         measure5EditText.setText("");
+        unit1EditText.setText("");
+        unit2EditText.setText("");
+        unit3EditText.setText("");
+        unit4EditText.setText("");
+        unit5EditText.setText("");
         ingredient1EditText.setText("");
         ingredient2EditText.setText("");
         ingredient3EditText.setText("");

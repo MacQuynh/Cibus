@@ -2,32 +2,56 @@ package dk.au.mad22spring.group04.cibusapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentContainerView;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.google.android.material.navigation.NavigationBarView;
 
+import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
+import dk.au.mad22spring.group04.cibusapp.interfaces.UserRecipeSelectorInterface;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.AddNewRecipe.AddNewRecipeFragment;
+import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPIDetails.RecipeListApiDetailsFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiFragment;
+import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipeDetails.UserRecipeDetailsFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipesList.UserRecipesListFragment;
 
 
 //Navigation bar: https://www.geeksforgeeks.org/bottom-navigation-bar-in-android/
 // https://material.io/components/bottom-navigation/android#using-bottom-navigation
 
-public class MainActivity extends AppCompatActivity {
+//Master Detail inspiration: Demo from lecture "FragmentsArnieMovies"
+public class MainActivity extends AppCompatActivity implements UserRecipeSelectorInterface {
+
+    public enum PhoneOrientation {PORTRAIT, LANDSCAPE}
+    private PhoneOrientation phoneOrientation;
+    public enum Mode {USER_RECIPE_LIST, USER_RECIPE_DETAILS, API_RECIPE_LIST} //TODO: add rest of modes (api)
+    private Mode mode;
 
     //UI Widgets
     private NavigationBarView navigationBarView;
 
+    //Tags for fragments
+    private static final String USER_RECIPE_LIST_FRAG = "USER_RECIPE_LIST_FRAG";
+    private static final String USER_RECIPE_DETAIL_FRAG = "USER_RECIPE_DETAIL_FRAG";
+    private static final String RECIPE_API_LIST_FRAG = "RECIPE_API_LIST_FRAG";
+
+
     // Fragments:
     private UserRecipesListFragment userRecipesListFragment;
+    private UserRecipeDetailsFragment userRecipeDetailsFragment;
     private RecipeListApiFragment recipeListApiFragment;
+    private RecipeListApiDetailsFragment recipeListApiDetailsFragment;
+
 
     //Containers for fragments:
-    private FragmentContainerView userRecipeListContainer;
+    private LinearLayout recipeList;
+    private LinearLayout recipeDetails;
+
+    private long selectedRecipeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +59,52 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //view setup:
-        //userRecipeListContainer = findViewById(R.id.fragConViewUserRecipesList);
         navigationBarView = findViewById(R.id.bottomNavigationView);
         navigationBarView.setSelectedItemId(R.id.home);
+        recipeList = findViewById(R.id.mainActivityListLayout);
+        recipeDetails = findViewById(R.id.mainActivityDetailLayout);
+
+        //determine orientation
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            phoneOrientation = PhoneOrientation.PORTRAIT;
+        } else {
+            phoneOrientation = PhoneOrientation.LANDSCAPE;
+        }
 
         if(savedInstanceState == null){
+            selectedRecipeId = 0;
+            mode = Mode.API_RECIPE_LIST;
+
+            //Initialize fragments
+            userRecipeDetailsFragment = new UserRecipeDetailsFragment();
+            userRecipesListFragment = new UserRecipesListFragment();
+            recipeListApiFragment = new RecipeListApiFragment();
+
+            userRecipeDetailsFragment.setSelectedRecipe(selectedRecipeId);
+
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.mainActitvityFragmentHolder, recipeListApiFragment.newInstance())
-                    .commitNow();
+                    .add(R.id.mainActivityListLayout, userRecipesListFragment, USER_RECIPE_LIST_FRAG)
+                    .replace(R.id.mainActivityListLayout, recipeListApiFragment, RECIPE_API_LIST_FRAG)
+                    .commit();
+        } else{
+
+            mode = (Mode) savedInstanceState.getSerializable(Constants.MODE);
+            if(mode == null){
+                mode = Mode.API_RECIPE_LIST;
+            }
+
+            if(recipeListApiFragment == null){
+                recipeListApiFragment = new RecipeListApiFragment();
+            }
+            if(userRecipesListFragment== null){
+                userRecipesListFragment = new UserRecipesListFragment();
+            }
+            if(userRecipeDetailsFragment == null){
+                userRecipeDetailsFragment = new UserRecipeDetailsFragment();
+            }
+
+            updateFragmentView(mode);
+
         }
 
         //https://stackoverflow.com/questions/68021770/setonnavigationitemselectedlistener-deprecated
@@ -51,25 +113,104 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.user:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.mainActitvityFragmentHolder, UserRecipesListFragment.newInstance())
-                                .commit();
+                        mode = Mode.USER_RECIPE_LIST;
+                        switchFragment();
+                        /*if(phoneOrientation == PhoneOrientation.PORTRAIT){
+                            if(mode == Mode.USER_RECIPE_LIST){
+                                recipeList.setVisibility(View.VISIBLE);
+                                recipeDetails.setVisibility(View.GONE);
+                                getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.mainActivityListLayout, userRecipesListFragment, USER_RECIPE_LIST_FRAG)
+                                        .commit();
+                            }else { //TODO: else if mode == Mode.USER_RECIPE_DETAIL
+                                recipeList.setVisibility(View.GONE);
+                                recipeDetails.setVisibility(View.VISIBLE);
+                                getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.mainActivityDetailLayout, userRecipeDetailsFragment, USER_RECIPE_DETAIL_FRAG)
+                                        .commit();
+                            }
+
+                        } else{
+                            getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.mainActivityListLayout, userRecipesListFragment, USER_RECIPE_LIST_FRAG)
+                                    .commit();
+                            getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.mainActivityDetailLayout, userRecipeDetailsFragment, USER_RECIPE_DETAIL_FRAG)
+                                    .commit();
+                        }*/
                         return true;
                     case R.id.home:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.mainActitvityFragmentHolder, RecipeListApiFragment.newInstance())
-                                .commit();
+                        mode = Mode.API_RECIPE_LIST;
+                        switchFragment();
+                        /*getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.mainActivityListLayout, RecipeListApiFragment.newInstance())
+                                .commit();*/
                         return true;
                     case R.id.add:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.mainActitvityFragmentHolder, AddNewRecipeFragment.newInstance())
+                                .replace(R.id.mainActivityListLayout, AddNewRecipeFragment.newInstance())
                                 .commit();
                         return true;
                 }
-                return false;
+                return true;
             }
         });
 
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putSerializable(Constants.MODE, mode);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onUserRecipeSelected(long id) {
+        selectedRecipeId = id;
+        userRecipeDetailsFragment.setSelectedRecipe(id);
+        mode = Mode.USER_RECIPE_DETAILS;
+        switchFragment();
+    }
+
+    private void updateFragmentView(Mode mode){
+        this.mode = mode;
+        switchFragment();
+    }
+
+    private void switchFragment() {
+        if (phoneOrientation == PhoneOrientation.PORTRAIT) {
+            switch (mode){
+                case USER_RECIPE_LIST:
+                    recipeList.setVisibility(View.VISIBLE);
+                    recipeDetails.setVisibility(View.GONE);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainActivityListLayout, userRecipesListFragment, USER_RECIPE_LIST_FRAG)
+                            .commit();
+                    break;
+                case USER_RECIPE_DETAILS:
+                    recipeList.setVisibility(View.GONE);
+                    recipeDetails.setVisibility(View.VISIBLE);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainActivityDetailLayout, userRecipeDetailsFragment, USER_RECIPE_DETAIL_FRAG)
+                            .commit();
+                    break;
+                default: //case API_RECIPE_LIST:
+                    recipeList.setVisibility(View.VISIBLE);
+                    recipeDetails.setVisibility(View.GONE);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainActivityDetailLayout, recipeListApiFragment, RECIPE_API_LIST_FRAG)
+                            .commit();
+                    break;
+            }
+        } else  {
+            //TODO: Insert if statements for if apiList/userList/details/add
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainActivityListLayout, userRecipesListFragment, USER_RECIPE_LIST_FRAG)
+                    .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainActivityDetailLayout, userRecipeDetailsFragment, USER_RECIPE_DETAIL_FRAG)
+                    .commit();
+        }
+    }
 }

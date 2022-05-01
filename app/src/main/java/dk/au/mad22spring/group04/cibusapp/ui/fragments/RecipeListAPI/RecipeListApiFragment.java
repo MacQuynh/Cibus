@@ -20,7 +20,7 @@ import dk.au.mad22spring.group04.cibusapp.R;
 import dk.au.mad22spring.group04.cibusapp.databinding.RecipeListApiFragmentBinding;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.model.Result;
-import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPI.RecipeListApiViewModel;
+import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiViewModel;
 import dk.au.mad22spring.group04.cibusapp.ui.adapters.ApiListAdapter;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPIDetails.RecipeListApiDetailsFragment;
 
@@ -96,6 +96,6 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
         fragment.setArguments(bundle);
 
         activity.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.mainActitvityFragmentHolder, fragment).addToBackStack(null).commit();
+                .replace(R.id.mainActivityDetailLayout, fragment).addToBackStack(null).commit();
     }
 }

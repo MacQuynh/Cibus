@@ -14,6 +14,8 @@ public class RecipeDTO {
     @PrimaryKey(autoGenerate = true)
     public int idRecipe;
 
+    private Integer apiId = null;
+
     private String name;
 
     private String thumbnailUrl;
@@ -46,7 +48,8 @@ public class RecipeDTO {
 
     private String userID;
 
-    public RecipeDTO(String name,
+    public RecipeDTO(Integer apiId,
+                     String name,
                      String thumbnailUrl,
                      float totalTimeMinutes,
                      float cookTimeMinutes,
@@ -58,6 +61,7 @@ public class RecipeDTO {
                      Integer updatedAtUnix,
                      float userRatings,
                      String userID) {
+        this.apiId = apiId;
         this.name = name;
         this.thumbnailUrl = thumbnailUrl;
         this.totalTimeMinutes = totalTimeMinutes;
@@ -70,6 +74,14 @@ public class RecipeDTO {
         this.updatedAtUnix = updatedAtUnix;
         this.userRatings = userRatings;
         this.userID = userID;
+    }
+
+    public Integer getApiId() {
+        return apiId;
+    }
+
+    public void setApiId(Integer apiId) {
+        this.apiId = apiId;
     }
 
     public int getIdRecipe() {

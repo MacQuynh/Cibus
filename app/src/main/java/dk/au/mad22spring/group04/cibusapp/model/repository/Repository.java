@@ -150,7 +150,8 @@ public class Repository {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                RecipeDTO recipe1 = new RecipeDTO("Kage",
+                RecipeDTO recipe1 = new RecipeDTO(null,
+                        "Tærte",
                         "",
                         120,
                         100,
@@ -168,6 +169,9 @@ public class Repository {
                 InstructionDTO instruc1 = new InstructionDTO("Instruction text 1", 1111, 2222, 1);
                 instruc1.recipeCreatorId = idRecipe1;
                 db.recipeDAO().addInstruction(instruc1);
+                InstructionDTO instruc2 = new InstructionDTO("Instruction text 2", 1111, 2222, 2);
+                instruc2.recipeCreatorId = idRecipe1;
+                db.recipeDAO().addInstruction(instruc2);
 
                 SectionDTO section1 = new SectionDTO("Section 1", 1);
                 section1.recipeCreatorIdForSection = idRecipe1;
@@ -278,7 +282,8 @@ public class Repository {
 
                     RecipeDTO recipeDTO = null;
                     if (recipeMutable != null) {
-                        recipeDTO = new RecipeDTO(response.body().getResults().get(0).getName(),
+                        recipeDTO = new RecipeDTO(response.body().getResults().get(0).getId(),
+                                response.body().getResults().get(0).getName(),
                                 response.body().getResults().get(0).getThumbnailUrl(),
                                 10.00f, 10.00f, 10.00f,
                                /* response.body().getResults().get(0).getTotalTimeMinutes(),

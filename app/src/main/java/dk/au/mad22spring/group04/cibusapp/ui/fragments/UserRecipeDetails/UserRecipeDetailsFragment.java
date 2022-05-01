@@ -15,14 +15,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import dk.au.mad22spring.group04.cibusapp.R;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionWithComponentsDTO;
@@ -42,6 +46,7 @@ public class UserRecipeDetailsFragment extends Fragment {
             txtInstructions;
     private Button btnDelete, btnSave, btnShare;
     private RatingBar ratingBar;
+    private ImageView imgRecipe;
 
     private UserRecipeDetailsViewModel detailsViewModel;
     private static long recipeId;
@@ -80,6 +85,8 @@ public class UserRecipeDetailsFragment extends Fragment {
     }
 
     private void setUIWidgets(View view){
+        imgRecipe = view.findViewById(R.id.userRecipeDetail_img);
+        
         txtRecipeName = view.findViewById(R.id.userRecipeDetail_NameHeader);
         txtNumOfServings = view.findViewById(R.id.userRecipeDetail_servings);
         txtCountry = view.findViewById(R.id.userRecipeDetail_Country);
@@ -152,6 +159,13 @@ public class UserRecipeDetailsFragment extends Fragment {
             btnShare.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.disabledGrey));
             btnShare.setClickable(false);
         }
+        
+        if(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getThumbnailUrl().equals("") 
+                || detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getThumbnailUrl() == null){
+            imgRecipe.setImageResource(R.drawable.default_recipe_image);
+        } else {
+            Glide.with(imgRecipe.getContext()).load(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getThumbnailUrl()).into(imgRecipe);
+        }
 
         txtRecipeName.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getName());
         txtNumOfServings.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getNumServings() + "");
@@ -169,7 +183,7 @@ public class UserRecipeDetailsFragment extends Fragment {
         }
         txtInstructions.setText(instructionText);
 
-        //getIngredients();
+        //getIngredients2();
     }
 
     //Fejler med timing...
@@ -177,10 +191,34 @@ public class UserRecipeDetailsFragment extends Fragment {
         String ingredientText = "";
         for (SectionDTO section:
              detailsViewModel.recipeWithSectionsAndInstructionsDTO.sections) {
-            int id = section.idSection;
-            SectionWithComponentsDTO sectio = detailsViewModel.getSectionWithComponent(id);
-            List<ComponentDTO> componentDTOS = detailsViewModel.sectionWithComponentsDTO.components;
-            ingredientText += componentDTOS.get(0).getRawText();
+/*            int id = section.idSection;
+            List<ComponentDTO> componentDTOS = detailsViewModel.getSectionWithComponent(id);
+            for (ComponentDTO component :
+                    componentDTOS) {*/
+               /* List<IngredientDTO> ingredientDTOS = detailsViewModel.getIngredientFromComponentId(section.idSection);
+                for (IngredientDTO ingredient :
+                        ingredientDTOS) {
+                    ingredientText += ingredient.getName() + "\n";
+                }*/
+            /*}*/
+        };
+        txtIngredients.setText(ingredientText);
+    }
+
+    private void getIngredients2(){
+        String ingredientText = "";
+        for (SectionDTO section:
+                detailsViewModel.recipeWithSectionsAndInstructionsDTO.sections) {
+/*            int id = section.idSection;
+            List<ComponentDTO> componentDTOS = detailsViewModel.getSectionWithComponent(id);
+            for (ComponentDTO component :
+                    componentDTOS) {*/
+           /* List<IngredientDTO> ingredientDTOS = detailsViewModel.getIngredientFromComponentId(section.idSection);
+            for (IngredientDTO ingredient :
+                    ingredientDTOS) {
+                ingredientText += ingredient.getName() + "\n";
+            }*/
+            /*}*/
         };
         txtIngredients.setText(ingredientText);
     }

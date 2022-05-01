@@ -18,10 +18,12 @@ import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentWithMeasurementsAn
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.MeasurementDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.MeasurementWithUnitDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionWithComponentsDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.UnitDTO;
 import dk.au.mad22spring.group04.cibusapp.model.Section;
 
 @Dao
@@ -55,8 +57,16 @@ public interface RecipeDAO {
     public List<ComponentDTO> getComponentsFromSectionId(int id);
 
     @Transaction
+    @Query("SELECT * FROM ComponentDTO WHERE sectionCreatorId like :id")
+    public ListenableFuture<List<ComponentDTO>> getComponentsFromSectionIdFuture(int id);
+
+    @Transaction
     @Query("SELECT * FROM IngredientDTO WHERE componentCreatorIdForIngredient like :id")
-    public List<IngredientDTO> getIngredientFromComponentId(int id);
+    public IngredientDTO getIngredientFromComponentId(int id);
+
+    @Transaction
+    @Query("SELECT * FROM MeasurementDTO")
+    public List<MeasurementWithUnitDTO> getMeasurementWithUnit();
 
     @Transaction
     @Query("SELECT * FROM MeasurementDTO WHERE componentCreatorId like :id")
@@ -83,6 +93,9 @@ public interface RecipeDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addMeasurement(MeasurementDTO measurementDTO);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void addUnit(UnitDTO unitDTO);
 
     @Update
     void updateRecipe(RecipeDTO recipeDTO);

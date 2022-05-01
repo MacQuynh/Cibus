@@ -47,4 +47,5 @@
     <string name="delete">Delete</string>
     <string name="save">Save</string>
     <string name="share">Share</string>
+    <string name="addFields_btn">Add Fields</string>
 </resources>

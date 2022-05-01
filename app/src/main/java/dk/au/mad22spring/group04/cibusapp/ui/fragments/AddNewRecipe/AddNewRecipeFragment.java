@@ -2,19 +2,19 @@ package dk.au.mad22spring.group04.cibusapp.ui.fragments.AddNewRecipe;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import android.graphics.LinearGradient;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -36,9 +36,8 @@ public class AddNewRecipeFragment extends Fragment {
     private EditText recipeNameEditText, measure1EditText,measure2EditText,measure3EditText,measure4EditText,measure5EditText;
     private EditText ingredient1EditText, ingredient2EditText, ingredient3EditText, ingredient4EditText, ingredient5EditText, instructionsEditText;
     private EditText totalTimeEditText, cookTimeEditText, prepTimeEditText, numberOfServingsEditText;
-    private Button addBtn;
-
-
+    private EditText extraMeasureEditText, extraIngredientEditText;
+    private Button addBtn, extraFieldBtn;
 
     public static AddNewRecipeFragment newInstance() {
         return new AddNewRecipeFragment();
@@ -47,6 +46,7 @@ public class AddNewRecipeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.add_new_recipe_fragment, container, false);
         setupUIWidgets(view);
 
@@ -54,6 +54,7 @@ public class AddNewRecipeFragment extends Fragment {
     }
 
     private void setupUIWidgets(View view) {
+
         recipeNameEditText = view.findViewById(R.id.addNew_recipeName_editText);
         numberOfServingsEditText = view.findViewById(R.id.addNew_numberOf_editText);
         totalTimeEditText = view.findViewById(R.id.addNew_total_editText);
@@ -77,10 +78,36 @@ public class AddNewRecipeFragment extends Fragment {
                 addRecipeToLibrary();
             }
         });
+        extraFieldBtn = view.findViewById(R.id.addNew_addField_btn_);
+        extraFieldBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //addFieldsDynamically();
+            }
+        });
+    }
+
+
+    //Code adapted from https://stackoverflow.com/questions/37764422/add-edittext-dynamically-with-if-possible-string-id-into-a-fragment
+    private void addFieldsDynamically() {
+        int numberOfEditTexts = 0 ;
+        Context context = getActivity();
+        extraMeasureEditText = new EditText(context);
+        extraMeasureEditText.setHint(R.string.measurements_editText);
+        extraIngredientEditText = new EditText(context);
+        extraIngredientEditText.setHint(R.string.ingredient_editText);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        extraMeasureEditText.setLayoutParams(params);
+        extraIngredientEditText.setLayoutParams(params);
+        LinearLayout layout = (LinearLayout)getView().findViewById(R.id.addNew_linearLayout);
+        layout.addView(extraMeasureEditText,0);
+        layout.addView(extraIngredientEditText,1);
+        numberOfEditTexts ++;
     }
 
     private void addRecipeToLibrary() {
         String recipeName = recipeNameEditText.getText().toString();
+        //Code for handling NumberFormatException adapted from https://stackoverflow.com/questions/11113238/getting-a-numberformatexception-from-a-numerical-edittext-field
         String numberOfServingsString = numberOfServingsEditText.getText().toString();
         Integer numberOfServings = 0;
         try {

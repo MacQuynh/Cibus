@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
     <RelativeLayout
@@ -13,11 +13,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="682dp"
+            android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp">
+            android:layout_marginTop="29dp"
+            android:layout_marginBottom="-11dp">
 
             <TextView
                 android:id="@+id/addNew_header_textView"
@@ -144,12 +144,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:hint="@string/ingredient_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:textSize="@dimen/hint_text_size"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_measure1_editText"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/addNew_measure1_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_measure1_editText"
                 app:layout_constraintVertical_bias="1.0" />
@@ -211,7 +213,6 @@
                 android:id="@+id/addNew_add_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="@string/addBtn"
                 app:layout_constraintEnd_toEndOf="@+id/addNew_instructions_editText"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_instructions_editText" />
@@ -221,24 +222,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="16dp"
                 android:text="@string/instructionsHeading_textView"
                 android:textSize="@dimen/text_textView"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addNew_measure5_editText" />
+                app:layout_constraintTop_toBottomOf="@+id/addNew_addField_btn_" />
 
             <EditText
                 android:id="@+id/addNew_instructions_editText"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="@string/instructions_editText"
                 android:inputType="textMultiLine"
                 android:minHeight="48dp"
                 android:textSize="@dimen/hint_text_size"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/addNew_instructionsHeading_textView"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_instructionsHeading_textView" />
 
             <TextView
@@ -269,10 +272,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
+                android:layout_marginEnd="16dp"
                 android:text="@string/preparation_time"
                 android:textSize="@dimen/text_textView"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_cookTime_textView"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/addNew_cookTime_textView"
                 app:layout_constraintTop_toTopOf="@+id/addNew_cookTime_textView" />
 
@@ -318,10 +323,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="64dp"
+                android:layout_marginEnd="16dp"
                 android:text="@string/number_of_servings"
                 android:textSize="@dimen/text_textView"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_recipeName_textView"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/addNew_recipeName_textView"
                 app:layout_constraintTop_toTopOf="@+id/addNew_recipeName_textView" />
 
@@ -336,12 +343,29 @@
                 android:textSize="@dimen/hint_text_size"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_recipeName_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_numberOf_textView"
-                app:layout_constraintTop_toBottomOf="@+id/addNew_recipeName_textView" /><![CDATA[
+                app:layout_constraintTop_toBottomOf="@+id/addNew_recipeName_textView" />
 
-            />
-        ]]>
+            <Button
+                android:id="@+id/addNew_addField_btn_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:text="@string/addFields_btn"
+                app:layout_constraintEnd_toEndOf="@+id/addNew_ingredient5_editText"
+                app:layout_constraintTop_toBottomOf="@+id/addNew_linearLayout" />
+
+            <LinearLayout
+                android:id="@+id/addNew_linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addNew_measure5_editText">
+
+
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </RelativeLayout>
 </ScrollView>

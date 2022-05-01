@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +31,14 @@ import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
 
 public class AddNewRecipeFragment extends Fragment {
 
+    private static final String TAG = "TAG";
     private AddNewRecipeViewModel addNewRecipeViewModel;
     private EditText recipeNameEditText, measure1EditText,measure2EditText,measure3EditText,measure4EditText,measure5EditText;
     private EditText ingredient1EditText, ingredient2EditText, ingredient3EditText, ingredient4EditText, ingredient5EditText, instructionsEditText;
     private EditText totalTimeEditText, cookTimeEditText, prepTimeEditText, numberOfServingsEditText;
     private Button addBtn;
+
+
 
     public static AddNewRecipeFragment newInstance() {
         return new AddNewRecipeFragment();
@@ -77,10 +81,37 @@ public class AddNewRecipeFragment extends Fragment {
 
     private void addRecipeToLibrary() {
         String recipeName = recipeNameEditText.getText().toString();
-        Integer numberOfServings = Integer.valueOf(numberOfServingsEditText.getText().toString());
-        Float cookTime = Float.valueOf(cookTimeEditText.getText().toString());
-        Float prepTime = Float.valueOf(prepTimeEditText.getText().toString());
-        Float totalTime = Float.valueOf(totalTimeEditText.getText().toString());
+        String numberOfServingsString = numberOfServingsEditText.getText().toString();
+        Integer numberOfServings = 0;
+        try {
+            numberOfServings = Integer.valueOf(numberOfServingsString);
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+        String cookTimeString = cookTimeEditText.getText().toString();
+        Float cookTime = 0.0f;
+        try{
+            cookTime = Float.valueOf(cookTimeString);
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+
+        String prepTimeString = prepTimeEditText.getText().toString();
+        Float prepTime = 0.0f;
+        try{
+            prepTime = Float.valueOf(prepTimeString);
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+        String totalTimeString = totalTimeEditText.getText().toString();
+        Float totalTime = 0.0f;
+        try{
+            totalTime = Float.valueOf(totalTimeString);
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+
+        }
+
         String measure1 = measure1EditText.getText().toString();
         String measure2 = measure2EditText.getText().toString();
         String measure3 = measure3EditText.getText().toString();
@@ -108,18 +139,12 @@ public class AddNewRecipeFragment extends Fragment {
         listOfMeasures.add(new MeasurementDTO(measure4));
         listOfMeasures.add(new MeasurementDTO(measure5));
 
-        IngredientDTO ingredientDTO1 = new IngredientDTO(ingredient1,"", "");
-        IngredientDTO ingredientDTO2 = new IngredientDTO(ingredient2,"", "");
-        IngredientDTO ingredientDTO3 = new IngredientDTO(ingredient3,"", "");
-        IngredientDTO ingredientDTO4 = new IngredientDTO(ingredient4,"", "");
-        IngredientDTO ingredientDTO5 = new IngredientDTO(ingredient5,"", "");
-
         ArrayList<IngredientDTO> listOfIngredients = new ArrayList<IngredientDTO>();
-        listOfIngredients.add(ingredientDTO1);
-        listOfIngredients.add(ingredientDTO2);
-        listOfIngredients.add(ingredientDTO3);
-        listOfIngredients.add(ingredientDTO4);
-        listOfIngredients.add(ingredientDTO5);
+        listOfIngredients.add(new IngredientDTO(ingredient1,"", ""));
+        listOfIngredients.add(new IngredientDTO(ingredient2,"", ""));
+        listOfIngredients.add(new IngredientDTO(ingredient3,"", ""));
+        listOfIngredients.add(new IngredientDTO(ingredient4,"", ""));
+        listOfIngredients.add(new IngredientDTO(ingredient5,"", ""));
 
         addNewRecipeViewModel.addNewRecipe(recipeDTO,instructionDTO,sectionDTO,componentDTO,listOfMeasures,listOfIngredients);
 
@@ -151,7 +176,5 @@ public class AddNewRecipeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         addNewRecipeViewModel = new ViewModelProvider(this).get(AddNewRecipeViewModel.class);
     }
-
-
 
 }

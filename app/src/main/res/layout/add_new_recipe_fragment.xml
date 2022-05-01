@@ -73,13 +73,13 @@
                 android:text="@string/ingredientsHeading_textView"
                 android:textSize="@dimen/text_textView"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/addNew_MeasureHeading_textView"
+                app:layout_constraintBottom_toBottomOf="@+id/addNew_unit_textView"
                 app:layout_constraintStart_toStartOf="@+id/addNew_ingredient1_editText"
-                app:layout_constraintTop_toTopOf="@+id/addNew_MeasureHeading_textView" />
+                app:layout_constraintTop_toTopOf="@+id/addNew_unit_textView" />
 
             <EditText
                 android:id="@+id/addNew_measure1_editText"
-                android:layout_width="140dp"
+                android:layout_width="65dp"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:ems="10"
@@ -92,7 +92,7 @@
 
             <EditText
                 android:id="@+id/addNew_measure2_editText"
-                android:layout_width="140dp"
+                android:layout_width="65dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:ems="10"
@@ -105,7 +105,7 @@
 
             <EditText
                 android:id="@+id/addNew_measure3_editText"
-                android:layout_width="140dp"
+                android:layout_width="65dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/measurements_editText"
@@ -117,7 +117,7 @@
 
             <EditText
                 android:id="@+id/addNew_measure4_editText"
-                android:layout_width="140dp"
+                android:layout_width="65dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/measurements_editText"
@@ -129,7 +129,7 @@
 
             <EditText
                 android:id="@+id/addNew_measure5_editText"
-                android:layout_width="140dp"
+                android:layout_width="65dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/measurements_editText"
@@ -139,22 +139,93 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_measure4_editText" />
 
+            <TextView
+                android:id="@+id/addNew_unit_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/unit"
+                android:textSize="@dimen/text_textView"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/addNew_MeasureHeading_textView"
+                app:layout_constraintStart_toStartOf="@+id/addNew_unit1_editText"
+                app:layout_constraintTop_toTopOf="@+id/addNew_MeasureHeading_textView" />
+
+            <EditText
+                android:id="@+id/addNew_unit1_editText"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:ems="10"
+                android:hint="@string/unit_editText"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintBottom_toBottomOf="@+id/addNew_measure1_editText"
+                app:layout_constraintStart_toEndOf="@+id/addNew_measure1_editText"
+                app:layout_constraintTop_toTopOf="@+id/addNew_measure1_editText" />
+
+            <EditText
+                android:id="@+id/addNew_unit2_editText"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/unit_editText"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintBottom_toBottomOf="@+id/addNew_measure2_editText"
+                app:layout_constraintStart_toStartOf="@+id/addNew_unit1_editText"
+                app:layout_constraintTop_toTopOf="@+id/addNew_measure2_editText" />
+
+            <EditText
+                android:id="@+id/addNew_unit3_editText"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/unit_editText"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintBottom_toBottomOf="@+id/addNew_measure3_editText"
+                app:layout_constraintStart_toStartOf="@+id/addNew_unit2_editText"
+                app:layout_constraintTop_toTopOf="@+id/addNew_measure3_editText" />
+
+            <EditText
+                android:id="@+id/addNew_unit4_editText"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/unit_editText"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintBottom_toBottomOf="@+id/addNew_measure4_editText"
+                app:layout_constraintStart_toStartOf="@+id/addNew_unit3_editText"
+                app:layout_constraintTop_toTopOf="@+id/addNew_measure4_editText" />
+
+            <EditText
+                android:id="@+id/addNew_unit5_editText"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/unit_editText"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintBottom_toBottomOf="@+id/addNew_measure5_editText"
+                app:layout_constraintStart_toStartOf="@+id/addNew_unit4_editText"
+                app:layout_constraintTop_toTopOf="@+id/addNew_measure5_editText" />
+
             <EditText
                 android:id="@+id/addNew_ingredient1_editText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:hint="@string/ingredient_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:textSize="@dimen/hint_text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/addNew_measure1_editText"
+                app:layout_constraintBottom_toBottomOf="@+id/addNew_unit1_editText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/addNew_measure1_editText"
-                app:layout_constraintTop_toTopOf="@+id/addNew_measure1_editText"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintStart_toEndOf="@+id/addNew_unit1_editText"
+                app:layout_constraintTop_toTopOf="@+id/addNew_unit1_editText" />
 
             <EditText
                 android:id="@+id/addNew_ingredient2_editText"
@@ -166,8 +237,9 @@
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:textSize="@dimen/hint_text_size"
+                app:layout_constraintBottom_toBottomOf="@+id/addNew_unit2_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_ingredient1_editText"
-                app:layout_constraintTop_toTopOf="@+id/addNew_measure2_editText" />
+                app:layout_constraintTop_toTopOf="@+id/addNew_unit2_editText" />
 
             <EditText
                 android:id="@+id/addNew_ingredient3_editText"
@@ -178,9 +250,9 @@
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:textSize="@dimen/hint_text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/addNew_measure3_editText"
+                app:layout_constraintBottom_toBottomOf="@+id/addNew_unit3_editText"
                 app:layout_constraintStart_toStartOf="@id/addNew_ingredient2_editText"
-                app:layout_constraintTop_toBottomOf="@+id/addNew_measure2_editText" />
+                app:layout_constraintTop_toBottomOf="@+id/addNew_unit2_editText" />
 
             <EditText
                 android:id="@+id/addNew_ingredient4_editText"
@@ -191,10 +263,9 @@
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:textSize="@dimen/hint_text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/addNew_measure4_editText"
+                app:layout_constraintBottom_toBottomOf="@+id/addNew_unit4_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_ingredient3_editText"
-                app:layout_constraintTop_toBottomOf="@+id/addNew_measure3_editText"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/addNew_unit3_editText" />
 
             <EditText
                 android:id="@+id/addNew_ingredient5_editText"
@@ -205,9 +276,9 @@
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:textSize="@dimen/hint_text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/addNew_measure5_editText"
+                app:layout_constraintBottom_toBottomOf="@+id/addNew_unit5_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_ingredient4_editText"
-                app:layout_constraintTop_toBottomOf="@+id/addNew_measure4_editText" />
+                app:layout_constraintTop_toBottomOf="@+id/addNew_unit4_editText" />
 
             <Button
                 android:id="@+id/addNew_add_btn"
@@ -363,8 +434,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_measure5_editText">
-
-
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>

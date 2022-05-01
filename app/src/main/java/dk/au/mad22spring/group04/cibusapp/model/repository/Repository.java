@@ -361,7 +361,7 @@ public class Repository {
         return recipeMutable;
     }
 
-    public void addNewRecipeToDb(RecipeDTO recipeDTO, InstructionDTO instructionDTO, SectionDTO sectionDTO, ComponentDTO componentDTO, ArrayList<MeasurementDTO> listOfMeasurementDTO, ArrayList<IngredientDTO> listOfIngredientDTO ){
+    public void addNewRecipeToDb(RecipeDTO recipeDTO, InstructionDTO instructionDTO, SectionDTO sectionDTO, ArrayList<MeasurementDTO> listOfMeasurementDTO, ArrayList<UnitDTO> listOfUnitsDTO, ArrayList<IngredientDTO> listOfIngredientDTO ){
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -373,19 +373,31 @@ public class Repository {
                 sectionDTO.recipeCreatorIdForSection = idRecipe;
                 long idSection = db.recipeDAO().addSection(sectionDTO);
 
-                componentDTO.sectionCreatorId = idSection;
-                long idComponent = db.recipeDAO().addComponent(componentDTO);
-
-                for (MeasurementDTO measurementDTO : listOfMeasurementDTO){
+                for (int i = 0; i < listOfMeasurementDTO.size(); i++ ){
+                    ComponentDTO componentDTO = new ComponentDTO(i+1, "");
+                    componentDTO.sectionCreatorId = idSection;
+                    long idComponent = db.recipeDAO().addComponent(componentDTO);
+                    MeasurementDTO measurementDTO = listOfMeasurementDTO.get(i);
                     measurementDTO.componentCreatorId = idComponent;
-                    db.recipeDAO().addMeasurement(measurementDTO);
+                    //long idMeasurement = db.recipeDAO().addMeasurement(measurementDTO);
+
+                    UnitDTO unitDTO = listOfUnitsDTO.get(i);
+                    //unitDTO.measurementCreatorId = idMeasurement;
+
+                    if (listOfIngredientDTO.size() <= i + 1){
+                        IngredientDTO ingredientDTO = listOfIngredientDTO.get(i);
+                        ingredientDTO.componentCreatorIdForIngredient = idComponent;
+                        db.recipeDAO().addIngredient(ingredientDTO);
+                    }
+
+
                 }
 
-                for (IngredientDTO ingredientDTO : listOfIngredientDTO){
+              /*  for (IngredientDTO ingredientDTO : listOfIngredientDTO){
                     ingredientDTO.componentCreatorIdForIngredient = idComponent;
                     db.recipeDAO().addIngredient(ingredientDTO);
 
-                }
+                }*/
             }
         });
 

@@ -78,15 +78,15 @@ public class UserRecipeDetailsFragment extends Fragment {
     }
 
     private void setUIWidgets(View view){
-        txtRecipeName = view.findViewById(R.id.userRecipeDetail_NameHeader);
-        txtNumOfServings = view.findViewById(R.id.userRecipeDetail_servings);
-        txtCountry = view.findViewById(R.id.userRecipeDetail_Country);
-        txtDescription = view.findViewById(R.id.userRecipeDetail_Description);
-        txtPrepTime = view.findViewById(R.id.userRecipeDetail_prepTime);
-        txtCookTime = view.findViewById(R.id.userRecipeDetail_cookTime);
-        txtTotalTime = view.findViewById(R.id.userRecipeDetail_totalTime);
-        txtIngredients = view.findViewById(R.id.userRecipeDetail_Ingredients);
-        txtInstructions = view.findViewById(R.id.userRecipeDetail_Instructions);
+        txtRecipeName = view.findViewById(R.id.recipe_list_api_details_NameHeader);
+        txtNumOfServings = view.findViewById(R.id.recipeLitApiDetailsServings);
+        txtCountry = view.findViewById(R.id.recipeListApiDetailsCountry);
+        txtDescription = view.findViewById(R.id.recipeListApiDetailsDescription);
+        txtPrepTime = view.findViewById(R.id.recipeListApiDetailsPrepTime);
+        txtCookTime = view.findViewById(R.id.recipeListApiDetailsCookTime);
+        txtTotalTime = view.findViewById(R.id.recipeListApiDetailsTotalTime);
+        txtIngredients = view.findViewById(R.id.recipeListApiDetailsIngredients);
+        txtInstructions = view.findViewById(R.id.recipeListApiDetailsInstructions);
 
         ratingBar = view.findViewById(R.id.userRecipeDetail_ratingBar);
 

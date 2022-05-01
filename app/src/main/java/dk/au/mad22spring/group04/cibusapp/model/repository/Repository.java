@@ -115,10 +115,10 @@ public class Repository {
         return recipesDB;
     }
 
-    public void searchAllUserRecipes(String searchText){
+    public void searchAllUserRecipes(String searchText) {
         //inspiration for searching for part of word https://stackoverflow.com/questions/61948455/android-room-query-text-matches-exactly-the-search-string-or-start-with-search
         ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> list = db.recipeDAO().getRecipesWithSectionsAndInstructionsFromSearch(searchText + "%", Constants.USER_ID);
-        list.addListener(()->{
+        list.addListener(() -> {
             try {
                 recipesDB.postValue(list.get());
 
@@ -129,20 +129,20 @@ public class Repository {
 
     }
 
-    public void setFullRecipeByName(long recipeId){
+    public void setFullRecipeByName(long recipeId) {
         ListenableFuture<RecipeWithSectionsAndInstructionsDTO> recipe = db.recipeDAO().getFullRecipeById(recipeId);
 
         recipe.addListener(() -> {
             try {
                 recipeDB.postValue(recipe.get());
-            } catch (Exception e){
+            } catch (Exception e) {
                 Log.e(Constants.TAG_REPOSITORY, "Error loading Recipe: ", e);
             }
 
         }, ContextCompat.getMainExecutor(application.getApplicationContext()));
     }
 
-    public LiveData<RecipeWithSectionsAndInstructionsDTO> getFullRecipeFromDB(){
+    public LiveData<RecipeWithSectionsAndInstructionsDTO> getFullRecipeFromDB() {
         return recipeDB;
     }
 
@@ -181,7 +181,7 @@ public class Repository {
                 measure1.componentCreatorId = idComponent1;
                 db.recipeDAO().addMeasurement(measure1);
 
-                IngredientDTO ingre1 = new IngredientDTO("Meat", "Meat","Meat");
+                IngredientDTO ingre1 = new IngredientDTO("Meat", "Meat", "Meat");
                 ingre1.componentCreatorIdForIngredient = idComponent1;
                 db.recipeDAO().addIngredient(ingre1);
             }
@@ -191,26 +191,28 @@ public class Repository {
         Log.d(Constants.TAG_REPOSITORY, "addRecipesDefault: ");
     }
 
-    public SectionWithComponentsDTO setSectionWithComponent(int sectionId){
+    public SectionWithComponentsDTO setSectionWithComponent(int sectionId) {
         ListenableFuture<SectionWithComponentsDTO> section = db.recipeDAO().getSectionWithComponentsById(sectionId);
         final SectionWithComponentsDTO scetion;
-        section.addListener(()->{
+        section.addListener(() -> {
             try {
                 //scetion = section.get(100, TimeUnit.SECONDS);
                 sectionWithComponentDB.postValue(section.get(10, TimeUnit.SECONDS));
-            } catch (Exception e){
+            } catch (Exception e) {
                 Log.e(Constants.TAG_REPOSITORY, "Error getting Section with Components", e);
             }
         }, ContextCompat.getMainExecutor(application.getApplicationContext()));
-        while (sectionWithComponentDB.getValue() == null){};
+        while (sectionWithComponentDB.getValue() == null) {
+        }
+        ;
         return sectionWithComponentDB.getValue();
     }
 
-    public ListenableFuture<SectionWithComponentsDTO> getSectionWithComponent(int sectionId){
+    public ListenableFuture<SectionWithComponentsDTO> getSectionWithComponent(int sectionId) {
         return db.recipeDAO().getSectionWithComponentsById(sectionId);
     }
 
-    public void updateFullRecipe(RecipeDTO recipe){
+    public void updateFullRecipe(RecipeDTO recipe) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -219,11 +221,11 @@ public class Repository {
         });
     }
 
-    public void searchDrinks(String search_text) {
+    public void searchRecipes(String search_text) {
         searchRecipesFromString(search_text);
     }
 
-    public LiveData<List<Result>> searchDrinks() {
+    public LiveData<List<Result>> searchRecipes() {
         return recipeList;
     }
 
@@ -270,30 +272,38 @@ public class Repository {
         return list;
     }
 
-    public void getDrinkByName(String name) {
+    public void getRecipeByName(String name) {
         RetrofitClient.getInstance().getJsonApi().getRecipeFromSearchString(name).enqueue(new Callback<Recipes>() {
             @Override
             public void onResponse(Call<Recipes> call, Response<Recipes> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    Double totalTimeMinutes = 0.0;
+                    Double cookTimeMinutes = 0.0;
+                    Double prepTimeMinutes = 0.0;
+                    try {
+                        totalTimeMinutes = (Double) response.body().getResults().get(0).getTotalTimeMinutes();
+                        cookTimeMinutes = (Double) response.body().getResults().get(0).getCookTimeMinutes();
+                        prepTimeMinutes = (Double) response.body().getResults().get(0).getPrepTimeMinutes();
+                        RecipeDTO recipeDTO = null;
+                        if (recipeMutable != null) {
 
-                    RecipeDTO recipeDTO = null;
-                    if (recipeMutable != null) {
-                        recipeDTO = new RecipeDTO(response.body().getResults().get(0).getName(),
-                                response.body().getResults().get(0).getThumbnailUrl(),
-                                10.00f, 10.00f, 10.00f,
-                               /* response.body().getResults().get(0).getTotalTimeMinutes(),
-                                response.body().getResults().get(0).getCookTimeMinutes(),
-                                response.body().getResults().get(0).getPrepTimeMinutes(),*/
-                                response.body().getResults().get(0).getCountry(),
-                                response.body().getResults().get(0).getNumServings(),
-                                response.body().getResults().get(0).getDescription(),
-                                response.body().getResults().get(0).getCreatedAt(),
-                                response.body().getResults().get(0).getUpdatedAt(),
-                                response.body().getResults().get(0).getUserRatings().getCountPositive().floatValue(),
-                                response.body().getResults().get(0).getId().toString()
-                        );
+                            recipeDTO = new RecipeDTO(response.body().getResults().get(0).getName(),
+                                    response.body().getResults().get(0).getThumbnailUrl(),
+                                    totalTimeMinutes.floatValue(), cookTimeMinutes.floatValue(), prepTimeMinutes.floatValue(),
+                                    response.body().getResults().get(0).getCountry(),
+                                    response.body().getResults().get(0).getNumServings(),
+                                    response.body().getResults().get(0).getDescription(),
+                                    response.body().getResults().get(0).getCreatedAt(),
+                                    response.body().getResults().get(0).getUpdatedAt(),
+                                    response.body().getResults().get(0).getUserRatings().getCountPositive().floatValue(),
+                                    response.body().getResults().get(0).getId().toString()
+                            );
+                        }
+                        recipeMutable.postValue(recipeDTO);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    recipeMutable.postValue(recipeDTO);
+
                 }
             }
 

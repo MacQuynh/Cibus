@@ -4,12 +4,9 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import dk.au.mad22spring.group04.cibusapp.database.RecipeDAO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.repository.Repository;
 
@@ -24,7 +21,7 @@ public class RecipeListApiDetailsViewModel extends AndroidViewModel {
     }
 
     public LiveData<RecipeDTO> getRecipeByName(String name) {
-        repository.getDrinkByName(name);
+        repository.getRecipeByName(name);
         return repository.getRecipe();
     }
 

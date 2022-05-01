@@ -47,17 +47,25 @@ public class RecipeListApiDetailsFragment extends Fragment {
         vm.getRecipeByName(recipeObject).observe(getViewLifecycleOwner(), new Observer<RecipeDTO>() {
             @Override
             public void onChanged(RecipeDTO recipeDTO) {
-                binding.apiDetailsName.setText(recipeDTO.getName());
-                Glide.with(binding.apiDetailsThumbnailUrl.getContext()).load(recipeDTO.getThumbnailUrl());
-                binding.apiDetailsCountry.setText("Country: " + recipeDTO.getCountry());
-                binding.apiDetailsNumServings.setText("Serving: " + recipeDTO.getNumServings().toString());
-                binding.apiDetailsUserRatings.setText("Rating: " + recipeDTO.getUserRatings());
-                binding.apiDetailsDescription.setText("Description: " + recipeDTO.getDescription());
+                Log.d("TAG", "onChanged: " + recipeDTO);
+                Glide.with(binding.imageViewAPI.getContext()).load(recipeDTO.getThumbnailUrl()).into(binding.imageViewAPI);
+                binding.recipeListApiDetailsNameHeader.setText(recipeDTO.getName());
+                binding.recipeLitApiDetailsServings.setText(recipeDTO.getNumServings().toString());
+                binding.recipeListApiDetailsCountry.setText(recipeDTO.getCountry());
+                binding.recipeListApiDetailsDescription.setText(recipeDTO.getDescription());
+                binding.recipeListApiDetailsPrepTime.setText(Double.toString(recipeDTO.getPrepTimeMinutes()) + " min.");
+                binding.recipeListApiDetailsCookTime.setText(Double.toString(recipeDTO.getCookTimeMinutes()) + " min.");
+                binding.recipeListApiDetailsTotalTime.setText(Double.toString(recipeDTO.getTotalTimeMinutes()) + " min.");
+                //TODO: Instructions + ingrediense
+//                binding.recipeListApiDetailsIngredients.setText(recipeDTO.ing);
+                //binding.recipeListApiDetailsInstructions.setText(recipeDTO);
+
             }
         });
 
         return view;
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

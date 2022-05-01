@@ -80,8 +80,7 @@ public class AddNewRecipeFragment extends Fragment {
         Integer numberOfServings = Integer.valueOf(numberOfServingsEditText.getText().toString());
         Float cookTime = Float.valueOf(cookTimeEditText.getText().toString());
         Float prepTime = Float.valueOf(prepTimeEditText.getText().toString());
-        Float totalTime = cookTime+prepTime;
-        totalTimeEditText.setText("" + totalTime);
+        Float totalTime = Float.valueOf(totalTimeEditText.getText().toString());
         String measure1 = measure1EditText.getText().toString();
         String measure2 = measure2EditText.getText().toString();
         String measure3 = measure3EditText.getText().toString();
@@ -102,18 +101,12 @@ public class AddNewRecipeFragment extends Fragment {
 
         ComponentDTO componentDTO = new ComponentDTO(1, "");
 
-        MeasurementDTO measurementDTO1 = new MeasurementDTO(measure1);
-        MeasurementDTO measurementDTO2 = new MeasurementDTO(measure2);
-        MeasurementDTO measurementDTO3 = new MeasurementDTO(measure3);
-        MeasurementDTO measurementDTO4 = new MeasurementDTO(measure4);
-        MeasurementDTO measurementDTO5 = new MeasurementDTO(measure5);
-
         ArrayList<MeasurementDTO> listOfMeasures = new ArrayList<MeasurementDTO>();
-        listOfMeasures.add(measurementDTO1);
-        listOfMeasures.add(measurementDTO2);
-        listOfMeasures.add(measurementDTO3);
-        listOfMeasures.add(measurementDTO4);
-        listOfMeasures.add(measurementDTO5);
+        listOfMeasures.add(new MeasurementDTO(measure1));
+        listOfMeasures.add(new MeasurementDTO(measure2));
+        listOfMeasures.add(new MeasurementDTO(measure3));
+        listOfMeasures.add(new MeasurementDTO(measure4));
+        listOfMeasures.add(new MeasurementDTO(measure5));
 
         IngredientDTO ingredientDTO1 = new IngredientDTO(ingredient1,"", "");
         IngredientDTO ingredientDTO2 = new IngredientDTO(ingredient2,"", "");
@@ -130,6 +123,27 @@ public class AddNewRecipeFragment extends Fragment {
 
         addNewRecipeViewModel.addNewRecipe(recipeDTO,instructionDTO,sectionDTO,componentDTO,listOfMeasures,listOfIngredients);
 
+        clearInputFieldsAfterRecipeIsAdded();
+
+    }
+
+    private void clearInputFieldsAfterRecipeIsAdded() {
+        recipeNameEditText.setText("");
+        numberOfServingsEditText.setText("");
+        totalTimeEditText.setText("");
+        cookTimeEditText.setText("");
+        prepTimeEditText.setText("");
+        measure1EditText.setText("");
+        measure2EditText.setText("");
+        measure3EditText.setText("");
+        measure4EditText.setText("");
+        measure5EditText.setText("");
+        ingredient1EditText.setText("");
+        ingredient2EditText.setText("");
+        ingredient3EditText.setText("");
+        ingredient4EditText.setText("");
+        ingredient5EditText.setText("");
+        instructionsEditText.setText("");
     }
 
     @Override

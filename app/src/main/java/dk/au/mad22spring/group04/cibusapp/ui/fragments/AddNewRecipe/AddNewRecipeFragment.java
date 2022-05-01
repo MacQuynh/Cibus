@@ -2,19 +2,19 @@ package dk.au.mad22spring.group04.cibusapp.ui.fragments.AddNewRecipe;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import android.graphics.LinearGradient;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -26,19 +26,20 @@ import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.MeasurementDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.UnitDTO;
 
 //Code for using scrollView adapted from https://stackoverflow.com/questions/6674341/how-to-use-scrollview-in-android
 
 public class AddNewRecipeFragment extends Fragment {
 
-    private static final String TAG = "TAG";
+    private static final String TAG = "ADD_NEW_RECIPE_FRAGMENT";
     private AddNewRecipeViewModel addNewRecipeViewModel;
     private EditText recipeNameEditText, measure1EditText,measure2EditText,measure3EditText,measure4EditText,measure5EditText;
+    private EditText unit1EditText,unit2EditText,unit3EditText,unit4EditText,unit5EditText;
     private EditText ingredient1EditText, ingredient2EditText, ingredient3EditText, ingredient4EditText, ingredient5EditText, instructionsEditText;
     private EditText totalTimeEditText, cookTimeEditText, prepTimeEditText, numberOfServingsEditText;
-    private Button addBtn;
-
-
+    private EditText measureDynamic, unitDynamic,ingredientDynamic;
+    private Button addBtn, extraFieldBtn;
 
     public static AddNewRecipeFragment newInstance() {
         return new AddNewRecipeFragment();
@@ -47,6 +48,7 @@ public class AddNewRecipeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.add_new_recipe_fragment, container, false);
         setupUIWidgets(view);
 
@@ -64,6 +66,11 @@ public class AddNewRecipeFragment extends Fragment {
         measure3EditText = view.findViewById(R.id.addNew_measure3_editText);
         measure4EditText = view.findViewById(R.id.addNew_measure4_editText);
         measure5EditText = view.findViewById(R.id.addNew_measure5_editText);
+        unit1EditText = view.findViewById(R.id.addNew_unit1_editText);
+        unit2EditText = view.findViewById(R.id.addNew_unit2_editText);
+        unit3EditText = view.findViewById(R.id.addNew_unit3_editText);
+        unit4EditText = view.findViewById(R.id.addNew_unit4_editText);
+        unit5EditText = view.findViewById(R.id.addNew_unit5_editText);
         ingredient1EditText = view.findViewById(R.id.addNew_ingredient1_editText);
         ingredient2EditText = view.findViewById(R.id.addNew_ingredient2_editText);
         ingredient3EditText = view.findViewById(R.id.addNew_ingredient3_editText);
@@ -77,10 +84,40 @@ public class AddNewRecipeFragment extends Fragment {
                 addRecipeToLibrary();
             }
         });
+        extraFieldBtn = view.findViewById(R.id.addNew_addField_btn_);
+        extraFieldBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addFieldsDynamically();
+            }
+        });
+    }
+
+    //Code adapted from https://stackoverflow.com/questions/37764422/add-edittext-dynamically-with-if-possible-string-id-into-a-fragment
+    private void addFieldsDynamically() {
+        int numberOfEditTexts = 0 ;
+        Context context = getActivity();
+        measureDynamic = new EditText(context);
+        measureDynamic.setHint(R.string.measurements_editText);
+        unitDynamic = new EditText(context);
+        unitDynamic.setHint(R.string.unit_editText);
+        ingredientDynamic = new EditText(context);
+        ingredientDynamic.setHint(R.string.ingredient_editText);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        measureDynamic.setLayoutParams(params);
+        unitDynamic.setLayoutParams(params);
+        ingredientDynamic.setLayoutParams(params);
+        LinearLayout layout = (LinearLayout)getView().findViewById(R.id.addNew_linearLayout);
+        layout.addView(measureDynamic,0);
+        layout.addView(unitDynamic,1);
+        layout.addView(ingredientDynamic,2);
+        numberOfEditTexts ++;
     }
 
     private void addRecipeToLibrary() {
         String recipeName = recipeNameEditText.getText().toString();
+
+        //Code for handling NumberFormatException adapted from https://stackoverflow.com/questions/11113238/getting-a-numberformatexception-from-a-numerical-edittext-field
         String numberOfServingsString = numberOfServingsEditText.getText().toString();
         Integer numberOfServings = 0;
         try {
@@ -88,6 +125,7 @@ public class AddNewRecipeFragment extends Fragment {
         }catch (NumberFormatException e){
             e.printStackTrace();
         }
+
         String cookTimeString = cookTimeEditText.getText().toString();
         Float cookTime = 0.0f;
         try{
@@ -103,13 +141,13 @@ public class AddNewRecipeFragment extends Fragment {
         } catch (NumberFormatException e){
             e.printStackTrace();
         }
+
         String totalTimeString = totalTimeEditText.getText().toString();
         Float totalTime = 0.0f;
         try{
             totalTime = Float.valueOf(totalTimeString);
         } catch (NumberFormatException e){
             e.printStackTrace();
-
         }
 
         String measure1 = measure1EditText.getText().toString();
@@ -117,6 +155,11 @@ public class AddNewRecipeFragment extends Fragment {
         String measure3 = measure3EditText.getText().toString();
         String measure4 = measure4EditText.getText().toString();
         String measure5 = measure5EditText.getText().toString();
+        String unit1 = unit1EditText.getText().toString();
+        String unit2 = unit2EditText.getText().toString();
+        String unit3 = unit3EditText.getText().toString();
+        String unit4 = unit4EditText.getText().toString();
+        String unit5 = unit5EditText.getText().toString();
         String ingredient1 = ingredient1EditText.getText().toString();
         String ingredient2 = ingredient2EditText.getText().toString();
         String ingredient3 = ingredient3EditText.getText().toString();
@@ -130,14 +173,19 @@ public class AddNewRecipeFragment extends Fragment {
 
         SectionDTO sectionDTO = new SectionDTO("",1 );
 
-        ComponentDTO componentDTO = new ComponentDTO(1, "");
-
         ArrayList<MeasurementDTO> listOfMeasures = new ArrayList<MeasurementDTO>();
         listOfMeasures.add(new MeasurementDTO(measure1));
         listOfMeasures.add(new MeasurementDTO(measure2));
         listOfMeasures.add(new MeasurementDTO(measure3));
         listOfMeasures.add(new MeasurementDTO(measure4));
         listOfMeasures.add(new MeasurementDTO(measure5));
+
+        ArrayList<UnitDTO> listOfUnits = new ArrayList<UnitDTO>();
+        listOfUnits.add(new UnitDTO(unit1,"",""));
+        listOfUnits.add(new UnitDTO(unit2,"",""));
+        listOfUnits.add(new UnitDTO(unit3,"",""));
+        listOfUnits.add(new UnitDTO(unit4,"",""));
+        listOfUnits.add(new UnitDTO(unit5,"",""));
 
         ArrayList<IngredientDTO> listOfIngredients = new ArrayList<IngredientDTO>();
         listOfIngredients.add(new IngredientDTO(ingredient1,"", ""));
@@ -146,7 +194,7 @@ public class AddNewRecipeFragment extends Fragment {
         listOfIngredients.add(new IngredientDTO(ingredient4,"", ""));
         listOfIngredients.add(new IngredientDTO(ingredient5,"", ""));
 
-        addNewRecipeViewModel.addNewRecipe(recipeDTO,instructionDTO,sectionDTO,componentDTO,listOfMeasures,listOfIngredients);
+        addNewRecipeViewModel.addNewRecipe(recipeDTO,instructionDTO,sectionDTO,listOfMeasures,listOfUnits,listOfIngredients);
 
         clearInputFieldsAfterRecipeIsAdded();
 
@@ -163,6 +211,11 @@ public class AddNewRecipeFragment extends Fragment {
         measure3EditText.setText("");
         measure4EditText.setText("");
         measure5EditText.setText("");
+        unit1EditText.setText("");
+        unit2EditText.setText("");
+        unit3EditText.setText("");
+        unit4EditText.setText("");
+        unit5EditText.setText("");
         ingredient1EditText.setText("");
         ingredient2EditText.setText("");
         ingredient3EditText.setText("");

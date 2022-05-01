@@ -119,6 +119,20 @@ public class UserRecipeDetailsFragment extends Fragment {
                 onShare();
             }
         });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onDelete();
+            }
+        });
+    }
+
+    private void onDelete() {
+        detailsViewModel.deleteFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO);
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.mainActitvityFragmentHolder, UserRecipesListFragment.newInstance())
+                .commit();
     }
 
     private void onShare() {

@@ -24,6 +24,7 @@ import dk.au.mad22spring.group04.cibusapp.database.RecipeDAO;
 import dk.au.mad22spring.group04.cibusapp.database.RecipeDatabase;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentWithMeasurementsAndIngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.MeasurementDTO;
@@ -343,5 +344,38 @@ public class Repository {
             }
         });
 
+    }
+
+    public void deleteFullRecipe(RecipeWithSectionsAndInstructionsDTO recipe){
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                db.recipeDAO().deleteRecipe(recipe.recipe);
+                for (SectionDTO section :
+                        recipe.sections) {
+                    int sectionId = section.idSection;
+                    List<ComponentDTO> sectionWithComponents = db.recipeDAO().getComponentsFromSectionId(sectionId);
+                    for (ComponentDTO component :
+                            sectionWithComponents) {
+                        List<MeasurementDTO> measurementDTOS = db.recipeDAO().getMeasurementsFromComponentId(component.idComponent);
+                        for (MeasurementDTO measurement :
+                                measurementDTOS) {
+                            db.recipeDAO().deleteMeasurement(measurement);
+                        }
+                        List<IngredientDTO> ingredientDTOs = db.recipeDAO().getIngredientFromComponentId(component.idComponent);
+                        for (IngredientDTO ingredient :
+                                ingredientDTOs) {
+                            db.recipeDAO().deleteIngredient(ingredient);
+                        }
+                        db.recipeDAO().deleteComponent(component);
+                    }
+                    db.recipeDAO().deleteSection(section);
+                }
+                for (InstructionDTO instruction :
+                        recipe.instructions) {
+                    db.recipeDAO().deleteInstruction(instruction);
+                }
+            }
+        });
     }
 }

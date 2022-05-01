@@ -22,6 +22,7 @@ import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionWithComponentsDTO;
+import dk.au.mad22spring.group04.cibusapp.model.Section;
 
 @Dao
 public interface RecipeDAO {
@@ -50,6 +51,18 @@ public interface RecipeDAO {
     public ListenableFuture<SectionWithComponentsDTO> getSectionWithComponentsById(int id);
 
     @Transaction
+    @Query("SELECT * FROM ComponentDTO WHERE sectionCreatorId like :id")
+    public List<ComponentDTO> getComponentsFromSectionId(int id);
+
+    @Transaction
+    @Query("SELECT * FROM IngredientDTO WHERE componentCreatorIdForIngredient like :id")
+    public List<IngredientDTO> getIngredientFromComponentId(int id);
+
+    @Transaction
+    @Query("SELECT * FROM MeasurementDTO WHERE componentCreatorId like :id")
+    public List<MeasurementDTO> getMeasurementsFromComponentId(int id);
+
+    @Transaction
     @Query("SELECT * FROM ComponentDTO")
     public List<ComponentWithMeasurementsAndIngredientDTO> getComponentWithMeasurementsAndIngredient();
 
@@ -74,6 +87,23 @@ public interface RecipeDAO {
     @Update
     void updateRecipe(RecipeDTO recipeDTO);
 
-/*    @Delete("SELECT * FROM ")
-    void deleteFullRecipe(RecipeWithSectionsAndInstructionsDTO recipe);*/
+    @Delete
+    void deleteRecipe(RecipeDTO recipeDTO);
+
+    @Delete
+    void deleteSection(SectionDTO sectionDTO);
+
+    @Delete
+    void deleteInstruction(InstructionDTO instructionDTO);
+
+    @Delete
+    void deleteComponent(ComponentDTO componentDTO);
+
+    @Delete
+    void deleteMeasurement(MeasurementDTO measurementDTO);
+
+    @Delete
+    void deleteIngredient(IngredientDTO ingredientDTO);
+
+
 }

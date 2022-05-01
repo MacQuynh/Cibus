@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
 
     public enum PhoneOrientation {PORTRAIT, LANDSCAPE}
     private PhoneOrientation phoneOrientation;
-    public enum Mode {USER_RECIPE_LIST, USER_RECIPE_DETAILS, API_RECIPE_LIST} //TODO: add rest of modes (api)
+    public enum Mode {USER_RECIPE_LIST, USER_RECIPE_DETAILS, API_RECIPE_LIST, ADD_RECIPE} //TODO: add rest of modes (api)
     private Mode mode;
 
     //UI Widgets
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
     private static final String USER_RECIPE_LIST_FRAG = "USER_RECIPE_LIST_FRAG";
     private static final String USER_RECIPE_DETAIL_FRAG = "USER_RECIPE_DETAIL_FRAG";
     private static final String RECIPE_API_LIST_FRAG = "RECIPE_API_LIST_FRAG";
+    private static final String ADD_RECIPE_FRAG = "ADD_RECIPE_FRAG";
 
 
     // Fragments:
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
     private UserRecipeDetailsFragment userRecipeDetailsFragment;
     private RecipeListApiFragment recipeListApiFragment;
     private RecipeListApiDetailsFragment recipeListApiDetailsFragment;
+    private AddNewRecipeFragment addNewRecipeFragment;
 
 
     //Containers for fragments:
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
             userRecipeDetailsFragment = new UserRecipeDetailsFragment();
             userRecipesListFragment = new UserRecipesListFragment();
             recipeListApiFragment = new RecipeListApiFragment();
+            addNewRecipeFragment = new AddNewRecipeFragment();
 
             userRecipeDetailsFragment.setSelectedRecipe(selectedRecipeId);
 
@@ -102,9 +105,10 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
             if(userRecipeDetailsFragment == null){
                 userRecipeDetailsFragment = new UserRecipeDetailsFragment();
             }
-
+            if(addNewRecipeFragment == null){
+                addNewRecipeFragment = new AddNewRecipeFragment();
+            }
             updateFragmentView(mode);
-
         }
 
         //https://stackoverflow.com/questions/68021770/setonnavigationitemselectedlistener-deprecated
@@ -115,41 +119,14 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                     case R.id.user:
                         mode = Mode.USER_RECIPE_LIST;
                         switchFragment();
-                        /*if(phoneOrientation == PhoneOrientation.PORTRAIT){
-                            if(mode == Mode.USER_RECIPE_LIST){
-                                recipeList.setVisibility(View.VISIBLE);
-                                recipeDetails.setVisibility(View.GONE);
-                                getSupportFragmentManager().beginTransaction()
-                                        .replace(R.id.mainActivityListLayout, userRecipesListFragment, USER_RECIPE_LIST_FRAG)
-                                        .commit();
-                            }else { //TODO: else if mode == Mode.USER_RECIPE_DETAIL
-                                recipeList.setVisibility(View.GONE);
-                                recipeDetails.setVisibility(View.VISIBLE);
-                                getSupportFragmentManager().beginTransaction()
-                                        .replace(R.id.mainActivityDetailLayout, userRecipeDetailsFragment, USER_RECIPE_DETAIL_FRAG)
-                                        .commit();
-                            }
-
-                        } else{
-                            getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.mainActivityListLayout, userRecipesListFragment, USER_RECIPE_LIST_FRAG)
-                                    .commit();
-                            getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.mainActivityDetailLayout, userRecipeDetailsFragment, USER_RECIPE_DETAIL_FRAG)
-                                    .commit();
-                        }*/
                         return true;
                     case R.id.home:
                         mode = Mode.API_RECIPE_LIST;
                         switchFragment();
-                        /*getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.mainActivityListLayout, RecipeListApiFragment.newInstance())
-                                .commit();*/
                         return true;
                     case R.id.add:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.mainActivityListLayout, AddNewRecipeFragment.newInstance())
-                                .commit();
+                        mode = Mode.ADD_RECIPE;
+                        switchFragment();
                         return true;
                 }
                 return true;
@@ -188,10 +165,18 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                             .commit();
                     break;
                 case USER_RECIPE_DETAILS:
+                    //TODO: se på hvorfor scrollView kun fylder halvdelen af skræmen
                     recipeList.setVisibility(View.GONE);
                     recipeDetails.setVisibility(View.VISIBLE);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.mainActivityDetailLayout, userRecipeDetailsFragment, USER_RECIPE_DETAIL_FRAG)
+                            .commit();
+                    break;
+                case ADD_RECIPE:
+                    recipeDetails.setVisibility(View.GONE);
+                    recipeList.setVisibility(View.VISIBLE);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainActivityListLayout, addNewRecipeFragment, ADD_RECIPE_FRAG)
                             .commit();
                     break;
                 default: //case API_RECIPE_LIST:
@@ -203,14 +188,37 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                     break;
             }
         } else  {
-            //TODO: Insert if statements for if apiList/userList/details/add
+            switch (mode){
+                case USER_RECIPE_LIST:
+                case USER_RECIPE_DETAILS:
+                    recipeList.setVisibility(View.VISIBLE);
+                    recipeDetails.setVisibility(View.VISIBLE);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainActivityListLayout, userRecipesListFragment, USER_RECIPE_LIST_FRAG)
+                            .commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainActivityDetailLayout, userRecipeDetailsFragment, USER_RECIPE_DETAIL_FRAG)
+                            .commit();
+                    break;
+                case ADD_RECIPE:
 
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.mainActivityListLayout, userRecipesListFragment, USER_RECIPE_LIST_FRAG)
-                    .commit();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.mainActivityDetailLayout, userRecipeDetailsFragment, USER_RECIPE_DETAIL_FRAG)
-                    .commit();
+                    //TODO: ved ikke helt hvad vi gør her med containerne. Der er jo to, men vi skal kun have én til dette view..
+                    recipeDetails.setVisibility(View.GONE);
+                    recipeList.setVisibility(View.VISIBLE);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainActivityListLayout, addNewRecipeFragment, ADD_RECIPE_FRAG)
+                            .commit();
+                    break;
+                default: //case API_RECIPE_LIST:
+
+                    //TODO: Update når details er klar, så begge vises her
+                    recipeList.setVisibility(View.VISIBLE);
+                    recipeDetails.setVisibility(View.GONE);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainActivityDetailLayout, recipeListApiFragment, RECIPE_API_LIST_FRAG)
+                            .commit();
+                    break;
+            }
         }
     }
 }

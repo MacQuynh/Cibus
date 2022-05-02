@@ -1,5 +1,6 @@
 package dk.au.mad22spring.group04.cibusapp.ui.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,15 +58,13 @@ public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListV
         if (listOfRecipes.get(position).getCookTimeMinutes() == null) {
             holder.total_cooking_time.setText("No total cooking time");
         } else
-            holder.total_cooking_time.setText("Total time: " + listOfRecipes.get(position).getCookTimeMinutes().toString() + "H");
+            holder.total_cooking_time.setText("Total time: " + listOfRecipes.get(position).getCookTimeMinutes().toString() + " min");
        /* if (listOfRecipes.get(position).getUserRatings().getCountPositive().toString() == null) {
             holder.rating.setText("0.0");
+        } else {
+            holder.rating.setText(listOfRecipes.get(position).getUserRatings().getScore().toString());
         }*/
-        //holder.rating.setText(listOfRecipes.get(position).getUserRatings().getCountPositive().toString());
         holder.country_code.setText(listOfRecipes.get(position).getCountry());
-
-//        holder.rating.setText(listOfRecipes.get(position).getUserRatings().getCountPositive().toString());
-        //TODO: May needs more fields
         Glide.with(holder.imgRecipe.getContext()).load(listOfRecipes.get(position).getThumbnailUrl()).into(holder.imgRecipe);
 
     }

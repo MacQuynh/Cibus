@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/delete"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/userRecipeDetail_btnSave" />
+                app:layout_constraintTop_toTopOf="@+id/recipeListApiDetails_btnSave" />
 
             <TextView
                 android:id="@+id/recipe_list_api_details_ingrediense"
@@ -197,20 +197,20 @@
                 tools:text="120 min" />
 
             <Button
-                android:id="@+id/userRecipeDetail_btnShare"
+                android:id="@+id/recipeListApiDetails_btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/share"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/userRecipeDetail_btnSave" />
+                app:layout_constraintTop_toTopOf="@+id/recipeListApiDetails_btnSave" />
 
             <Button
-                android:id="@+id/userRecipeDetail_btnSave"
+                android:id="@+id/recipeListApiDetails_btnSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/save"
-                app:layout_constraintEnd_toStartOf="@+id/userRecipeDetail_btnShare"
+                app:layout_constraintEnd_toStartOf="@+id/recipeListApiDetails_btnBack"
                 app:layout_constraintStart_toEndOf="@+id/userRecipeDetail_btnDelete"
                 app:layout_constraintTop_toBottomOf="@+id/userRecipeDetail_ratingBar" />
 

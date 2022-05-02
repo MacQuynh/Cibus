@@ -91,8 +91,8 @@ public class UserRecipeDetailsFragment extends Fragment {
         ratingBar = view.findViewById(R.id.userRecipeDetail_ratingBar);
 
         btnDelete = view.findViewById(R.id.userRecipeDetail_btnDelete);
-        btnSave = view.findViewById(R.id.userRecipeDetail_btnSave);
-        btnShare = view.findViewById(R.id.userRecipeDetail_btnShare);
+        btnSave = view.findViewById(R.id.recipeListApiDetails_btnSave);
+//        btnShare = view.findViewById(R.id.userRecipeDetail_btnShare);
     }
 
     private void listeners(){

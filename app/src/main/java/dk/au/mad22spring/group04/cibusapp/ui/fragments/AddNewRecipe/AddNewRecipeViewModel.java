@@ -24,7 +24,7 @@ public class AddNewRecipeViewModel extends AndroidViewModel {
         repository = Repository.getRepositoryInstance(application);
     }
 
-    public void addNewRecipe(RecipeDTO recipeDTO, InstructionDTO instructionDTO, SectionDTO sectionDTO, ArrayList<MeasurementDTO> listOfMeasurementDTO, ArrayList<UnitDTO> listOfUnitsDTO , ArrayList<IngredientDTO> listOfIngredientDTO){
-        repository.addNewRecipeToDb(recipeDTO, instructionDTO, sectionDTO, listOfMeasurementDTO, listOfUnitsDTO, listOfIngredientDTO);
+    public void addNewRecipeToLibrary(RecipeDTO recipeDTO, InstructionDTO instructionDTO, SectionDTO sectionDTO, ArrayList<MeasurementDTO> listOfMeasurementDTO, ArrayList<UnitDTO> listOfUnitsDTO , ArrayList<IngredientDTO> listOfIngredientDTO){
+        repository.addNewRecipeToLibrary(recipeDTO, instructionDTO, sectionDTO, listOfMeasurementDTO, listOfUnitsDTO, listOfIngredientDTO);
     }
 }

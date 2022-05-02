@@ -81,7 +81,7 @@ public class AddNewRecipeFragment extends Fragment {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addRecipeToLibrary();
+                addNewRecipeToLibrary();
             }
         });
         extraFieldBtn = view.findViewById(R.id.addNew_addField_btn_);
@@ -114,7 +114,7 @@ public class AddNewRecipeFragment extends Fragment {
         numberOfEditTexts ++;
     }
 
-    private void addRecipeToLibrary() {
+    private void addNewRecipeToLibrary() {
         String recipeName = recipeNameEditText.getText().toString();
 
         //Code for handling NumberFormatException adapted from https://stackoverflow.com/questions/11113238/getting-a-numberformatexception-from-a-numerical-edittext-field
@@ -194,7 +194,7 @@ public class AddNewRecipeFragment extends Fragment {
         listOfIngredients.add(new IngredientDTO(ingredient4,"", ""));
         listOfIngredients.add(new IngredientDTO(ingredient5,"", ""));
 
-        addNewRecipeViewModel.addNewRecipe(recipeDTO,instructionDTO,sectionDTO,listOfMeasures,listOfUnits,listOfIngredients);
+        addNewRecipeViewModel.addNewRecipeToLibrary(recipeDTO,instructionDTO,sectionDTO,listOfMeasures,listOfUnits,listOfIngredients);
 
         clearInputFieldsAfterRecipeIsAdded();
 

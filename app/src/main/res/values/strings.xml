@@ -30,7 +30,7 @@
     <string name="recipeName_editText">Recipe Name</string>
     <string name="ingredientsHeading_textView">Ingredients:</string>
     <string name="measure_textView">Measure</string>
-    <string name="measureHeading_textview">Measure</string>
+    <string name="measureHeading_textview">Measure:</string>
     <string name="measurements_editText">Number</string>
     <string name="unit_editText">ml/dl/g</string>
     <string name="ingredient_editText">Enter ingredient</string>
@@ -49,5 +49,5 @@
     <string name="save">Save</string>
     <string name="share">Share</string>
     <string name="addFields_btn">Add Fields</string>
-    <string name="unit">Unit</string>
+    <string name="unit">Unit:</string>
 </resources>

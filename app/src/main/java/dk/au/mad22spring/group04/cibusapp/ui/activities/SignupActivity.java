@@ -57,7 +57,6 @@ public class SignupActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { goToLoginActivity();
-
             }
         });
     }
@@ -73,7 +72,7 @@ public class SignupActivity extends AppCompatActivity {
 
         signupViewModel.createUserAccount(name, email, password, new SignupHandler() {
             @Override
-            public void onSuccess(String email) {
+            public void onSuccess(String name, String email) {
                 Log.d(TAG, "onSuccess: " + email);
                 displayToast(getString(R.string.msg_you_are_now_signed_up));
                 goToStartPage();
@@ -96,6 +95,7 @@ public class SignupActivity extends AppCompatActivity {
     private void goToLoginActivity() {
         Intent intent =  new Intent(this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void displayToast(String message) {

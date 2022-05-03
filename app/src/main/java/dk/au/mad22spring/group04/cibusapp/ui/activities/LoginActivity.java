@@ -67,18 +67,15 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError() {
-                displayToast("Failed to login");
                 passwordEditText.setText("");
             }
         });
-
     }
 
     private void gotToSignupActivity() {
         Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
         finish();
-
     }
 
     private void goToStartPage() {

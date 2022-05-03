@@ -72,6 +72,7 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
             }
         });
 
+        searchBtn.callOnClick();
 
     }
 

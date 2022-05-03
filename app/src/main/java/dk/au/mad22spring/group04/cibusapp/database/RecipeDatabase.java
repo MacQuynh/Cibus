@@ -13,13 +13,15 @@ import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.MeasurementDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.UnitDTO;
 
 @Database(entities = {RecipeDTO.class,
         InstructionDTO.class,
         SectionDTO.class,
         ComponentDTO.class,
         MeasurementDTO.class,
-        IngredientDTO.class}, version = 3)
+        IngredientDTO.class,
+        UnitDTO.class}, version = 5)
 public abstract class RecipeDatabase extends RoomDatabase {
     public abstract RecipeDAO recipeDAO();
     private static RecipeDatabase instance;

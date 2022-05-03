@@ -30,12 +30,16 @@
     <string name="recipeName_editText">Recipe Name</string>
     <string name="ingredientsHeading_textView">Ingredients:</string>
     <string name="measure_textView">Measure</string>
-    <string name="measureHeading_textview">Measure</string>
-    <string name="measurements_editText">ml/dl/spoon/g</string>
+    <string name="measureHeading_textview">Measure:</string>
+    <string name="measurements_editText">Number</string>
+    <string name="unit_editText">ml/dl/g</string>
     <string name="ingredient_editText">Enter ingredient</string>
     <string name="instructionsHeading_textView">Instructions:</string>
     <string name="instructions_editText">Enter instructions</string>
     <string name="addBtn">Add</string>
+    <string name="recipeName_hint">Enter name</string>   
+    <string name="time_editView">In minutes</string>
+    <string name="numberOfServings_editText">Enter number</string>
     <string name="country_header">Country:</string>
     <string name="number_of_servings">Number of Servings:</string>
     <string name="cook_time">Cook time:</string>
@@ -44,4 +48,6 @@
     <string name="delete">Delete</string>
     <string name="save">Save</string>
     <string name="share">Share</string>
+    <string name="addFields_btn">Add Fields</string>
+    <string name="unit">Unit:</string>
 </resources>

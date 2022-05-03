@@ -13,11 +13,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="684dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="29dp"
-            android:layout_marginBottom="-11dp">
+            android:layout_marginTop="-26dp"
+            android:layout_marginBottom="43dp">
 
             <TextView
                 android:id="@+id/addNew_header_textView"
@@ -27,7 +27,6 @@
                 android:textSize="@dimen/heading_size"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,7 +43,7 @@
 
             <EditText
                 android:id="@+id/addNew_recipeName_editText"
-                android:layout_width="175dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/recipeName_hint"
@@ -60,12 +59,12 @@
                 android:id="@+id/addNew_MeasureHeading_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="@string/measureHeading_textview"
                 android:textSize="@dimen/subHeading_size"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addNew_total_editText" />
+                app:layout_constraintStart_toStartOf="@+id/addNew_recipeName_editText"
+                app:layout_constraintTop_toBottomOf="@+id/addNew_recipeName_editText" />
 
             <TextView
                 android:id="@+id/addNew_ingredientsHeading_textView"
@@ -82,6 +81,7 @@
                 android:id="@+id/addNew_measure1_editText"
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/measurements_editText"
@@ -155,7 +155,7 @@
                 android:id="@+id/addNew_unit1_editText"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="24dp"
                 android:ems="10"
                 android:hint="@string/unit_editText"
                 android:inputType="textPersonName"
@@ -216,15 +216,13 @@
                 android:id="@+id/addNew_ingredient1_editText"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="24dp"
                 android:ems="10"
                 android:hint="@string/ingredient_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:textSize="@dimen/hint_text_size"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_unit1_editText"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/addNew_unit1_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_unit1_editText" />
 
@@ -285,6 +283,7 @@
                 android:id="@+id/addNew_add_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="@string/addBtn"
                 app:layout_constraintEnd_toEndOf="@+id/addNew_instructions_editText"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_instructions_editText" />
@@ -293,39 +292,38 @@
                 android:id="@+id/addNew_instructionsHeading_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:text="@string/instructionsHeading_textView"
                 android:textSize="@dimen/subHeading_size"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addNew_linearLayout" />
+                app:layout_constraintBottom_toBottomOf="@+id/addNew_ingredientsHeading_textView"
+                app:layout_constraintStart_toStartOf="@+id/addNew_instructions_editText"
+                app:layout_constraintTop_toTopOf="@+id/addNew_ingredientsHeading_textView" />
 
             <EditText
                 android:id="@+id/addNew_instructions_editText"
-                android:layout_width="350dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="24dp"
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="@string/instructions_editText"
                 android:inputType="textMultiLine"
                 android:minHeight="48dp"
                 android:textSize="@dimen/hint_text_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/addNew_instructionsHeading_textView"
-                app:layout_constraintTop_toBottomOf="@+id/addNew_instructionsHeading_textView" />
+                app:layout_constraintStart_toEndOf="@+id/addNew_ingredient1_editText"
+                app:layout_constraintTop_toTopOf="@+id/addNew_ingredient1_editText" />
 
             <TextView
                 android:id="@+id/addNew_timeTotal_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="32dp"
                 android:text="@string/total_time"
                 android:textSize="@dimen/subHeading_size"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addNew_recipeName_editText" />
+                app:layout_constraintBottom_toBottomOf="@+id/addNew_numberOf_textView"
+                app:layout_constraintStart_toEndOf="@+id/addNew_numberOf_textView"
+                app:layout_constraintTop_toTopOf="@+id/addNew_numberOf_textView" />
 
             <TextView
                 android:id="@+id/addNew_cookTime_textView"
@@ -360,8 +358,8 @@
                 android:inputType="number"
                 android:minHeight="48dp"
                 android:textSize="@dimen/hint_text_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/addNew_timeTotal_textView" />
+                app:layout_constraintStart_toStartOf="@+id/addNew_timeTotal_textView"
+                app:layout_constraintTop_toBottomOf="@+id/addNew_timeTotal_textView" />
 
             <EditText
                 android:id="@+id/addNew_cookTime_editText"
@@ -392,15 +390,14 @@
                 android:id="@+id/addNew_numberOf_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="32dp"
                 android:text="@string/number_of_servings"
                 android:textSize="@dimen/subHeading_size"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_recipeName_textView"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/addNew_recipeName_textView"
-                app:layout_constraintTop_toTopOf="@+id/addNew_recipeName_textView" />
+                app:layout_constraintTop_toTopOf="@+id/addNew_recipeName_textView"
+                app:layout_constraintVertical_bias="0.0" />
 
             <EditText
                 android:id="@+id/addNew_numberOf_editText"
@@ -419,20 +416,22 @@
                 android:id="@+id/addNew_addField_btn_"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:text="@string/addFields_btn"
-                app:layout_constraintEnd_toEndOf="@+id/addNew_ingredient5_editText"
-                app:layout_constraintTop_toBottomOf="@+id/addNew_ingredient5_editText" />
+                app:layout_constraintBottom_toTopOf="@+id/addNew_linearLayout"
+                app:layout_constraintStart_toStartOf="@+id/addNew_instructions_editText"
+                app:layout_constraintTop_toBottomOf="@+id/addNew_ingredient4_editText"
+                app:layout_constraintVertical_bias="0.0" />
 
             <LinearLayout
                 android:id="@+id/addNew_linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addNew_addField_btn_"></LinearLayout>
+                app:layout_constraintTop_toBottomOf="@+id/addNew_ingredient5_editText"></LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
 </ScrollView>

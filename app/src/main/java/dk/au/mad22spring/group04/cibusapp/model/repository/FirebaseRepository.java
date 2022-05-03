@@ -40,7 +40,6 @@ public class FirebaseRepository {
      */
 
     public void createUserAccount(String name, String email, String password, SignupHandler signupHandler){
-
         Log.d(TAG, "createUserAccount: " + email);
         if (email == null || email.length() < 5){
             displayToast(context.getString(R.string.msg_email_is_invalid));
@@ -59,7 +58,7 @@ public class FirebaseRepository {
                             Constants.USER_ID = uid;
                         }
                         Log.d(TAG, "createUser: success");
-                        signupHandler.onSuccess(email);
+                        signupHandler.onSuccess(name,email);
 
                     } else{
                         signupHandler.onError();
@@ -74,6 +73,15 @@ public class FirebaseRepository {
     }
 
     public  void loginUser(String email, String password, final LoginHandler loginHandler){
+        if (email == null || email.length() < 5){
+            displayToast(context.getString(R.string.msg_email_is_invalid));
+            return;
+        }
+        if (password == null || password.length() < 6){
+            displayToast(context.getString(R.string.msg_password_is_invalid));
+            return;
+        }
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()){

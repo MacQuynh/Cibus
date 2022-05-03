@@ -1,8 +1,10 @@
 package dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipeDetails;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,14 +15,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import dk.au.mad22spring.group04.cibusapp.R;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionWithComponentsDTO;
@@ -40,6 +46,7 @@ public class UserRecipeDetailsFragment extends Fragment {
             txtInstructions;
     private Button btnDelete, btnSave, btnShare;
     private RatingBar ratingBar;
+    private ImageView imgRecipe;
 
     private UserRecipeDetailsViewModel detailsViewModel;
     private static long recipeId;
@@ -78,21 +85,24 @@ public class UserRecipeDetailsFragment extends Fragment {
     }
 
     private void setUIWidgets(View view){
-        txtRecipeName = view.findViewById(R.id.recipe_list_api_details_NameHeader);
-        txtNumOfServings = view.findViewById(R.id.recipeLitApiDetailsServings);
-        txtCountry = view.findViewById(R.id.recipeListApiDetailsCountry);
-        txtDescription = view.findViewById(R.id.recipeListApiDetailsDescription);
-        txtPrepTime = view.findViewById(R.id.recipeListApiDetailsPrepTime);
-        txtCookTime = view.findViewById(R.id.recipeListApiDetailsCookTime);
-        txtTotalTime = view.findViewById(R.id.recipeListApiDetailsTotalTime);
-        txtIngredients = view.findViewById(R.id.recipeListApiDetailsIngredients);
-        txtInstructions = view.findViewById(R.id.recipeListApiDetailsInstructions);
+        imgRecipe = view.findViewById(R.id.userRecipeDetail_img);
+        
+        txtRecipeName = view.findViewById(R.id.userRecipeDetail_NameHeader);
+        txtNumOfServings = view.findViewById(R.id.userRecipeDetail_servings);
+        txtCountry = view.findViewById(R.id.userRecipeDetail_Country);
+        txtDescription = view.findViewById(R.id.userRecipeDetail_Description);
+        txtPrepTime = view.findViewById(R.id.userRecipeDetail_prepTime);
+        txtCookTime = view.findViewById(R.id.userRecipeDetail_cookTime);
+        txtTotalTime = view.findViewById(R.id.userRecipeDetail_totalTime);
+        txtIngredients = view.findViewById(R.id.userRecipeDetail_Ingredients);
+        txtInstructions = view.findViewById(R.id.userRecipeDetail_Instructions);
 
         ratingBar = view.findViewById(R.id.userRecipeDetail_ratingBar);
 
         btnDelete = view.findViewById(R.id.userRecipeDetail_btnDelete);
-        btnSave = view.findViewById(R.id.recipeListApiDetails_btnSave);
-//        btnShare = view.findViewById(R.id.userRecipeDetail_btnShare);
+        btnSave = view.findViewById(R.id.userRecipeDetail_btnSave);
+        btnShare = view.findViewById(R.id.userRecipeDetail_btnShare);
+
     }
 
     private void listeners(){
@@ -109,6 +119,31 @@ public class UserRecipeDetailsFragment extends Fragment {
                 onSave();
             }
         });
+
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onShare();
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onDelete();
+            }
+        });
+    }
+
+    private void onDelete() {
+        detailsViewModel.deleteFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO);
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.mainActitvityFragmentHolder, UserRecipesListFragment.newInstance())
+                .commit();
+    }
+
+    private void onShare() {
+        //TODO
     }
 
     private void onSave() {
@@ -119,6 +154,19 @@ public class UserRecipeDetailsFragment extends Fragment {
     }
 
     private void setUIData(){
+        if(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getApiId() == null){
+            //get color resource: https://www.codegrepper.com/code-examples/java/get+color+resource+android
+            btnShare.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.disabledGrey));
+            btnShare.setClickable(false);
+        }
+        
+        if(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getThumbnailUrl().equals("") 
+                || detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getThumbnailUrl() == null){
+            imgRecipe.setImageResource(R.drawable.default_recipe_image);
+        } else {
+            Glide.with(imgRecipe.getContext()).load(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getThumbnailUrl()).into(imgRecipe);
+        }
+
         txtRecipeName.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getName());
         txtNumOfServings.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getNumServings() + "");
         txtCountry.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getCountry());
@@ -135,18 +183,33 @@ public class UserRecipeDetailsFragment extends Fragment {
         }
         txtInstructions.setText(instructionText);
 
-        //getIngredients();
+        getIngredients();
     }
 
     //Fejler med timing...
     private void getIngredients(){
+        detailsViewModel.getIngredientMeasurementText(detailsViewModel.recipeWithSectionsAndInstructionsDTO).observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                txtIngredients.setText(s);
+            }
+        });
+    }
+
+    private void getIngredients2(){
         String ingredientText = "";
         for (SectionDTO section:
-             detailsViewModel.recipeWithSectionsAndInstructionsDTO.sections) {
-            int id = section.idSection;
-            SectionWithComponentsDTO sectio = detailsViewModel.getSectionWithComponent(id);
-            List<ComponentDTO> componentDTOS = detailsViewModel.sectionWithComponentsDTO.components;
-            ingredientText += componentDTOS.get(0).getRawText();
+                detailsViewModel.recipeWithSectionsAndInstructionsDTO.sections) {
+/*            int id = section.idSection;
+            List<ComponentDTO> componentDTOS = detailsViewModel.getSectionWithComponent(id);
+            for (ComponentDTO component :
+                    componentDTOS) {*/
+           /* List<IngredientDTO> ingredientDTOS = detailsViewModel.getIngredientFromComponentId(section.idSection);
+            for (IngredientDTO ingredient :
+                    ingredientDTOS) {
+                ingredientText += ingredient.getName() + "\n";
+            }*/
+            /*}*/
         };
         txtIngredients.setText(ingredientText);
     }

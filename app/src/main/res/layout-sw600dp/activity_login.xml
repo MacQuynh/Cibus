@@ -38,7 +38,7 @@
         android:id="@+id/login_email_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
+        android:layout_marginStart="64dp"
         android:ems="10"
         android:hint="@string/email_editText"
         android:inputType="textEmailAddress"

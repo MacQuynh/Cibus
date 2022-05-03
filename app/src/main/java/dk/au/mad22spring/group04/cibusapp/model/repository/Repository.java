@@ -313,7 +313,6 @@ public class Repository {
                                     response.body().getResults().get(0).getId().toString()
                             );
                         }
-                        recipeMutable.postValue(recipeDTO);
 
                         /*Instruction*/
                         for (Instruction instruction : response.body().getResults().get(0).getInstructions()) {
@@ -325,11 +324,8 @@ public class Repository {
                             i.setId(instruction.getId());
                             instructionList.add(i);
                         }
-                        listInstructionMutable.postValue(instructionList);
 
                         /*Section & Component*/
-
-
                         try {
                             for (Component component : response.body().getResults().get(0).getSections().get(0).getComponents()) {
                                 Component c = new Component();
@@ -342,6 +338,8 @@ public class Repository {
                             e.printStackTrace();
                         }
 
+                        recipeMutable.postValue(recipeDTO);
+                        listInstructionMutable.postValue(instructionList);
                         listSectionMutable.postValue(componentList);
 
                     } catch (Exception e) {
@@ -351,7 +349,7 @@ public class Repository {
             }
 
             @Override
-            public void onFailure(Call<Recipes> call, Throwable t) {
+            public void onFailure(@NonNull Call<Recipes> call, @NonNull Throwable t) {
                 Log.d(TAG, "onFailure: ");
             }
         });
@@ -373,4 +371,83 @@ public class Repository {
         getRecipeByName(name);
     }
 
+    public void addRecipeFromAPItoDB(String recipeTobeAddedtoDB) {
+        retrofitClient.getJsonApi().getRecipeFromSearchString(recipeTobeAddedtoDB).enqueue(new Callback<Recipes>() {
+            @Override
+            public void onResponse(Call<Recipes> call, Response<Recipes> response) {
+                /*Recipe*/
+                RecipeDTO recipeDTO = null;
+                totalTimeMinutes = (Double) response.body().getResults().get(0).getTotalTimeMinutes();
+                cookTimeMinutes = (Double) response.body().getResults().get(0).getCookTimeMinutes();
+                prepTimeMinutes = (Double) response.body().getResults().get(0).getPrepTimeMinutes();
+                userRating = response.body().getResults().get(0).getUserRatings().getCountPositive().floatValue();
+
+                if (totalTimeMinutes == null || cookTimeMinutes == null || prepTimeMinutes == null || userRating == null) {
+                    totalTimeMinutes = 0.0;
+                    cookTimeMinutes = 0.0;
+                    prepTimeMinutes = 0.0;
+                    userRating = 0.0f;
+                }
+                if (recipeMutable != null) {
+                    recipeDTO = new RecipeDTO(response.body().getResults().get(0).getName(),
+                            response.body().getResults().get(0).getThumbnailUrl(),
+                            totalTimeMinutes.floatValue(), cookTimeMinutes.floatValue(), prepTimeMinutes.floatValue(),
+                            response.body().getResults().get(0).getCountry(),
+                            response.body().getResults().get(0).getNumServings(),
+                            response.body().getResults().get(0).getDescription(),
+                            response.body().getResults().get(0).getCreatedAt(),
+                            response.body().getResults().get(0).getUpdatedAt(),
+                            userRating,
+                            response.body().getResults().get(0).getId().toString()
+                    );
+                }
+                List<Instruction> instructionList = new ArrayList<>();
+
+                for (Instruction instruction : response.body().getResults().get(0).getInstructions()) {
+                    Instruction i = new Instruction();
+                    i.setDisplayText(instruction.getDisplayText());
+                    i.setTemperature(instruction.getTemperature());
+                    i.setEndTime(instruction.getEndTime());
+                    i.setStartTime(instruction.getStartTime());
+                    i.setId(instruction.getId());
+                    instructionList.add(i);
+                }
+
+                String instructions = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                for (int i = 0; i < instructionList.size(); i++) {
+                    stringBuilder.append(i + 1 + ") ").append(instructionList.get(i).getDisplayText())
+                            .append("\n\n");
+                    instructions = stringBuilder.toString();
+                }
+
+                InstructionDTO instructionDTO = new InstructionDTO(instructions, 00, 00, 1);
+
+                SectionDTO sectionDTO = new SectionDTO("", 1);
+
+                ArrayList<MeasurementDTO> listOfMeasures = new ArrayList<MeasurementDTO>();
+//                ArrayList<UnitDTO> listOfUnits = new ArrayList<UnitDTO>();
+                ArrayList<IngredientDTO> listOfIngredients = new ArrayList<IngredientDTO>();
+
+
+
+                RecipeDTO finalRecipeDTO = recipeDTO;
+                executor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        long idRecipe = db.recipeDAO().addRecipe(finalRecipeDTO);
+
+
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<Recipes> call, Throwable t) {
+
+            }
+        });
+
+    }
 }

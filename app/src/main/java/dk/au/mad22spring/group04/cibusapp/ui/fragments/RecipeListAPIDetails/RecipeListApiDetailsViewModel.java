@@ -39,4 +39,8 @@ public class RecipeListApiDetailsViewModel extends AndroidViewModel {
     public LiveData<List<Component>> getSection() {
         return repository.getSectionWithComponentAPI();
     }
+
+    public void addRecipeFromAPItoDB(String recipeTobeAddedtoDB) {
+        repository.addRecipeFromAPItoDB(recipeTobeAddedtoDB);
+    }
 }

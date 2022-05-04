@@ -1,0 +1,122 @@
+[33mc0c013f[m[33m ([m[1;36mHEAD -> [m[1;32mSignup[m[33m)[m HEAD@{0}: checkout: moving from main to Signup
+[33mf9a98d8[m[33m ([m[1;31morigin/randi[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{1}: checkout: moving from Signup to main
+[33mc0c013f[m[33m ([m[1;36mHEAD -> [m[1;32mSignup[m[33m)[m HEAD@{2}: commit: Added landscape mode
+[33mf9a98d8[m[33m ([m[1;31morigin/randi[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{3}: merge main: Fast-forward
+[33maeb4e55[m HEAD@{4}: checkout: moving from main to Signup
+[33mf9a98d8[m[33m ([m[1;31morigin/randi[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{5}: pull: Fast-forward
+[33maeb4e55[m HEAD@{6}: checkout: moving from Signup to main
+[33maeb4e55[m HEAD@{7}: checkout: moving from main to Signup
+[33maeb4e55[m HEAD@{8}: merge Signup: Fast-forward
+[33mc023003[m HEAD@{9}: checkout: moving from Signup to main
+[33maeb4e55[m HEAD@{10}: checkout: moving from main to Signup
+[33mc023003[m HEAD@{11}: checkout: moving from Signup to main
+[33maeb4e55[m HEAD@{12}: commit: updatede units
+[33m1cd2646[m HEAD@{13}: checkout: moving from Signup to Signup
+[33m1cd2646[m HEAD@{14}: merge main: Merge made by the 'recursive' strategy.
+[33mf34c4ae[m HEAD@{15}: checkout: moving from main to Signup
+[33mc023003[m HEAD@{16}: pull: Fast-forward
+[33m6da7f3e[m HEAD@{17}: checkout: moving from Signup to main
+[33mf34c4ae[m HEAD@{18}: commit: added units
+[33mf543802[m HEAD@{19}: checkout: moving from Signup to Signup
+[33mf543802[m HEAD@{20}: merge main: Merge made by the 'recursive' strategy.
+[33m57473a4[m HEAD@{21}: checkout: moving from main to Signup
+[33m6da7f3e[m HEAD@{22}: pull: Fast-forward
+[33m2d51449[m HEAD@{23}: checkout: moving from Signup to main
+[33m57473a4[m HEAD@{24}: commit: dynamically adding fields - not finished!
+[33m2d51449[m HEAD@{25}: checkout: moving from main to Signup
+[33m2d51449[m HEAD@{26}: merge Signup: Fast-forward
+[33m41113c2[m HEAD@{27}: checkout: moving from Signup to main
+[33m2d51449[m HEAD@{28}: checkout: moving from main to Signup
+[33m41113c2[m HEAD@{29}: checkout: moving from Signup to main
+[33m2d51449[m HEAD@{30}: commit: Added try/catch numberFormatException for editTextNumber fields
+[33m41113c2[m HEAD@{31}: checkout: moving from main to Signup
+[33m41113c2[m HEAD@{32}: checkout: moving from Signup to main
+[33m41113c2[m HEAD@{33}: merge main: Fast-forward
+[33m38daea0[m HEAD@{34}: checkout: moving from main to Signup
+[33m41113c2[m HEAD@{35}: pull: Merge made by the 'recursive' strategy.
+[33mb766aed[m HEAD@{36}: checkout: moving from main to main
+[33mb766aed[m HEAD@{37}: commit: Added methed for clearing inputfields
+[33m38daea0[m HEAD@{38}: merge Signup: Fast-forward
+[33m6a10819[m HEAD@{39}: checkout: moving from Signup to main
+[33m38daea0[m HEAD@{40}: checkout: moving from main to Signup
+[33m6a10819[m HEAD@{41}: checkout: moving from Signup to main
+[33m38daea0[m HEAD@{42}: commit: merged strings.xml
+[33m040958f[m HEAD@{43}: checkout: moving from Signup to Signup
+[33m040958f[m HEAD@{44}: commit (merge): Merge branch 'main' into Signup
+[33mbfa1527[m HEAD@{45}: checkout: moving from main to Signup
+[33m6a10819[m HEAD@{46}: pull: Fast-forward
+[33m3f4ac7d[m HEAD@{47}: checkout: moving from Signup to main
+[33mbfa1527[m HEAD@{48}: commit: Checking for 'null' on login, addNewRecipeToDb method in Repository
+[33m9b22d62[m HEAD@{49}: checkout: moving from Signup to Signup
+[33m9b22d62[m HEAD@{50}: commit (merge): Merge branch 'main' into Signup
+[33maf00c3b[m HEAD@{51}: checkout: moving from main to Signup
+[33m3f4ac7d[m HEAD@{52}: pull: Fast-forward
+[33m621fccd[m HEAD@{53}: checkout: moving from Signup to main
+[33maf00c3b[m HEAD@{54}: commit: changes to addNewFragment
+[33md4801d8[m HEAD@{55}: merge main: Merge made by the 'recursive' strategy.
+[33ma4c696f[m HEAD@{56}: checkout: moving from main to Signup
+[33m621fccd[m HEAD@{57}: pull: Fast-forward
+[33mc0b3af5[m HEAD@{58}: checkout: moving from Signup to main
+[33ma4c696f[m HEAD@{59}: commit: added functionality to addNew
+[33mc0b3af5[m HEAD@{60}: checkout: moving from main to Signup
+[33mc0b3af5[m HEAD@{61}: checkout: moving from Signup to main
+[33mc0b3af5[m HEAD@{62}: checkout: moving from main to Signup
+[33mc0b3af5[m HEAD@{63}: merge Signup: Fast-forward
+[33m9f09442[m HEAD@{64}: checkout: moving from Signup to main
+[33mc0b3af5[m HEAD@{65}: checkout: moving from main to Signup
+[33m9f09442[m HEAD@{66}: checkout: moving from Signup to main
+[33mc0b3af5[m HEAD@{67}: commit: AddNewRecipeFragment added
+[33m9f09442[m HEAD@{68}: checkout: moving from main to Signup
+[33m9f09442[m HEAD@{69}: merge Signup: Fast-forward
+[33mf717f11[m HEAD@{70}: checkout: moving from Signup to main
+[33m9f09442[m HEAD@{71}: checkout: moving from main to Signup
+[33mf717f11[m HEAD@{72}: checkout: moving from Signup to main
+[33m9f09442[m HEAD@{73}: commit: added login functionality
+[33mf717f11[m HEAD@{74}: merge main: Fast-forward
+[33m8cefeef[m HEAD@{75}: checkout: moving from main to Signup
+[33mf717f11[m HEAD@{76}: pull: Fast-forward
+[33m8cefeef[m HEAD@{77}: checkout: moving from main to main
+[33m8cefeef[m HEAD@{78}: merge Signup: Fast-forward
+[33md5c161c[m HEAD@{79}: checkout: moving from Signup to main
+[33m8cefeef[m HEAD@{80}: merge main: Merge made by the 'recursive' strategy.
+[33medc46cc[m HEAD@{81}: checkout: moving from main to Signup
+[33md5c161c[m HEAD@{82}: pull: Fast-forward
+[33m2d70fbc[m HEAD@{83}: checkout: moving from Signup to main
+[33medc46cc[m HEAD@{84}: commit: changes to signup
+[33m2d70fbc[m HEAD@{85}: checkout: moving from main to Signup
+[33m2d70fbc[m HEAD@{86}: merge Signup: Fast-forward
+[33m3de572f[m HEAD@{87}: checkout: moving from Signup to main
+[33m2d70fbc[m HEAD@{88}: commit (merge): Merge branch 'main' into Signup
+[33mef5b3ad[m HEAD@{89}: checkout: moving from main to Signup
+[33m3de572f[m HEAD@{90}: pull: Fast-forward
+[33md8cbc24[m HEAD@{91}: checkout: moving from Signup to main
+[33mef5b3ad[m HEAD@{92}: commit: added signup functionality
+[33md8cbc24[m HEAD@{93}: checkout: moving from main to Signup
+[33md8cbc24[m HEAD@{94}: checkout: moving from Signup to main
+[33md8cbc24[m HEAD@{95}: checkout: moving from main to Signup
+[33md8cbc24[m HEAD@{96}: checkout: moving from Signup to main
+[33md8cbc24[m HEAD@{97}: checkout: moving from main to Signup
+[33md8cbc24[m HEAD@{98}: merge Signup: Fast-forward
+[33mf7c854c[m HEAD@{99}: checkout: moving from Signup to main
+[33md8cbc24[m HEAD@{100}: merge main: Merge made by the 'recursive' strategy.
+[33m6740d5d[m HEAD@{101}: checkout: moving from main to Signup
+[33mf7c854c[m HEAD@{102}: pull: Fast-forward
+[33m07b17fb[m HEAD@{103}: checkout: moving from Signup to main
+[33m6740d5d[m HEAD@{104}: commit: added signup act + firebase -gradle
+[33m07ded0f[m HEAD@{105}: commit: merge
+[33m07b17fb[m HEAD@{106}: merge main: Fast-forward
+[33m49b8089[m HEAD@{107}: checkout: moving from main to Signup
+[33m07b17fb[m HEAD@{108}: checkout: moving from Signup to main
+[33m49b8089[m HEAD@{109}: checkout: moving from main to Signup
+[33m07b17fb[m HEAD@{110}: pull --rebase=false origin main --verbose --progress: Fast-forward
+[33ma82db48[m HEAD@{111}: pull --rebase=false origin main --verbose --progress: Fast-forward
+[33m49b8089[m HEAD@{112}: checkout: moving from main to main
+[33m49b8089[m HEAD@{113}: checkout: moving from Signup to main
+[33m49b8089[m HEAD@{114}: checkout: moving from main to Signup
+[33m49b8089[m HEAD@{115}: reset: moving to HEAD
+[33m49b8089[m HEAD@{116}: checkout: moving from Signup to main
+[33m49b8089[m HEAD@{117}: checkout: moving from main to Signup
+[33m49b8089[m HEAD@{118}: checkout: moving from Signup to main
+[33m49b8089[m HEAD@{119}: checkout: moving from main to Signup
+[33m49b8089[m HEAD@{120}: pull --rebase=false origin main --verbose --progress: Fast-forward
+[33mf233de4[m HEAD@{121}: clone: from https://github.com/MacQuynh/Cibus.git

@@ -63,13 +63,22 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
         rcvUserRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
         rcvUserRecipes.setAdapter(adapter);
 
+
         userRecipeVM = new ViewModelProvider(this).get(UserRecipesListViewModel.class);
         userRecipeVM.getUserRecipes().observe(getViewLifecycleOwner(), new Observer<List<RecipeWithSectionsAndInstructionsDTO>>() {
             @Override
             public void onChanged(List<RecipeWithSectionsAndInstructionsDTO> recipeWithSectionsAndInstructionsDTOS) {
+                if (recipeWithSectionsAndInstructionsDTOS.size() <= 0){
+                    userRecipeVM.addDefaultRecipes();
+                }
                 adapter.updateUserRecipeList(recipeWithSectionsAndInstructionsDTOS);
             }
         });
+        userRecipeVM.addDefaultRecipes();
+        userRecipeVM.addDefaultRecipes();
+        userRecipeVM.addDefaultRecipes();
+        userRecipeVM.addDefaultRecipes();
+        userRecipeVM.addDefaultRecipes();
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override

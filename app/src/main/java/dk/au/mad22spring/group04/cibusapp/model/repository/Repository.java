@@ -33,6 +33,7 @@ import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstru
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionWithComponentsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.UnitDTO;
+import dk.au.mad22spring.group04.cibusapp.model.Instruction;
 import dk.au.mad22spring.group04.cibusapp.model.Recipes;
 import dk.au.mad22spring.group04.cibusapp.model.Result;
 import retrofit2.Call;
@@ -89,6 +90,7 @@ public class Repository {
         this.application = app;
     }
 
+    //TODO: er den her nødvendig?
     public void getInitialListFromAPI() {
         getInitialList();
     }
@@ -116,6 +118,18 @@ public class Repository {
     }
 
     public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> getAllUserRecipes() {
+/*        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                db.recipeDAO().deleteAllingre();
+                db.recipeDAO().deleteAllinstr();
+                db.recipeDAO().deleteAllmeas();
+                db.recipeDAO().deleteAllrecipe();
+                db.recipeDAO().deleteAllsecti();
+                db.recipeDAO().deleteAlluni();
+                db.recipeDAO().deleteAllrecipe();
+            }
+        });*/
         return recipesDB;
     }
 
@@ -150,7 +164,69 @@ public class Repository {
         return recipeDB;
     }
 
+    public void addRecipesDefault2(){
+        retrofitClient.getInstance().getJsonApi().getRandomRecipesFromTheLast30min().enqueue(new Callback<Recipes>() {
+            @Override
+            public void onResponse(@NonNull Call<Recipes> call, @NonNull Response<Recipes> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    
+                    List<Result> firstTenInList = response.body().getResults().subList(0,10);
+
+                    parseRecipesAndSaveToDB(firstTenInList);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Recipes> call, @NonNull Throwable t) {
+                Log.d(Constants.TAG_REPOSITORY, "onFailure: " + t);
+            }
+        });
+    }
+
+    private void parseRecipesAndSaveToDB(List<Result> resultList){
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                for (Result result :
+                        resultList) {
+                    RecipeDTO recipe = new RecipeDTO(
+                            result.getId(),
+                            result.getName(),
+                            result.getThumbnailUrl(),
+                            0,
+                            0,
+                            0,
+                            result.getCountry(),
+                            result.getNumServings(),
+                            result.getDescription(),
+                            result.getCreatedAt(),
+                            result.getUpdatedAt(),
+                            0,
+                            Constants.USER_ID
+                    );
+                    long idRecipe = db.recipeDAO().addRecipe(recipe);
+
+                    if(result.getInstructions() != null || result.getInstructions().size() > 0){
+                        for (Instruction instruction :
+                                result.getInstructions()) {
+                            InstructionDTO instructionObj = new InstructionDTO(
+                                    instruction.getDisplayText(),
+                                    instruction.getStartTime(),
+                                    instruction.getEndTime(),
+                                    instruction.getPosition());
+                            instructionObj.recipeCreatorId = idRecipe;
+                            db.recipeDAO().addInstruction(instructionObj);
+                        }
+                    }
+
+                }
+            }
+        });
+
+    }
+
     public void addRecipesDefault() {
+
         executor.execute(new Runnable() {
             @Override
             public void run() {

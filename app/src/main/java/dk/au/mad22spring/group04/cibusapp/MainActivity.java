@@ -2,6 +2,8 @@ package dk.au.mad22spring.group04.cibusapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -11,7 +13,12 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
+import dk.au.mad22spring.group04.cibusapp.model.Result;
 import dk.au.mad22spring.group04.cibusapp.ui.interfaces.ApiRecipeSelectorInterface;
 import dk.au.mad22spring.group04.cibusapp.ui.interfaces.UserRecipeSelectorInterface;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.AddNewRecipe.AddNewRecipeFragment;
@@ -19,6 +26,7 @@ import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPIDetails.Reci
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipeDetails.UserRecipeDetailsFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipesList.UserRecipesListFragment;
+import dk.au.mad22spring.group04.cibusapp.ui.viewModels.MainActivityViewModel;
 
 
 //Navigation bar: https://www.geeksforgeeks.org/bottom-navigation-bar-in-android/
@@ -57,8 +65,13 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
     private LinearLayout recipeFullLandScape;
     private View dividerLandscape;
 
+    //lists of data
+    private List<RecipeWithSectionsAndInstructionsDTO> userRecipeList;
+    private List<Result> apiRecipeList;
     private int selectedUserRecipeIndex;
     private int selectedApiRecipeIndex;
+
+    private MainActivityViewModel mainVM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +92,18 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
         } else {
             phoneOrientation = PhoneOrientation.LANDSCAPE;
         }
+
+/*        //Get list data
+        mainVM = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        mainVM.getUserRecipes().observe(this, new Observer<List<RecipeWithSectionsAndInstructionsDTO>>() {
+            @Override
+            public void onChanged(List<RecipeWithSectionsAndInstructionsDTO> recipeWithSectionsAndInstructionsDTOS) {
+                userRecipeList = recipeWithSectionsAndInstructionsDTOS;
+                if(userRecipeList.size() <=0){
+                    mainVM.addDefaultRecipes();
+                }
+            }
+        });*/
 
         if(savedInstanceState == null){
             selectedUserRecipeIndex = 0;
@@ -155,11 +180,44 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
     }
 
     @Override
+    public void onBackPressed() {
+        if (phoneOrientation == PhoneOrientation.PORTRAIT) {
+            switch (mode){
+                case USER_RECIPE_LIST:
+                case ADD_RECIPE:
+                case API_RECIPE_DETAILS:
+                    navigationBarView.setSelectedItemId(androidx.appcompat.R.id.home);
+                    break;
+                case USER_RECIPE_DETAILS:
+                    mode = Mode.USER_RECIPE_LIST;
+                    break;
+                default: //case API_RECIPE_LIST:
+                    finish();
+                    break;
+            }
+        } else  {
+            switch (mode){
+                case USER_RECIPE_LIST:
+                case USER_RECIPE_DETAILS:
+                case ADD_RECIPE:
+                    navigationBarView.setSelectedItemId(androidx.appcompat.R.id.home);
+                    break;
+                default: //case API_RECIPE_LIST: and API_RECIPE_DETAILS:
+                    finish();
+                    break;
+            }
+        }
+        switchFragment();
+    }
+
+    //TODO: move to a viewModel
+    @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putSerializable(Constants.MODE, mode);
         super.onSaveInstanceState(outState);
     }
 
+    //UserRecipeSelectorInterface implementations
     @Override
     public void onUserRecipeSelected(int index) {
         selectedUserRecipeIndex = index;
@@ -168,6 +226,13 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
         switchFragment();
     }
 
+    @Override
+    public void onBackFromUserRecipeDetails() {
+        mode = Mode.USER_RECIPE_LIST;
+        switchFragment();
+    }
+
+    //ApiRecipeSelectorInterface implementations
     @Override
     public void onApiRecipeSelected(int index) {
         selectedApiRecipeIndex = index;

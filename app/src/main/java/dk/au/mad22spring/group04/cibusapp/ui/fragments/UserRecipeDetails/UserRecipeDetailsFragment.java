@@ -4,6 +4,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,7 +24,7 @@ import com.bumptech.glide.Glide;
 import dk.au.mad22spring.group04.cibusapp.R;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
-import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipesList.UserRecipesListFragment;
+import dk.au.mad22spring.group04.cibusapp.ui.interfaces.UserRecipeSelectorInterface;
 
 public class UserRecipeDetailsFragment extends Fragment {
 
@@ -45,19 +46,19 @@ public class UserRecipeDetailsFragment extends Fragment {
     private RecipeWithSectionsAndInstructionsDTO recipe;
     private static int recipeIndex;
 
+    private UserRecipeSelectorInterface recipeSelectorInterface;
+
     public static UserRecipeDetailsFragment newInstance() {
         return new UserRecipeDetailsFragment();
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_recipe_details_fragment, container, false);
 
-        //Pass arguments inspiration: https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
-        //recipeId = getArguments().getLong(String.valueOf(Constants.USER_RECIPE_ID));
         setUIWidgets(view);
+
         detailsViewModel = new ViewModelProvider(this).get(UserRecipeDetailsViewModel.class);
         RecipeWithSectionsAndInstructionsDTO fetchedRecipe = detailsViewModel.getFullRecipeByIndex(recipeIndex);
 
@@ -66,6 +67,7 @@ public class UserRecipeDetailsFragment extends Fragment {
         } else if (detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.idRecipe != fetchedRecipe.recipe.idRecipe){
             detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
         }
+
         return view;
     }
 
@@ -86,6 +88,17 @@ public class UserRecipeDetailsFragment extends Fragment {
             }
         });*/
         listeners();
+    }
+
+    //Master Detail inspiration: Demo from lecture "FragmentsArnieMovies"
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            recipeSelectorInterface = (UserRecipeSelectorInterface) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement UserRecipe interface");
+        }
     }
 
     public void setSelectedRecipe(int index){
@@ -145,10 +158,12 @@ public class UserRecipeDetailsFragment extends Fragment {
 
     private void onDelete() {
         detailsViewModel.deleteFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO);
+        recipeSelectorInterface.onBackFromUserRecipeDetails();
+
         //TODO: call interface
-        getParentFragmentManager().beginTransaction()
+        /*getParentFragmentManager().beginTransaction()
                 .replace(R.id.mainActivityListLayout, UserRecipesListFragment.newInstance())
-                .commit();
+                .commit();*/
     }
 
     private void onShare() {
@@ -157,10 +172,11 @@ public class UserRecipeDetailsFragment extends Fragment {
 
     private void onSave() {
         detailsViewModel.updateFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe);
+        recipeSelectorInterface.onBackFromUserRecipeDetails();
         //TODO: call interface
-        getParentFragmentManager().beginTransaction()
+        /*getParentFragmentManager().beginTransaction()
                 .replace(R.id.mainActivityListLayout, UserRecipesListFragment.newInstance())
-                .commit();
+                .commit();*/
     }
 
     private void setUIData(){

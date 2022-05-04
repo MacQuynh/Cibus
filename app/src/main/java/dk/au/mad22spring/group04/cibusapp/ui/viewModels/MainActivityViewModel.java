@@ -1,4 +1,4 @@
-package dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipesList;
+package dk.au.mad22spring.group04.cibusapp.ui.viewModels;
 
 import android.app.Application;
 
@@ -12,12 +12,13 @@ import java.util.List;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.repository.Repository;
 
-public class UserRecipesListViewModel extends AndroidViewModel {
+public class MainActivityViewModel extends AndroidViewModel {
+
     Repository repoInstance;
 
     public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> recipes;
 
-    public UserRecipesListViewModel(@NonNull Application application) {
+    public MainActivityViewModel(@NonNull Application application) {
         super(application);
         repoInstance = Repository.getRepositoryInstance(application);
     }
@@ -30,15 +31,8 @@ public class UserRecipesListViewModel extends AndroidViewModel {
         return recipes;
     }
 
-    public void searchRecipes(String searchText){
-        repoInstance.searchAllUserRecipes(searchText);
-    }
-
-    public RecipeWithSectionsAndInstructionsDTO getRecipeByIndex(int index){
-        return recipes.getValue().get(index);
-    }
-
     public void addDefaultRecipes(){
+        repoInstance.addRecipesDefault();
         repoInstance.addRecipesDefault();
     }
 }

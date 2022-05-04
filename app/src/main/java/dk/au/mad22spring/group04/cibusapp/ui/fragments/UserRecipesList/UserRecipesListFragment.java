@@ -72,11 +72,6 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
                 adapter.updateUserRecipeList(recipeWithSectionsAndInstructionsDTOS);
             }
         });
-        userRecipeVM.addDefaultRecipes();
-        userRecipeVM.addDefaultRecipes();
-        userRecipeVM.addDefaultRecipes();
-        userRecipeVM.addDefaultRecipes();
-        userRecipeVM.addDefaultRecipes();
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,5 +103,9 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
     @Override
     public void onUserRecipeClicked(int index) {
         recipeSelectorInterface.onUserRecipeSelected(index);
+    }
+
+    public void setRecipes(){
+
     }
 }

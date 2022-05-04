@@ -37,6 +37,7 @@ import dk.au.mad22spring.group04.cibusapp.model.Instruction;
 import dk.au.mad22spring.group04.cibusapp.model.Measurement;
 import dk.au.mad22spring.group04.cibusapp.model.Recipes;
 import dk.au.mad22spring.group04.cibusapp.model.Result;
+import dk.au.mad22spring.group04.cibusapp.model.Section;
 import dk.au.mad22spring.group04.cibusapp.model.Unit;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -126,7 +127,7 @@ public class Repository {
     }
 
     public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> getAllUserRecipes() {
-/*        executor.execute(new Runnable() {
+        executor.execute(new Runnable() {
             @Override
             public void run() {
                 db.recipeDAO().deleteAllingre();
@@ -135,9 +136,9 @@ public class Repository {
                 db.recipeDAO().deleteAllrecipe();
                 db.recipeDAO().deleteAllsecti();
                 db.recipeDAO().deleteAlluni();
-                db.recipeDAO().deleteAllrecipe();
+                db.recipeDAO().deleteAllComponents();
             }
-        });*/
+        });
         return recipesDB;
     }
 
@@ -172,7 +173,7 @@ public class Repository {
         return recipesDB.getValue().get(index);
     }
 
-    public void addRecipesDefault2(){
+    public void addRecipesDefault(){
         retrofitClient.getInstance().getJsonApi().getRandomRecipesFromTheLast30min().enqueue(new Callback<Recipes>() {
             @Override
             public void onResponse(@NonNull Call<Recipes> call, @NonNull Response<Recipes> response) {
@@ -226,14 +227,49 @@ public class Repository {
                             db.recipeDAO().addInstruction(instructionObj);
                         }
                     }
+                    if(result.getSections() != null || result.getSections().size() > 0){
+                        for (Section section :
+                                result.getSections()) {
+                            SectionDTO sectionObj = new SectionDTO(section.getName(), section.getPosition());
+                            sectionObj.recipeCreatorIdForSection = idRecipe;
+                            long idSection = db.recipeDAO().addSection(sectionObj);
 
+                            if(section.getComponents() != null || section.getComponents().size() > 0){
+                                for (Component component :
+                                        section.getComponents()) {
+                                    ComponentDTO componentObj = new ComponentDTO(component.getPosition(), component.getRawText());
+                                    componentObj.sectionCreatorId = idSection;
+                                    long idComponent = db.recipeDAO().addComponent(componentObj);
+
+                                    if(component.getMeasurements() != null || component.getMeasurements().size() > 0) {
+                                        for (Measurement measurement :
+                                                component.getMeasurements()) {
+                                            MeasurementDTO measurementObj = new MeasurementDTO(measurement.getQuantity());
+                                            measurementObj.componentCreatorId = idComponent;
+                                            long idMeasurement = db.recipeDAO().addMeasurement(measurementObj);
+
+                                            if(measurement.getUnit() != null){
+                                                UnitDTO unitObj = new UnitDTO(measurement.getUnit().getName(), measurement.getUnit().getDisplayPlural(), measurement.getUnit().getDisplaySingular());
+                                                unitObj.measurementCreatorId = idMeasurement;
+                                                db.recipeDAO().addUnit(unitObj);
+                                            }
+                                        }
+
+                                        IngredientDTO ingredientObj = new IngredientDTO(component.getIngredient().getName(), component.getIngredient().getDisplayPlural(), component.getIngredient().getDisplaySingular());
+                                        ingredientObj.componentCreatorIdForIngredient = idComponent;
+                                        db.recipeDAO().addIngredient(ingredientObj);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         });
 
     }
 
-    public void addRecipesDefault() {
+    public void addRecipesDefault2() {
 
         executor.execute(new Runnable() {
             @Override

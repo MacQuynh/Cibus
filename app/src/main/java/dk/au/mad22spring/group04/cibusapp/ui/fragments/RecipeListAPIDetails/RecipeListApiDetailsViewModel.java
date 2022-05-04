@@ -4,13 +4,14 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import dk.au.mad22spring.group04.cibusapp.database.RecipeDAO;
+import dk.au.mad22spring.group04.cibusapp.model.Component;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
+import dk.au.mad22spring.group04.cibusapp.model.Instruction;
+import dk.au.mad22spring.group04.cibusapp.model.Section;
 import dk.au.mad22spring.group04.cibusapp.model.repository.Repository;
 
 
@@ -23,11 +24,23 @@ public class RecipeListApiDetailsViewModel extends AndroidViewModel {
         repository = Repository.getRepositoryInstance(application);
     }
 
-    public LiveData<RecipeDTO> getRecipeByName(String name) {
-        //TODO: get by Id eller index i stedet
-        repository.getDrinkByName(name);
+    public void getRecipeByName (String name){
+        repository.getRecipe(name);
+
+    }
+    public LiveData<RecipeDTO> getRecipeByName() {
         return repository.getRecipe();
     }
 
+    public LiveData<List<Instruction>> getInstruction (){
+        return repository.getInstruction();
+    }
 
+    public LiveData<List<Component>> getSection() {
+        return repository.getSectionWithComponentAPI();
+    }
+
+    public void addRecipeFromAPItoDB(String recipeTobeAddedtoDB) {
+        repository.addRecipeFromAPItoDB(recipeTobeAddedtoDB);
+    }
 }

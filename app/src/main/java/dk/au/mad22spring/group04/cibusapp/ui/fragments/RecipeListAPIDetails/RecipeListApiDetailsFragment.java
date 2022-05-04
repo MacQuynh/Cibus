@@ -1,5 +1,7 @@
 package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPIDetails;
 
+import static dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPI.RecipeListApiFragment.TAG;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,14 +16,18 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 
+import java.util.List;
+
 import dk.au.mad22spring.group04.cibusapp.databinding.RecipeListApiDetailsFragmentBinding;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
+import dk.au.mad22spring.group04.cibusapp.model.Section;
 
 public class RecipeListApiDetailsFragment extends Fragment {
 
     private RecipeListApiDetailsViewModel vm;
     private RecipeListApiDetailsFragmentBinding binding;
+
 
     private String recipeObject;
     private Integer indexObject;
@@ -39,32 +45,81 @@ public class RecipeListApiDetailsFragment extends Fragment {
 
         binding = RecipeListApiDetailsFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        vm = new ViewModelProvider(this).get(RecipeListApiDetailsViewModel.class);
 
         //TODO: Slet bundle og get by id eller index i stedet
         Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            recipeObject = bundle.get(Constants.RECIPE_OBJECT).toString();
-            indexObject = bundle.getInt(Constants.INDEX_OBJECT, 0);
+        recipeObject = bundle.get(Constants.RECIPE_OBJECT).toString();
+        indexObject = bundle.getInt(Constants.INDEX_OBJECT, 0);
+
+        if (recipeObject != null) {
+            vm.getRecipeByName(recipeObject);
         }
 
-        vm = new ViewModelProvider(this).get(RecipeListApiDetailsViewModel.class);
-        vm.getRecipeByName(recipeObject).observe(getViewLifecycleOwner(), new Observer<RecipeDTO>() {
-            @Override
-            public void onChanged(RecipeDTO recipeDTO) {
-                binding.apiDetailsName.setText(recipeDTO.getName());
-                Glide.with(binding.apiDetailsThumbnailUrl.getContext()).load(recipeDTO.getThumbnailUrl());
-                binding.apiDetailsCountry.setText("Country: " + recipeDTO.getCountry());
-                binding.apiDetailsNumServings.setText("Serving: " + recipeDTO.getNumServings().toString());
-                binding.apiDetailsUserRatings.setText("Rating: " + recipeDTO.getUserRatings());
-                binding.apiDetailsDescription.setText("Description: " + recipeDTO.getDescription());
+        vm.getRecipeByName().observe(getViewLifecycleOwner(), recipeDTO -> {
+            recipeSetup(recipeDTO);
+        });
+
+        vm.getInstruction().observe(getViewLifecycleOwner(), instructions -> {
+            //Reference to StringBuilder: https://localcoder.org/beginner-java-netbeans-how-do-i-display-for-loop-in-jlabel
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < instructions.size(); i++) {
+                stringBuilder.append(i + 1 + ") ").append(instructions.get(i).getDisplayText())
+                        .append("\n\n");
+                binding.recipeListApiDetailsInstructions.setText(stringBuilder);
             }
         });
+
+        vm.getSection().observe(getViewLifecycleOwner(), sections -> {
+            //Sections and components
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < sections.size(); i++) {
+                sb.append(sections.get(i).getIngredient().getName())
+                        .append(":")
+                        .append(" ").append(sections.get(i).getMeasurements().get(0).getQuantity())
+                        .append(" ")
+                        .append(sections.get(i).getMeasurements().get(0).getUnit().getDisplaySingular()).append("\n\n");
+                binding.recipeListApiDetailsIngredients.setText(sb);
+            }
+        });
+
+        saveButton();
+        backButton();
 
         return view;
     }
 
     public void setSelectedRecipe(int index){
         recipeIndex = index;
+    }
+    
+    private void saveButton() {
+        binding.recipeListApiDetailsBtnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: Save-functionality
+
+                String recipeTobeAddedtoDB = recipeObject;
+                vm.addRecipeFromAPItoDB(recipeTobeAddedtoDB);
+            }
+        });
+    }
+
+    private void recipeSetup(RecipeDTO recipeDTO) {
+        Glide.with(binding.imageViewAPI.getContext()).load(recipeDTO.getThumbnailUrl()).into(binding.imageViewAPI);
+        binding.recipeListApiDetailsNameHeader.setText(recipeDTO.getName());
+        binding.recipeLitApiDetailsServings.setText(recipeDTO.getNumServings().toString());
+        binding.recipeListApiDetailsCountry.setText(recipeDTO.getCountry());
+        binding.recipeListApiDetailsDescription.setText(recipeDTO.getDescription());
+        binding.recipeListApiDetailsPrepTime.setText(String.format("%s min", Double.toString(recipeDTO.getPrepTimeMinutes())));
+        binding.recipeListApiDetailsCookTime.setText(String.format("%s min", Double.toString(recipeDTO.getCookTimeMinutes())));
+        binding.recipeListApiDetailsTotalTime.setText(String.format("%s min", Double.toString(recipeDTO.getTotalTimeMinutes())));
+    }
+
+    private void backButton() {
+        //Reference: https://stackoverflow.com/questions/10863572/programmatically-go-back-to-the-previous-fragment-in-the-backstackhttps://stackoverflow.com/questions/10863572/programmatically-go-back-to-the-previous-fragment-in-the-backstack
+        binding.recipeListApiDetailsBtnBack.setOnClickListener(view -> getActivity().onBackPressed());
     }
 
     @Override

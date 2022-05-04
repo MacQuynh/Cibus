@@ -24,8 +24,7 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="@string/addNew_header_textView"
-                android:textSize="@dimen/heading_size"
-                android:textStyle="bold"
+                style="@style/headings"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -36,8 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/recipeName_textView"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
+                style="@style/subHeadings"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_header_textView" />
 
@@ -50,7 +48,7 @@
                 android:importantForAutofill="no"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_recipeName_textView"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -61,8 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/measureHeading_textview"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
+                style="@style/subHeadings"
                 app:layout_constraintStart_toStartOf="@+id/addNew_recipeName_editText"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_recipeName_editText" />
 
@@ -71,8 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ingredientsHeading_textView"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
+                style="@style/subHeadings"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_unit_textView"
                 app:layout_constraintStart_toStartOf="@+id/addNew_ingredient1_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_unit_textView" />
@@ -87,7 +83,7 @@
                 android:hint="@string/measurements_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_MeasureHeading_textView" />
 
@@ -100,7 +96,7 @@
                 android:hint="@string/measurements_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_measure1_editText" />
 
@@ -112,7 +108,7 @@
                 android:hint="@string/measurements_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_measure2_editText" />
 
@@ -124,7 +120,7 @@
                 android:hint="@string/measurements_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_measure3_editText" />
 
@@ -136,7 +132,7 @@
                 android:hint="@string/measurements_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_measure4_editText" />
 
@@ -145,8 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/unit"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
+                style="@style/subHeadings"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_MeasureHeading_textView"
                 app:layout_constraintStart_toStartOf="@+id/addNew_unit1_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_MeasureHeading_textView" />
@@ -160,6 +155,7 @@
                 android:hint="@string/unit_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
+                style="@style/hint_text"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_measure1_editText"
                 app:layout_constraintStart_toEndOf="@+id/addNew_measure1_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_measure1_editText" />
@@ -172,6 +168,7 @@
                 android:hint="@string/unit_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
+                style="@style/hint_text"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_measure2_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_unit1_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_measure2_editText" />
@@ -184,6 +181,7 @@
                 android:hint="@string/unit_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
+                style="@style/hint_text"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_measure3_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_unit2_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_measure3_editText" />
@@ -196,6 +194,7 @@
                 android:hint="@string/unit_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
+                style="@style/hint_text"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_measure4_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_unit3_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_measure4_editText" />
@@ -208,6 +207,7 @@
                 android:hint="@string/unit_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
+                style="@style/hint_text"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_measure5_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_unit4_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_measure5_editText" />
@@ -221,7 +221,7 @@
                 android:hint="@string/ingredient_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_unit1_editText"
                 app:layout_constraintStart_toEndOf="@+id/addNew_unit1_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_unit1_editText" />
@@ -235,7 +235,7 @@
                 android:hint="@string/ingredient_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_unit2_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_ingredient1_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_unit2_editText" />
@@ -248,7 +248,7 @@
                 android:hint="@string/ingredient_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_unit3_editText"
                 app:layout_constraintStart_toStartOf="@id/addNew_ingredient2_editText"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_unit2_editText" />
@@ -261,7 +261,7 @@
                 android:hint="@string/ingredient_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_unit4_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_ingredient3_editText"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_unit3_editText" />
@@ -274,7 +274,7 @@
                 android:hint="@string/ingredient_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_unit5_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_ingredient4_editText"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_unit4_editText" />
@@ -293,8 +293,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/instructionsHeading_textView"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
+                style="@style/subHeadings"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_ingredientsHeading_textView"
                 app:layout_constraintStart_toStartOf="@+id/addNew_instructions_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_ingredientsHeading_textView" />
@@ -309,7 +308,7 @@
                 android:hint="@string/instructions_editText"
                 android:inputType="textMultiLine"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintStart_toEndOf="@+id/addNew_ingredient1_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_ingredient1_editText" />
 
@@ -319,8 +318,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:text="@string/total_time"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
+                style="@style/subHeadings"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_numberOf_textView"
                 app:layout_constraintStart_toEndOf="@+id/addNew_numberOf_textView"
                 app:layout_constraintTop_toTopOf="@+id/addNew_numberOf_textView" />
@@ -331,8 +329,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:text="@string/cook_time"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
+                style="@style/subHeadings"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_timeTotal_textView"
                 app:layout_constraintStart_toEndOf="@+id/addNew_timeTotal_textView"
                 app:layout_constraintTop_toTopOf="@+id/addNew_timeTotal_textView" />
@@ -343,8 +340,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:text="@string/preparation_time"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
+                style="@style/subHeadings"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_cookTime_textView"
                 app:layout_constraintStart_toEndOf="@+id/addNew_cookTime_textView"
                 app:layout_constraintTop_toTopOf="@+id/addNew_cookTime_textView" />
@@ -357,7 +353,7 @@
                 android:hint="@string/time_editView"
                 android:inputType="number"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintStart_toStartOf="@+id/addNew_timeTotal_textView"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_timeTotal_textView" />
 
@@ -369,7 +365,7 @@
                 android:hint="@string/time_editView"
                 android:inputType="number"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintStart_toStartOf="@+id/addNew_cookTime_textView"
                 app:layout_constraintTop_toTopOf="@+id/addNew_total_editText" />
 
@@ -381,7 +377,7 @@
                 android:hint="@string/time_editView"
                 android:inputType="number"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_cookTime_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_prepTime_textView"
                 app:layout_constraintTop_toTopOf="@+id/addNew_cookTime_editText" />
@@ -392,8 +388,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:text="@string/number_of_servings"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
+                style="@style/subHeadings"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_recipeName_textView"
                 app:layout_constraintStart_toEndOf="@+id/addNew_recipeName_textView"
                 app:layout_constraintTop_toTopOf="@+id/addNew_recipeName_textView"
@@ -407,7 +402,7 @@
                 android:hint="@string/numberOfServings_editText"
                 android:inputType="number"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
+                style="@style/hint_text"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_recipeName_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_numberOf_textView"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_recipeName_textView" />

@@ -1,5 +1,6 @@
 package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,8 @@ import dk.au.mad22spring.group04.cibusapp.model.Result;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiViewModel;
 import dk.au.mad22spring.group04.cibusapp.ui.adapters.ApiListAdapter;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPIDetails.RecipeListApiDetailsFragment;
+import dk.au.mad22spring.group04.cibusapp.ui.interfaces.ApiRecipeSelectorInterface;
+import dk.au.mad22spring.group04.cibusapp.ui.interfaces.UserRecipeSelectorInterface;
 
 public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IApiItemClickedListener {
 
@@ -34,6 +37,8 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
     private List<Result> resultList;
 
     private RecyclerView recyclerView;
+
+    private ApiRecipeSelectorInterface apiRecipeSelectorInterface;
 
     public static RecipeListApiFragment newInstance() {
         return new RecipeListApiFragment();
@@ -72,6 +77,17 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
         recyclerView.setAdapter(adapter);
     }
 
+    //Master Detail inspiration: Demo from lecture "FragmentsArnieMovies"
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            apiRecipeSelectorInterface = (ApiRecipeSelectorInterface) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement UserRecipe interface");
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -84,6 +100,8 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
         Log.d(TAG, "onApiItemClicked: " + index);
 
         Result result = adapter.getRecipeByIndex(index);
+
+        apiRecipeSelectorInterface.onApiRecipeSelected(index);
 
         Bundle bundle = new Bundle();
         if (result != null) {

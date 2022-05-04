@@ -24,6 +24,7 @@ public class RecipeListApiDetailsViewModel extends AndroidViewModel {
     }
 
     public LiveData<RecipeDTO> getRecipeByName(String name) {
+        //TODO: get by Id eller index i stedet
         repository.getDrinkByName(name);
         return repository.getRecipe();
     }

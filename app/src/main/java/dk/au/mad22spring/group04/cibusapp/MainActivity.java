@@ -12,7 +12,8 @@ import android.widget.LinearLayout;
 import com.google.android.material.navigation.NavigationBarView;
 
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
-import dk.au.mad22spring.group04.cibusapp.interfaces.UserRecipeSelectorInterface;
+import dk.au.mad22spring.group04.cibusapp.ui.interfaces.ApiRecipeSelectorInterface;
+import dk.au.mad22spring.group04.cibusapp.ui.interfaces.UserRecipeSelectorInterface;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.AddNewRecipe.AddNewRecipeFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPIDetails.RecipeListApiDetailsFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiFragment;
@@ -24,11 +25,11 @@ import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipesList.UserRecip
 // https://material.io/components/bottom-navigation/android#using-bottom-navigation
 
 //Master Detail inspiration: Demo from lecture "FragmentsArnieMovies"
-public class MainActivity extends AppCompatActivity implements UserRecipeSelectorInterface {
+public class MainActivity extends AppCompatActivity implements UserRecipeSelectorInterface, ApiRecipeSelectorInterface {
 
     public enum PhoneOrientation {PORTRAIT, LANDSCAPE}
     private PhoneOrientation phoneOrientation;
-    public enum Mode {USER_RECIPE_LIST, USER_RECIPE_DETAILS, API_RECIPE_LIST, ADD_RECIPE} //TODO: add rest of modes (api)
+    public enum Mode {USER_RECIPE_LIST, USER_RECIPE_DETAILS, API_RECIPE_LIST, API_RECIPE_DETAILS, ADD_RECIPE} //TODO: add rest of modes (api)
     private Mode mode;
 
     //UI Widgets
@@ -53,7 +54,8 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
     private LinearLayout recipeList;
     private LinearLayout recipeDetails;
 
-    private long selectedRecipeId;
+    private long selectedUserRecipeId;
+    private int selectedApiRecipeIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +76,20 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
         }
 
         if(savedInstanceState == null){
-            selectedRecipeId = 0;
+            selectedUserRecipeId = 0;
+            selectedApiRecipeIndex = 0;
             mode = Mode.API_RECIPE_LIST;
 
             //Initialize fragments
             userRecipeDetailsFragment = new UserRecipeDetailsFragment();
             userRecipesListFragment = new UserRecipesListFragment();
             recipeListApiFragment = new RecipeListApiFragment();
+            recipeListApiDetailsFragment = new RecipeListApiDetailsFragment();
             addNewRecipeFragment = new AddNewRecipeFragment();
 
-            userRecipeDetailsFragment.setSelectedRecipe(selectedRecipeId);
+            userRecipeDetailsFragment.setSelectedRecipe(selectedUserRecipeId);
+
+            recipeListApiDetailsFragment.setSelectedRecipe(selectedApiRecipeIndex);
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.mainActivityListLayout, userRecipesListFragment, USER_RECIPE_LIST_FRAG)
@@ -143,9 +149,17 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
 
     @Override
     public void onUserRecipeSelected(long id) {
-        selectedRecipeId = id;
+        selectedUserRecipeId = id;
         userRecipeDetailsFragment.setSelectedRecipe(id);
         mode = Mode.USER_RECIPE_DETAILS;
+        switchFragment();
+    }
+
+    @Override
+    public void onApiRecipeSelected(int index) {
+        selectedApiRecipeIndex = index;
+        recipeListApiDetailsFragment.setSelectedRecipe(index);
+        mode = Mode.API_RECIPE_DETAILS;
         switchFragment();
     }
 
@@ -183,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                     recipeList.setVisibility(View.VISIBLE);
                     recipeDetails.setVisibility(View.GONE);
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.mainActivityDetailLayout, recipeListApiFragment, RECIPE_API_LIST_FRAG)
+                            .replace(R.id.mainActivityListLayout, recipeListApiFragment, RECIPE_API_LIST_FRAG)
                             .commit();
                     break;
             }

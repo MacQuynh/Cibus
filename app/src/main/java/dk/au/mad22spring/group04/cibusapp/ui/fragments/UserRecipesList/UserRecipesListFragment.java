@@ -21,11 +21,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import dk.au.mad22spring.group04.cibusapp.R;
-import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
-import dk.au.mad22spring.group04.cibusapp.interfaces.UserRecipeSelectorInterface;
+import dk.au.mad22spring.group04.cibusapp.ui.interfaces.UserRecipeSelectorInterface;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 import dk.au.mad22spring.group04.cibusapp.ui.adapters.UserRecipesListAdapter;
-import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipeDetails.UserRecipeDetailsFragment;
 
 public class UserRecipesListFragment extends Fragment implements UserRecipesListAdapter.IUserRecipeItemClickListener{
 

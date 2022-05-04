@@ -26,6 +26,9 @@ public class RecipeListApiDetailsFragment extends Fragment {
     private String recipeObject;
     private Integer indexObject;
 
+    private static long recipeIndex;
+
+
     public static RecipeListApiDetailsFragment newInstance() {
         return new RecipeListApiDetailsFragment();
     }
@@ -37,6 +40,7 @@ public class RecipeListApiDetailsFragment extends Fragment {
         binding = RecipeListApiDetailsFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        //TODO: Slet bundle og get by id eller index i stedet
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             recipeObject = bundle.get(Constants.RECIPE_OBJECT).toString();
@@ -57,6 +61,10 @@ public class RecipeListApiDetailsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void setSelectedRecipe(int index){
+        recipeIndex = index;
     }
 
     @Override

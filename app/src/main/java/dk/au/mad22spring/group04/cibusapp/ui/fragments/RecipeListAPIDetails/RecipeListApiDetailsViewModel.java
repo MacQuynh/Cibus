@@ -40,7 +40,7 @@ public class RecipeListApiDetailsViewModel extends AndroidViewModel {
         return repository.getSectionWithComponentAPI();
     }
 
-    public void addRecipeFromAPItoDB(String recipeTobeAddedtoDB) {
-        repository.addRecipeFromAPItoDB(recipeTobeAddedtoDB);
+    public void addRecipeFromAPItoDB(String recipeToAddDB) {
+        repository.addRecipeFromAPItoDB(recipeToAddDB);
     }
 }

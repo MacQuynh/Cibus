@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import dk.au.mad22spring.group04.cibusapp.API.RetrofitClient;
 import dk.au.mad22spring.group04.cibusapp.database.RecipeDAO;
@@ -24,7 +23,6 @@ import dk.au.mad22spring.group04.cibusapp.database.RecipeDatabase;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.model.Component;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentWithMeasurementsAndIngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.MeasurementDTO;
@@ -33,10 +31,12 @@ import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstru
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionWithComponentsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.UnitDTO;
+import dk.au.mad22spring.group04.cibusapp.model.Ingredient;
 import dk.au.mad22spring.group04.cibusapp.model.Instruction;
+import dk.au.mad22spring.group04.cibusapp.model.Measurement;
 import dk.au.mad22spring.group04.cibusapp.model.Recipes;
 import dk.au.mad22spring.group04.cibusapp.model.Result;
-import dk.au.mad22spring.group04.cibusapp.model.Section;
+import dk.au.mad22spring.group04.cibusapp.model.Unit;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,7 +59,6 @@ public class Repository {
     private MutableLiveData<RecipeDTO> recipeMutable;
     final MutableLiveData<List<RecipeWithSectionsAndInstructionsDTO>> recipesDB;
     final MutableLiveData<RecipeWithSectionsAndInstructionsDTO> recipeDB;
-    final MutableLiveData<SectionWithComponentsDTO> sectionWithComponentDB;
     final MutableLiveData<String> ingredientMeasurementText;
 
 
@@ -92,7 +91,6 @@ public class Repository {
         retrofitClient = new RetrofitClient();
         recipesDB = new MutableLiveData<List<RecipeWithSectionsAndInstructionsDTO>>();
         recipeDB = new MutableLiveData<RecipeWithSectionsAndInstructionsDTO>();
-        sectionWithComponentDB = new MutableLiveData<SectionWithComponentsDTO>();
         ingredientMeasurementText = new MutableLiveData<String>("");
         this.application = app;
     }
@@ -226,7 +224,6 @@ public class Repository {
 
         Log.d(Constants.TAG_REPOSITORY, "addRecipesDefault: ");
     }
-
     public List<ComponentDTO> getSectionWithComponent(int sectionId) {
         List<ComponentDTO> list = new ArrayList<>();
         executor.execute(new Runnable() {
@@ -509,8 +506,8 @@ public class Repository {
         getRecipeByName(name);
     }
 
-    public void addRecipeFromAPItoDB(String recipeTobeAddedtoDB) {
-        retrofitClient.getJsonApi().getRecipeFromSearchString(recipeTobeAddedtoDB).enqueue(new Callback<Recipes>() {
+    public void addRecipeFromAPItoDB(String recipeAddedDB) {
+        retrofitClient.getJsonApi().getRecipeFromSearchString(recipeAddedDB).enqueue(new Callback<Recipes>() {
             @Override
             public void onResponse(Call<Recipes> call, Response<Recipes> response) {
                 /*Recipe*/
@@ -541,7 +538,6 @@ public class Repository {
                     );
                 }
                 List<Instruction> instructionList = new ArrayList<>();
-
                 for (Instruction instruction : response.body().getResults().get(0).getInstructions()) {
                     Instruction i = new Instruction();
                     i.setDisplayText(instruction.getDisplayText());
@@ -565,25 +561,81 @@ public class Repository {
 
                 SectionDTO sectionDTO = new SectionDTO("", 1);
 
-                ArrayList<MeasurementDTO> listOfMeasures = new ArrayList<MeasurementDTO>();
-//                ArrayList<UnitDTO> listOfUnits = new ArrayList<UnitDTO>();
-                ArrayList<IngredientDTO> listOfIngredients = new ArrayList<IngredientDTO>();
+                List<MeasurementDTO> measurementDTOS = new ArrayList<MeasurementDTO>();
+                for (Measurement measurement : response.body().getResults().get(0).getSections().get(0).getComponents().get(0).getMeasurements()) {
+                    Measurement m = new Measurement();
+                    m.setId(measurement.getId());
+                    m.setQuantity(measurement.getQuantity());
+                    measurementDTOS.add(new MeasurementDTO(measurement.getQuantity()));
+                }
 
+
+                ArrayList<UnitDTO> listOfUnitsDTO = new ArrayList<UnitDTO>();
+                for (Measurement m : response.body().getResults().get(0).getSections().get(0).getComponents().get(0).getMeasurements()) {
+                    Unit u = new Unit();
+                    u.setName(m.getUnit().getName());
+                    u.setDisplayPlural(m.getUnit().getDisplayPlural());
+                    u.setDisplaySingular(m.getUnit().getDisplaySingular());
+                    listOfUnitsDTO.add(new UnitDTO(u.getName(), u.getDisplayPlural(), u.getDisplaySingular()));
+                }
+
+                ArrayList<IngredientDTO> ingredientDTOS = new ArrayList<IngredientDTO>();
+                for (Component i : response.body().getResults().get(0).getSections().get(0).getComponents()) {
+                    Component c = new Component();
+                    c.setRawText(i.getIngredient().getName());
+                    c.setIngredient(i.getIngredient());
+                    c.setMeasurements(i.getMeasurements());
+                    ingredientDTOS.add(new IngredientDTO(i.getIngredient().getName(), i.getIngredient().getDisplayPlural(), i.getIngredient().getDisplaySingular()));
+                }
+
+                Log.d(TAG, "onResponse: " + listOfUnitsDTO + measurementDTOS + ingredientDTOS);
 
                 RecipeDTO finalRecipeDTO = recipeDTO;
-                executor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        long idRecipe = db.recipeDAO().addRecipe(finalRecipeDTO);
+                try {
+                    executor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            RecipeDTO recipeDTO = new RecipeDTO(finalRecipeDTO.idRecipe, finalRecipeDTO.getName(), finalRecipeDTO.getThumbnailUrl(),
+                                    finalRecipeDTO.getTotalTimeMinutes(), finalRecipeDTO.getCookTimeMinutes(), finalRecipeDTO.getPrepTimeMinutes(),
+                                    finalRecipeDTO.getCountry(), finalRecipeDTO.getNumServings(), finalRecipeDTO.getDescription(), finalRecipeDTO.getCreatedAtUnix(),
+                                    finalRecipeDTO.getUpdatedAtUnix(), finalRecipeDTO.getUserRatings(), Constants.USER_ID);
+
+                            long idRecipe = db.recipeDAO().addRecipe(recipeDTO);
+
+                            instructionDTO.recipeCreatorId = idRecipe;
+                            db.recipeDAO().addInstruction(instructionDTO);
+
+                            sectionDTO.recipeCreatorIdForSection = idRecipe;
+                            long idSection = db.recipeDAO().addSection(sectionDTO);
 
 
-                    }
-                });
+                            for (int i = 0; i < measurementDTOS.size(); i++) {
+                                ComponentDTO componentDTO = new ComponentDTO(i , "");
+                                componentDTO.sectionCreatorId = idSection;
+                                long idComponent = db.recipeDAO().addComponent(componentDTO);
+                                MeasurementDTO measurementDTO = measurementDTOS.get(i);
+                                measurementDTO.componentCreatorId = idComponent;
+                                long idMeasurement = db.recipeDAO().addMeasurement(measurementDTO);
+                                UnitDTO unitDTO = listOfUnitsDTO.get(i);
+                                unitDTO.measurementCreatorId = idMeasurement;
+                                db.recipeDAO().addUnit(unitDTO);
+
+                                if (ingredientDTOS.size() <= i ) {
+                                    IngredientDTO ingredientDTO = ingredientDTOS.get(i);
+                                    ingredientDTO.componentCreatorIdForIngredient = idComponent;
+                                    db.recipeDAO().addIngredient(ingredientDTO);
+                                }
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onFailure(Call<Recipes> call, Throwable t) {
-
+                Log.d(TAG, "onFailure: " + "fucked-up code");
             }
         });
 

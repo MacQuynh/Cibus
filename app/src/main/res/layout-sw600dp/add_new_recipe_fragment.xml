@@ -9,10 +9,10 @@
 
     <TextView
         android:id="@+id/addNew_header_textView"
-        android:layout_width="200dp"
+        style="@style/headings"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/addNew_header_textView"
-        style="@style/headings"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"

@@ -51,9 +51,11 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
     private AddNewRecipeFragment addNewRecipeFragment;
 
 
-    //Containers for fragments:
+    //Containers and UI widgets for fragments:
     private LinearLayout recipeList;
     private LinearLayout recipeDetails;
+    private LinearLayout recipeFullLandScape;
+    private View dividerLandscape;
 
     private long selectedUserRecipeId;
     private int selectedApiRecipeIndex;
@@ -68,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
         navigationBarView.setSelectedItemId(R.id.home);
         recipeList = findViewById(R.id.mainActivityListLayout);
         recipeDetails = findViewById(R.id.mainActivityDetailLayout);
+        recipeFullLandScape = findViewById(R.id.mainActivityFullLayout);
+        dividerLandscape = findViewById(R.id.mainActivityDivider);
 
         //determine orientation
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
@@ -217,6 +221,8 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                 case USER_RECIPE_DETAILS:
                     recipeList.setVisibility(View.VISIBLE);
                     recipeDetails.setVisibility(View.VISIBLE);
+                    recipeFullLandScape.setVisibility(View.GONE);
+                    dividerLandscape.setVisibility(View.VISIBLE);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.mainActivityListLayout, userRecipesListFragment, USER_RECIPE_LIST_FRAG)
                             .commit();
@@ -225,17 +231,19 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                             .commit();
                     break;
                 case ADD_RECIPE:
-
-                    //TODO: ved ikke helt hvad vi gør her med containerne. Der er jo to, men vi skal kun have én til dette view..
                     recipeDetails.setVisibility(View.GONE);
-                    recipeList.setVisibility(View.VISIBLE);
+                    recipeList.setVisibility(View.GONE);
+                    recipeFullLandScape.setVisibility(View.VISIBLE);
+                    dividerLandscape.setVisibility(View.GONE);
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.mainActivityListLayout, addNewRecipeFragment, ADD_RECIPE_FRAG)
+                            .replace(R.id.mainActivityFullLayout, addNewRecipeFragment, ADD_RECIPE_FRAG)
                             .commit();
                     break;
                 default: //case API_RECIPE_LIST: and API_RECIPE_DETAILS:
                     recipeList.setVisibility(View.VISIBLE);
                     recipeDetails.setVisibility(View.VISIBLE);
+                    recipeFullLandScape.setVisibility(View.GONE);
+                    dividerLandscape.setVisibility(View.VISIBLE);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.mainActivityDetailLayout, recipeListApiFragment, RECIPE_API_LIST_FRAG)
                             .commit();

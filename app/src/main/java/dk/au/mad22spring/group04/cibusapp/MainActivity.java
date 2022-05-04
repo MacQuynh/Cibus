@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
     private LinearLayout recipeFullLandScape;
     private View dividerLandscape;
 
-    private long selectedUserRecipeId;
+    private int selectedUserRecipeIndex;
     private int selectedApiRecipeIndex;
 
     @Override
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
         }
 
         if(savedInstanceState == null){
-            selectedUserRecipeId = 0;
+            selectedUserRecipeIndex = 0;
             selectedApiRecipeIndex = 0;
             mode = Mode.API_RECIPE_LIST;
 
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
             recipeListApiDetailsFragment = new RecipeListApiDetailsFragment();
             addNewRecipeFragment = new AddNewRecipeFragment();
 
-            userRecipeDetailsFragment.setSelectedRecipe(selectedUserRecipeId);
+            userRecipeDetailsFragment.setSelectedRecipe(selectedUserRecipeIndex);
 
             recipeListApiDetailsFragment.setSelectedRecipe(selectedApiRecipeIndex);
 
@@ -107,18 +107,23 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                 mode = Mode.API_RECIPE_LIST;
             }
 
+            recipeListApiFragment = (RecipeListApiFragment) getSupportFragmentManager().findFragmentByTag(RECIPE_API_LIST_FRAG);
             if(recipeListApiFragment == null){
                 recipeListApiFragment = new RecipeListApiFragment();
             }
+            recipeListApiDetailsFragment = (RecipeListApiDetailsFragment) getSupportFragmentManager().findFragmentByTag(RECIPE_API_DETAIL_FRAG);
             if(recipeListApiDetailsFragment == null){
                 recipeListApiDetailsFragment = new RecipeListApiDetailsFragment();
             }
+            userRecipesListFragment = (UserRecipesListFragment) getSupportFragmentManager().findFragmentByTag(USER_RECIPE_LIST_FRAG);
             if(userRecipesListFragment== null){
                 userRecipesListFragment = new UserRecipesListFragment();
             }
+            userRecipeDetailsFragment = (UserRecipeDetailsFragment) getSupportFragmentManager().findFragmentByTag(USER_RECIPE_DETAIL_FRAG);
             if(userRecipeDetailsFragment == null){
                 userRecipeDetailsFragment = new UserRecipeDetailsFragment();
             }
+            addNewRecipeFragment = (AddNewRecipeFragment) getSupportFragmentManager().findFragmentByTag(ADD_RECIPE_FRAG);
             if(addNewRecipeFragment == null){
                 addNewRecipeFragment = new AddNewRecipeFragment();
             }
@@ -156,9 +161,9 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
     }
 
     @Override
-    public void onUserRecipeSelected(long id) {
-        selectedUserRecipeId = id;
-        userRecipeDetailsFragment.setSelectedRecipe(id);
+    public void onUserRecipeSelected(int index) {
+        selectedUserRecipeIndex = index;
+        userRecipeDetailsFragment.setSelectedRecipe(index);
         mode = Mode.USER_RECIPE_DETAILS;
         switchFragment();
     }

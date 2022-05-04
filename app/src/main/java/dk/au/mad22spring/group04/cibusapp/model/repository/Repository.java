@@ -155,7 +155,7 @@ public class Repository {
 
     }
 
-    public void setFullRecipeByName(long recipeId) {
+/*    public void setFullRecipeByName(long recipeId) {
         ListenableFuture<RecipeWithSectionsAndInstructionsDTO> recipe = db.recipeDAO().getFullRecipeById(recipeId);
 
         recipe.addListener(() -> {
@@ -166,10 +166,10 @@ public class Repository {
             }
 
         }, ContextCompat.getMainExecutor(application.getApplicationContext()));
-    }
+    }*/
 
-    public LiveData<RecipeWithSectionsAndInstructionsDTO> getFullRecipeFromDB() {
-        return recipeDB;
+    public RecipeWithSectionsAndInstructionsDTO getFullRecipeFromDB(int index) {
+        return recipesDB.getValue().get(index);
     }
 
     public void addRecipesDefault2(){

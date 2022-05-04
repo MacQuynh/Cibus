@@ -1,4 +1,4 @@
-package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPI;
+package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -105,7 +105,7 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
 
         apiRecipeSelectorInterface.onApiRecipeSelected(index);
 
-        Bundle bundle = new Bundle();
+       /* Bundle bundle = new Bundle();
         if (result != null) {
             bundle.putString(Constants.RECIPE_OBJECT, result.getName());
             bundle.putInt(Constants.INDEX_OBJECT, index);
@@ -116,6 +116,6 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
         fragment.setArguments(bundle);
 
         activity.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.mainActivityDetailLayout, fragment).addToBackStack(null).commit();
+                .replace(R.id.mainActivityDetailLayout, fragment).addToBackStack(null).commit();*/
     }
 }

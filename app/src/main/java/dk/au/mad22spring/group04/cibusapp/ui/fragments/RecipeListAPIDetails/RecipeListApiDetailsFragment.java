@@ -1,6 +1,6 @@
 package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPIDetails;
 
-import static dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPI.RecipeListApiFragment.TAG;
+import static dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiFragment.TAG;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +21,7 @@ import java.util.List;
 import dk.au.mad22spring.group04.cibusapp.databinding.RecipeListApiDetailsFragmentBinding;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
+import dk.au.mad22spring.group04.cibusapp.model.Result;
 import dk.au.mad22spring.group04.cibusapp.model.Section;
 
 public class RecipeListApiDetailsFragment extends Fragment {
@@ -28,16 +29,13 @@ public class RecipeListApiDetailsFragment extends Fragment {
     private RecipeListApiDetailsViewModel vm;
     private RecipeListApiDetailsFragmentBinding binding;
 
+    public Result recipe;
 
     private String recipeObject;
     private Integer indexObject;
 
-    private static long recipeIndex;
+    private static int recipeIndex;
 
-
-    public static RecipeListApiDetailsFragment newInstance() {
-        return new RecipeListApiDetailsFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -47,7 +45,9 @@ public class RecipeListApiDetailsFragment extends Fragment {
         View view = binding.getRoot();
         vm = new ViewModelProvider(this).get(RecipeListApiDetailsViewModel.class);
 
-        //TODO: Slet bundle og get by id eller index i stedet
+        recipe = vm.getRecipeByIndex(recipeIndex);
+
+        /*//TODO: Slet bundle og get by index i stedet
         Bundle bundle = this.getArguments();
         recipeObject = bundle.get(Constants.RECIPE_OBJECT).toString();
         indexObject = bundle.getInt(Constants.INDEX_OBJECT, 0);
@@ -82,7 +82,9 @@ public class RecipeListApiDetailsFragment extends Fragment {
                         .append(sections.get(i).getMeasurements().get(0).getUnit().getDisplaySingular()).append("\n\n");
                 binding.recipeListApiDetailsIngredients.setText(sb);
             }
-        });
+        });*/
+
+        recipeSetup();
 
         saveButton();
         backButton();
@@ -106,15 +108,17 @@ public class RecipeListApiDetailsFragment extends Fragment {
         });
     }
 
-    private void recipeSetup(RecipeDTO recipeDTO) {
-        Glide.with(binding.imageViewAPI.getContext()).load(recipeDTO.getThumbnailUrl()).into(binding.imageViewAPI);
-        binding.recipeListApiDetailsNameHeader.setText(recipeDTO.getName());
-        binding.recipeLitApiDetailsServings.setText(recipeDTO.getNumServings().toString());
-        binding.recipeListApiDetailsCountry.setText(recipeDTO.getCountry());
-        binding.recipeListApiDetailsDescription.setText(recipeDTO.getDescription());
-        binding.recipeListApiDetailsPrepTime.setText(String.format("%s min", Double.toString(recipeDTO.getPrepTimeMinutes())));
+    private void recipeSetup() {
+        Glide.with(binding.imageViewAPI.getContext()).load(recipe.getThumbnailUrl()).into(binding.imageViewAPI);
+        binding.recipeListApiDetailsNameHeader.setText(recipe.getName());
+        if(recipe.getNumServings() != null){
+            binding.recipeLitApiDetailsServings.setText(recipe.getNumServings().toString());
+        }
+        binding.recipeListApiDetailsCountry.setText(recipe.getCountry());
+        binding.recipeListApiDetailsDescription.setText(recipe.getDescription());
+/*        binding.recipeListApiDetailsPrepTime.setText(String.format("%s min", Double.toString(recipeDTO.getPrepTimeMinutes())));
         binding.recipeListApiDetailsCookTime.setText(String.format("%s min", Double.toString(recipeDTO.getCookTimeMinutes())));
-        binding.recipeListApiDetailsTotalTime.setText(String.format("%s min", Double.toString(recipeDTO.getTotalTimeMinutes())));
+        binding.recipeListApiDetailsTotalTime.setText(String.format("%s min", Double.toString(recipeDTO.getTotalTimeMinutes())));*/
     }
 
     private void backButton() {
@@ -122,11 +126,5 @@ public class RecipeListApiDetailsFragment extends Fragment {
         binding.recipeListApiDetailsBtnBack.setOnClickListener(view -> getActivity().onBackPressed());
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        vm = new ViewModelProvider(this).get(RecipeListApiDetailsViewModel.class);
-        // TODO: Use the ViewModel
-    }
 
 }

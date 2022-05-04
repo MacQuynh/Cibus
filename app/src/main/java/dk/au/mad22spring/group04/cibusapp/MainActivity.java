@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
     private static final String USER_RECIPE_LIST_FRAG = "USER_RECIPE_LIST_FRAG";
     private static final String USER_RECIPE_DETAIL_FRAG = "USER_RECIPE_DETAIL_FRAG";
     private static final String RECIPE_API_LIST_FRAG = "RECIPE_API_LIST_FRAG";
+    private static final String RECIPE_API_DETAIL_FRAG = "RECIPE_API_DETAIL_FRAG";
     private static final String ADD_RECIPE_FRAG = "ADD_RECIPE_FRAG";
 
 
@@ -104,6 +105,9 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
 
             if(recipeListApiFragment == null){
                 recipeListApiFragment = new RecipeListApiFragment();
+            }
+            if(recipeListApiDetailsFragment == null){
+                recipeListApiDetailsFragment = new RecipeListApiDetailsFragment();
             }
             if(userRecipesListFragment== null){
                 userRecipesListFragment = new UserRecipesListFragment();
@@ -179,7 +183,6 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                             .commit();
                     break;
                 case USER_RECIPE_DETAILS:
-                    //TODO: se på hvorfor scrollView kun fylder halvdelen af skræmen
                     recipeList.setVisibility(View.GONE);
                     recipeDetails.setVisibility(View.VISIBLE);
                     getSupportFragmentManager().beginTransaction()
@@ -191,6 +194,13 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                     recipeList.setVisibility(View.VISIBLE);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.mainActivityListLayout, addNewRecipeFragment, ADD_RECIPE_FRAG)
+                            .commit();
+                    break;
+                case API_RECIPE_DETAILS:
+                    recipeList.setVisibility(View.GONE);
+                    recipeDetails.setVisibility(View.VISIBLE);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainActivityDetailLayout, recipeListApiDetailsFragment, RECIPE_API_DETAIL_FRAG)
                             .commit();
                     break;
                 default: //case API_RECIPE_LIST:
@@ -223,13 +233,14 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                             .replace(R.id.mainActivityListLayout, addNewRecipeFragment, ADD_RECIPE_FRAG)
                             .commit();
                     break;
-                default: //case API_RECIPE_LIST:
-
-                    //TODO: Update når details er klar, så begge vises her
+                default: //case API_RECIPE_LIST: and API_RECIPE_DETAILS:
                     recipeList.setVisibility(View.VISIBLE);
-                    recipeDetails.setVisibility(View.GONE);
+                    recipeDetails.setVisibility(View.VISIBLE);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.mainActivityDetailLayout, recipeListApiFragment, RECIPE_API_LIST_FRAG)
+                            .commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainActivityDetailLayout, recipeListApiDetailsFragment, RECIPE_API_DETAIL_FRAG)
                             .commit();
                     break;
             }

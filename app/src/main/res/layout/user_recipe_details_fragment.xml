@@ -20,12 +20,12 @@
                 android:layout_height="130dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recipe_list_api_details_NameHeader"
+                app:layout_constraintTop_toBottomOf="@+id/userRecipeDetail_NameHeader"
                 app:srcCompat="@drawable/default_recipe_image"
                 tools:src="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/recipe_list_api_details_NameHeader"
+                android:id="@+id/userRecipeDetail_NameHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
@@ -42,10 +42,10 @@
                 android:text="@string/ingredientsHeading_textView"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recipeListApiDetailsDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/userRecipeDetail_Description" />
 
             <TextView
-                android:id="@+id/recipeListApiDetailsIngredients"
+                android:id="@+id/userRecipeDetail_Ingredients"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -62,10 +62,10 @@
                 android:text="@string/instructionsHeading_textView"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recipeListApiDetailsIngredients" />
+                app:layout_constraintTop_toBottomOf="@+id/userRecipeDetail_Ingredients" />
 
             <TextView
-                android:id="@+id/recipeListApiDetailsInstructions"
+                android:id="@+id/userRecipeDetail_Instructions"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="TextView"
@@ -80,7 +80,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recipeListApiDetailsInstructions" />
+                app:layout_constraintTop_toBottomOf="@+id/userRecipeDetail_Instructions" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -93,7 +93,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
             <TextView
-                android:id="@+id/recipeListApiDetailsCountry"
+                android:id="@+id/userRecipeDetail_Country"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -102,7 +102,7 @@
                 app:layout_constraintTop_toTopOf="@+id/textView8" />
 
             <TextView
-                android:id="@+id/recipeListApiDetailsDescription"
+                android:id="@+id/userRecipeDetail_Description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -121,7 +121,7 @@
                 app:layout_constraintTop_toTopOf="@+id/userRecipeDetail_img" />
 
             <TextView
-                android:id="@+id/recipeLitApiDetailsServings"
+                android:id="@+id/userRecipeDetail_servings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -140,7 +140,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
             <TextView
-                android:id="@+id/recipeListApiDetailsPrepTime"
+                android:id="@+id/userRecipeDetail_prepTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -160,7 +160,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
             <TextView
-                android:id="@+id/recipeListApiDetailsCookTime"
+                android:id="@+id/userRecipeDetail_cookTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -180,7 +180,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
             <TextView
-                android:id="@+id/recipeListApiDetailsTotalTime"
+                android:id="@+id/userRecipeDetail_totalTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -189,7 +189,7 @@
                 tools:text="120 min" />
 
             <Button
-                android:id="@+id/recipeListApiDetails_btnBack"
+                android:id="@+id/userRecipeDetail_btnShare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -199,7 +199,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/userRecipeDetail_ratingBar" />
 
             <Button
-                android:id="@+id/recipeListApiDetails_btnSave"
+                android:id="@+id/userRecipeDetail_btnSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"

@@ -56,6 +56,7 @@ public class Repository {
     private MutableLiveData<List<Instruction>> listInstructionMutable;
     private MutableLiveData<List<Component>> listSectionMutable;
     private MutableLiveData<List<Result>> recipeList;
+    private MutableLiveData<Result> recipeApi;
     private MutableLiveData<RecipeDTO> recipeMutable;
     final MutableLiveData<List<RecipeWithSectionsAndInstructionsDTO>> recipesDB;
     final MutableLiveData<RecipeWithSectionsAndInstructionsDTO> recipeDB;
@@ -87,6 +88,7 @@ public class Repository {
         listSectionMutable = new MutableLiveData<List<Component>>();
         listInstructionMutable = new MutableLiveData<List<Instruction>>();
         recipeList = new MutableLiveData<List<Result>>();
+        recipeApi = new MutableLiveData<Result>();
         recipeMutable = new MutableLiveData<>();
         executor = Executors.newSingleThreadExecutor();                //executor for background processing
         retrofitClient = new RetrofitClient();
@@ -302,37 +304,6 @@ public class Repository {
         Log.d(Constants.TAG_REPOSITORY, "addRecipesDefault: ");
     }
 
-    public List<ComponentDTO> getSectionWithComponent(int sectionId){
-        List<ComponentDTO> list = new ArrayList<>();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                list.addAll(db.recipeDAO().getComponentsFromSectionId(sectionId));
-            }
-        });
-        return list;
-    }
-    public SectionWithComponentsDTO setSectionWithComponent(int sectionId) {
-        ListenableFuture<SectionWithComponentsDTO> section = db.recipeDAO().getSectionWithComponentsById(sectionId);
-        final SectionWithComponentsDTO scetion;
-        section.addListener(() -> {
-            try {
-                //scetion = section.get(100, TimeUnit.SECONDS);
-                sectionWithComponentDB.postValue(section.get(10, TimeUnit.SECONDS));
-            } catch (Exception e) {
-                Log.e(Constants.TAG_REPOSITORY, "Error getting Section with Components", e);
-            }
-        }, ContextCompat.getMainExecutor(application.getApplicationContext()));
-        while (sectionWithComponentDB.getValue() == null) {
-        }
-        ;
-        return sectionWithComponentDB.getValue();
-    }
-
-    public ListenableFuture<SectionWithComponentsDTO> getSectionWithComponent(int sectionId) {
-        return db.recipeDAO().getSectionWithComponentsById(sectionId);
-    }
-
     public void updateFullRecipe(RecipeDTO recipe) {
         executor.execute(new Runnable() {
             @Override
@@ -393,6 +364,11 @@ public class Repository {
         return list;
     }
 
+    public Result getRecipeFromApiByIndex(int index){
+        return recipeList.getValue().get(index);
+    }
+
+    //TODO: not used
     public void getRecipeByName(String name) {
         RetrofitClient.getInstance().getJsonApi().getRecipeFromSearchString(name).enqueue(new Callback<Recipes>() {
             @Override
@@ -417,7 +393,7 @@ public class Repository {
                             userRating = 0.0f;
                         }
                         if (recipeMutable != null) {
-                            recipeDTO = new RecipeDTO(response.body().getResults().get(0).getName(),
+                            recipeDTO = new RecipeDTO(null,response.body().getResults().get(0).getName(),
                                     response.body().getResults().get(0).getThumbnailUrl(),
                                     totalTimeMinutes.floatValue(), cookTimeMinutes.floatValue(), prepTimeMinutes.floatValue(),
                                     response.body().getResults().get(0).getCountry(),
@@ -601,6 +577,7 @@ public class Repository {
         return listSectionMutable;
     }
 
+    //TODO: not used
     public void getRecipe(String name) {
         getRecipeByName(name);
     }
@@ -623,7 +600,7 @@ public class Repository {
                     userRating = 0.0f;
                 }
                 if (recipeMutable != null) {
-                    recipeDTO = new RecipeDTO(response.body().getResults().get(0).getName(),
+                    recipeDTO = new RecipeDTO(null, response.body().getResults().get(0).getName(),
                             response.body().getResults().get(0).getThumbnailUrl(),
                             totalTimeMinutes.floatValue(), cookTimeMinutes.floatValue(), prepTimeMinutes.floatValue(),
                             response.body().getResults().get(0).getCountry(),

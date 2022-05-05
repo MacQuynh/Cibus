@@ -2,8 +2,6 @@ package dk.au.mad22spring.group04.cibusapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -14,7 +12,6 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.navigation.NavigationBarView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
@@ -27,7 +24,6 @@ import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPIDetails.Reci
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipeDetails.UserRecipeDetailsFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipesList.UserRecipesListFragment;
-import dk.au.mad22spring.group04.cibusapp.ui.viewModels.MainActivityViewModel;
 
 
 //Navigation bar: https://www.geeksforgeeks.org/bottom-navigation-bar-in-android/
@@ -67,15 +63,12 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
     private View dividerLandscape;
 
     //lists of data
-    private List<RecipeWithSectionsAndInstructionsDTO> userRecipeList;
-    private List<Result> apiRecipeList;
     private int selectedUserRecipeIndex;
     private int selectedApiRecipeIndex;
 
     //Foreground service:
     RecipeService recipeService;
 
-    private MainActivityViewModel mainVM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,8 +105,6 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
         });*/
 
         if(savedInstanceState == null){
-            selectedUserRecipeIndex = 0;
-            selectedApiRecipeIndex = 0;
             mode = Mode.API_RECIPE_LIST;
 
             //Initialize fragments
@@ -123,9 +114,8 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
             recipeListApiDetailsFragment = new RecipeListApiDetailsFragment();
             addNewRecipeFragment = new AddNewRecipeFragment();
 
-            userRecipeDetailsFragment.setSelectedRecipe(selectedUserRecipeIndex);
+           // userRecipeDetailsFragment.setSelectedRecipe(selectedUserRecipeIndex);
 
-            recipeListApiDetailsFragment.setSelectedRecipe(selectedApiRecipeIndex);
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.mainActivityListLayout, userRecipesListFragment, USER_RECIPE_LIST_FRAG)

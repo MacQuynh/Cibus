@@ -39,7 +39,7 @@ public interface RecipeDAO {
 
     @Transaction
     @Query("SELECT * FROM RECIPEDTO WHERE name like :searchText AND userId like :userId")
-    public ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> getRecipesWithSectionsAndInstructionsFromSearch(String searchText, String userId);
+    public ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>>  getRecipesWithSectionsAndInstructionsFromSearch(String searchText, String userId);
 
     @Query("SELECT * FROM RecipeDTO")
     List<RecipeDTO> getAllRecipesFromDB();

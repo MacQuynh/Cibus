@@ -100,7 +100,6 @@ public class RecipeListApiDetailsFragment extends Fragment {
         binding.recipeListApiDetailsBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: Save-functionality
                 String recipeTobeAddedtoDB = recipeObject;
                 vm.addRecipeFromAPItoDB(recipeTobeAddedtoDB);
             }

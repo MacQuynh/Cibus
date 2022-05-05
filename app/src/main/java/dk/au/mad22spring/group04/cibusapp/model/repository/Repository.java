@@ -130,7 +130,7 @@ public class Repository {
     }
 
     public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> getAllUserRecipes() {
-        /*executor.execute(new Runnable() {
+/*        executor.execute(new Runnable() {
             @Override
             public void run() {
                 db.recipeDAO().deleteAllingre();
@@ -706,7 +706,7 @@ public class Repository {
 
     public RecipeDTO getRandomRecipeFromDB() {
         Random randomNumber = new Random();
-        List<RecipeDTO> recipesFromDB = db.recipeDAO().getAllRecipesFromDB();
+        List<RecipeDTO> recipesFromDB = db.recipeDAO().getAllRecipesFromDB(Constants.USER_ID);
         int length = recipesFromDB.size();
         int high = length;
         int randomIndex = randomNumber.nextInt(high);

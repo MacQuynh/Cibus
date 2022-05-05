@@ -70,6 +70,7 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
                     userRecipeVM.addDefaultRecipes();
                 }
                 adapter.updateUserRecipeList(recipeWithSectionsAndInstructionsDTOS);
+
             }
         });
 
@@ -79,7 +80,6 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
                 onSearch();
             }
         });
-
         searchBtn.callOnClick();
 
     }

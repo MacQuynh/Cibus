@@ -41,24 +41,8 @@ public interface RecipeDAO {
     @Query("SELECT * FROM RECIPEDTO WHERE name like :searchText AND userId like :userId")
     public ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>>  getRecipesWithSectionsAndInstructionsFromSearch(String searchText, String userId);
 
-    @Query("SELECT * FROM RecipeDTO")
-    List<RecipeDTO> getAllRecipesFromDB();
-
-    @Transaction
-    @Query("SELECT * FROM RECIPEDTO LIMIT 1")
-    RecipeWithSectionsAndInstructionsDTO getFirstRecipe();
-
-    @Transaction
-    @Query("SELECT * FROM RECIPEDTO WHERE idRecipe like :id")
-    RecipeWithSectionsAndInstructionsDTO getRecipeById(int id);
-
-    @Transaction
-    @Query("SELECT * FROM RecipeDTO WHERE idRecipe like :id")
-    ListenableFuture<RecipeWithSectionsAndInstructionsDTO> findRecipeById(long id);
-
-    /*@Transaction
-    @Query("SELECT * FROM RECIPEDTO WHERE  like :id")
-    public ListenableFuture<RecipeWithSectionsAndInstructionsDTO> getFullRecipeByIndex(int index);*/
+    @Query("SELECT * FROM RecipeDTO WHERE userId like :userId")
+    List<RecipeDTO> getAllRecipesFromDB(String userId);
 
     @Transaction
     @Query("SELECT * FROM SectionDTO")
@@ -77,10 +61,6 @@ public interface RecipeDAO {
     public IngredientDTO getIngredientFromComponentId(int id);
 
     @Transaction
-    @Query("SELECT * FROM IngredientDTO WHERE componentCreatorIdForIngredient like :id")
-    public ListenableFuture<IngredientDTO> getIngredientFromComponentIdFuture(int id);
-
-    @Transaction
     @Query("SELECT * FROM MeasurementDTO")
     public List<MeasurementWithUnitDTO> getMeasurementWithUnit();
 
@@ -89,16 +69,8 @@ public interface RecipeDAO {
     public List<MeasurementDTO> getMeasurementsFromComponentId(int id);
 
     @Transaction
-    @Query("SELECT * FROM MeasurementDTO WHERE componentCreatorId like :id")
-    public ListenableFuture<List<MeasurementDTO>> getMeasurementsFromComponentIdFuture(int id);
-
-    @Transaction
     @Query("SELECT * FROM UnitDTO WHERE measurementCreatorId like :id")
     public UnitDTO getUnitFromMeasurementId(int id);
-
-    @Transaction
-    @Query("SELECT * FROM UnitDTO WHERE measurementCreatorId like :id")
-    public ListenableFuture<UnitDTO> getUnitFromMeasurementIdFuture(int id);
 
     @Transaction
     @Query("SELECT * FROM ComponentDTO")
@@ -150,21 +122,21 @@ public interface RecipeDAO {
     void deleteAllComponents();
 
     @Query("DELETE FROM IngredientDTO")
-    void deleteAllingre();
+    void deleteAllIngredients();
 
     @Query("DELETE FROM InstructionDTO")
-    void deleteAllinstr();
+    void deleteAllInstructions();
 
     @Query("DELETE FROM MeasurementDTO")
-    void deleteAllmeas();
+    void deleteAllMeasurements();
 
     @Query("DELETE FROM RecipeDTO")
-    void deleteAllrecipe();
+    void deleteAllRecipes();
 
     @Query("DELETE FROM sectiondto")
-    void deleteAllsecti();
+    void deleteAllSections();
 
     @Query("DELETE FROM UnitDTO")
-    void deleteAlluni();
+    void deleteAllUnits();
 
 }

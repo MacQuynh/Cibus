@@ -15,17 +15,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="29dp"
-            android:layout_marginBottom="-11dp">
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp">
 
             <TextView
                 android:id="@+id/addNew_header_textView"
+                style="@style/headings"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="@string/addNew_header_textView"
-                android:textSize="@dimen/heading_size"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
@@ -33,17 +32,17 @@
 
             <TextView
                 android:id="@+id/addNew_recipeName_textView"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/recipeName_textView"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_header_textView" />
 
             <EditText
                 android:id="@+id/addNew_recipeName_editText"
+                style="@style/hint_text"
                 android:layout_width="175dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -51,35 +50,33 @@
                 android:importantForAutofill="no"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_recipeName_textView"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/addNew_MeasureHeading_textView"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/measureHeading_textview"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_total_editText" />
 
             <TextView
                 android:id="@+id/addNew_ingredientsHeading_textView"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ingredientsHeading_textView"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_unit_textView"
                 app:layout_constraintStart_toStartOf="@+id/addNew_ingredient1_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_unit_textView" />
 
             <EditText
                 android:id="@+id/addNew_measure1_editText"
+                style="@style/hint_text"
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
@@ -87,12 +84,12 @@
                 android:hint="@string/measurements_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_MeasureHeading_textView" />
 
             <EditText
                 android:id="@+id/addNew_measure2_editText"
+                style="@style/hint_text"
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -100,59 +97,58 @@
                 android:hint="@string/measurements_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_measure1_editText" />
 
             <EditText
                 android:id="@+id/addNew_measure3_editText"
+                style="@style/hint_text"
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/measurements_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_measure2_editText" />
 
             <EditText
                 android:id="@+id/addNew_measure4_editText"
+                style="@style/hint_text"
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/measurements_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_measure3_editText" />
 
             <EditText
                 android:id="@+id/addNew_measure5_editText"
+                style="@style/hint_text"
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/measurements_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_measure4_editText" />
 
             <TextView
                 android:id="@+id/addNew_unit_textView"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/unit"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_MeasureHeading_textView"
                 app:layout_constraintStart_toStartOf="@+id/addNew_unit1_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_MeasureHeading_textView" />
 
             <EditText
                 android:id="@+id/addNew_unit1_editText"
+                style="@style/hint_text"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -166,6 +162,7 @@
 
             <EditText
                 android:id="@+id/addNew_unit2_editText"
+                style="@style/hint_text"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -178,6 +175,7 @@
 
             <EditText
                 android:id="@+id/addNew_unit3_editText"
+                style="@style/hint_text"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -190,6 +188,7 @@
 
             <EditText
                 android:id="@+id/addNew_unit4_editText"
+                style="@style/hint_text"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -202,6 +201,7 @@
 
             <EditText
                 android:id="@+id/addNew_unit5_editText"
+                style="@style/hint_text"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -214,6 +214,7 @@
 
             <EditText
                 android:id="@+id/addNew_ingredient1_editText"
+                style="@style/hint_text"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_marginStart="8dp"
@@ -222,7 +223,6 @@
                 android:hint="@string/ingredient_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_unit1_editText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/addNew_unit1_editText"
@@ -230,6 +230,7 @@
 
             <EditText
                 android:id="@+id/addNew_ingredient2_editText"
+                style="@style/hint_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
@@ -237,46 +238,45 @@
                 android:hint="@string/ingredient_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_unit2_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_ingredient1_editText"
                 app:layout_constraintTop_toTopOf="@+id/addNew_unit2_editText" />
 
             <EditText
                 android:id="@+id/addNew_ingredient3_editText"
+                style="@style/hint_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/ingredient_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_unit3_editText"
                 app:layout_constraintStart_toStartOf="@id/addNew_ingredient2_editText"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_unit2_editText" />
 
             <EditText
                 android:id="@+id/addNew_ingredient4_editText"
+                style="@style/hint_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/ingredient_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_unit4_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_ingredient3_editText"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_unit3_editText" />
 
             <EditText
                 android:id="@+id/addNew_ingredient5_editText"
+                style="@style/hint_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/ingredient_editText"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_unit5_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_ingredient4_editText"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_unit4_editText" />
@@ -291,17 +291,17 @@
 
             <TextView
                 android:id="@+id/addNew_instructionsHeading_textView"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="@string/instructionsHeading_textView"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_linearLayout" />
 
             <EditText
                 android:id="@+id/addNew_instructions_editText"
+                style="@style/hint_text"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -310,7 +310,6 @@
                 android:hint="@string/instructions_editText"
                 android:inputType="textMultiLine"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/addNew_instructionsHeading_textView"
@@ -318,85 +317,81 @@
 
             <TextView
                 android:id="@+id/addNew_timeTotal_textView"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/total_time"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_recipeName_editText" />
 
             <TextView
                 android:id="@+id/addNew_cookTime_textView"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:text="@string/cook_time"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_timeTotal_textView"
                 app:layout_constraintStart_toEndOf="@+id/addNew_timeTotal_textView"
                 app:layout_constraintTop_toTopOf="@+id/addNew_timeTotal_textView" />
 
             <TextView
                 android:id="@+id/addNew_prepTime_textView"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:text="@string/preparation_time"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_cookTime_textView"
                 app:layout_constraintStart_toEndOf="@+id/addNew_cookTime_textView"
                 app:layout_constraintTop_toTopOf="@+id/addNew_cookTime_textView" />
 
             <EditText
                 android:id="@+id/addNew_total_editText"
+                style="@style/hint_text"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/time_editView"
                 android:inputType="number"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/addNew_timeTotal_textView" />
 
             <EditText
                 android:id="@+id/addNew_cookTime_editText"
+                style="@style/hint_text"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/time_editView"
                 android:inputType="number"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintStart_toStartOf="@+id/addNew_cookTime_textView"
                 app:layout_constraintTop_toTopOf="@+id/addNew_total_editText" />
 
             <EditText
                 android:id="@+id/addNew_prepTime_editText"
+                style="@style/hint_text"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/time_editView"
                 android:inputType="number"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_cookTime_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_prepTime_textView"
                 app:layout_constraintTop_toTopOf="@+id/addNew_cookTime_editText" />
 
             <TextView
                 android:id="@+id/addNew_numberOf_textView"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="64dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/number_of_servings"
-                android:textSize="@dimen/subHeading_size"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_recipeName_textView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/addNew_recipeName_textView"
@@ -404,13 +399,13 @@
 
             <EditText
                 android:id="@+id/addNew_numberOf_editText"
+                style="@style/hint_text"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/numberOfServings_editText"
                 android:inputType="number"
                 android:minHeight="48dp"
-                android:textSize="@dimen/hint_text_size"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_recipeName_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_numberOf_textView"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_recipeName_textView" />

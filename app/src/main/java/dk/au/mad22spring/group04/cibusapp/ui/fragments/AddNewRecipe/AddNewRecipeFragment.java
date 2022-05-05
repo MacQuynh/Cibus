@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import dk.au.mad22spring.group04.cibusapp.MainActivity;
 import dk.au.mad22spring.group04.cibusapp.R;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
@@ -40,6 +43,12 @@ public class AddNewRecipeFragment extends Fragment {
     private EditText totalTimeEditText, cookTimeEditText, prepTimeEditText, numberOfServingsEditText;
     private EditText measureDynamic, unitDynamic,ingredientDynamic;
     private Button addBtn, extraFieldBtn;
+    int numberOfEditTexts = 1 ;
+    List<EditText>allDynamicMeasures = new ArrayList<EditText>();
+    List<EditText>allDynamicUnits = new ArrayList<EditText>();
+    List<EditText>allDynamicIngredients = new ArrayList<EditText>();
+
+    //String measure1 = "";
 
     public static AddNewRecipeFragment newInstance() {
         return new AddNewRecipeFragment();
@@ -89,29 +98,75 @@ public class AddNewRecipeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 addFieldsDynamically();
+                numberOfEditTexts ++;
             }
         });
     }
 
     //Code adapted from https://stackoverflow.com/questions/37764422/add-edittext-dynamically-with-if-possible-string-id-into-a-fragment
+    // Code adapted from https://stackoverflow.com/questions/41865416/android-dynamically-or-programmatically-add-two-edittext-in-one-line-and-make-t
     private void addFieldsDynamically() {
-        int numberOfEditTexts = 0 ;
         Context context = getActivity();
+        LinearLayout linearLayout = new LinearLayout(context);
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        //List<EditText>allDynamicMeasures = new ArrayList<EditText>();
         measureDynamic = new EditText(context);
+        allDynamicMeasures.add(measureDynamic);
         measureDynamic.setHint(R.string.measurements_editText);
+        measureDynamic.setTextSize(16);
+        measureDynamic.setId(numberOfEditTexts);
+        measureDynamic.setLayoutParams(new LinearLayout.LayoutParams(0,ViewGroup.LayoutParams.WRAP_CONTENT, 0.6f));
+        linearLayout.addView(measureDynamic);
+
+
+      /*  measureDynamic = new EditText(context);
+        measureDynamic.setHint(R.string.measurements_editText);
+        measureDynamic.setTextSize(16);
+        measureDynamic.setLayoutParams(new LinearLayout.LayoutParams(0,ViewGroup.LayoutParams.WRAP_CONTENT, 0.6f));
+        measureDynamic.setId(numberOfEditTexts);*/
+
+       //For testing
+        int measureDynamicId = measureDynamic.getId();
+        Log.d(TAG, "addFieldsDynamically: measureID: " + measureDynamicId);
+        Log.d(TAG, "addFieldsDynamically: allDynamicMeasures: " + allDynamicMeasures.get(0).getId());
+
+        //List<EditText>allDynamicUnits = new ArrayList<EditText>();
         unitDynamic = new EditText(context);
+        allDynamicUnits.add(unitDynamic);
         unitDynamic.setHint(R.string.unit_editText);
+        unitDynamic.setTextSize(16);
+        unitDynamic.setId(numberOfEditTexts);
+        unitDynamic.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0.7f));
+        linearLayout.addView(unitDynamic);
+
+        //For testing
+        int unitDynamicId = unitDynamic.getId();
+        Log.d(TAG, "addFieldsDynamically: unitID" + unitDynamicId);
+        Log.d(TAG, "addFieldsDynamically: allDynamicUnits: " + allDynamicUnits.get(0).getId());
+
+        //List<EditText>allDynamicIngredients = new ArrayList<EditText>();
         ingredientDynamic = new EditText(context);
+        allDynamicIngredients.add(ingredientDynamic);
         ingredientDynamic.setHint(R.string.ingredient_editText);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        measureDynamic.setLayoutParams(params);
-        unitDynamic.setLayoutParams(params);
-        ingredientDynamic.setLayoutParams(params);
+        ingredientDynamic.setTextSize(16);
+        ingredientDynamic.setId(numberOfEditTexts);
+        ingredientDynamic.setLayoutParams(new LinearLayout.LayoutParams(0,ViewGroup.LayoutParams.WRAP_CONTENT, 1.5f));
+        linearLayout.addView(ingredientDynamic);
+
+        //For testing
+        int ingredientDynamicId = ingredientDynamic.getId();
+        Log.d(TAG, "addFieldsDynamically: IngredientId: " + ingredientDynamicId );
+        Log.d(TAG, "addFieldsDynamically: allDynamicIngredients: " + allDynamicIngredients.get(0).getId());
+
+
+        //linearLayout.addView(measureDynamic);
+        //linearLayout.addView(unitDynamic);
+        //linearLayout.addView(ingredientDynamic);
+
         LinearLayout layout = (LinearLayout)getView().findViewById(R.id.addNew_linearLayout);
-        layout.addView(measureDynamic,0);
-        layout.addView(unitDynamic,1);
-        layout.addView(ingredientDynamic,2);
-        numberOfEditTexts ++;
+        layout.addView(linearLayout);
+
     }
 
     private void addNewRecipeToLibrary() {
@@ -150,7 +205,8 @@ public class AddNewRecipeFragment extends Fragment {
             e.printStackTrace();
         }
 
-        String measure1 = measure1EditText.getText().toString();
+        //String measure1 = measure1EditText.getText().toString();
+        ;
         String measure2 = measure2EditText.getText().toString();
         String measure3 = measure3EditText.getText().toString();
         String measure4 = measure4EditText.getText().toString();
@@ -166,6 +222,20 @@ public class AddNewRecipeFragment extends Fragment {
         String ingredient4 = ingredient4EditText.getText().toString();
         String ingredient5 = ingredient5EditText.getText().toString();
         String instructions = instructionsEditText.getText().toString();
+        String[] measure = new String[allDynamicMeasures.size()];
+        for (int i = 0; i < allDynamicMeasures.size(); i++){
+             measure[i] = allDynamicMeasures.get(i).getText().toString();
+            Log.d(TAG, "addNewRecipeToLibrary: measure " +measure[i]);
+        }
+
+        /*int id = measureDynamic.getId();
+        String measure1 = "";
+        if(id == 1){
+            measure1 = measureDynamic.getText().toString();
+            Log.d(TAG, "addNewRecipeToLibrary: measure1" +measure1);
+        }*/
+
+
 
         RecipeDTO recipeDTO = new RecipeDTO(null, recipeName,"", totalTime, cookTime, prepTime, "", numberOfServings, "",1619608605, 1651144605,0, Constants.USER_ID);
 
@@ -174,7 +244,7 @@ public class AddNewRecipeFragment extends Fragment {
         SectionDTO sectionDTO = new SectionDTO("",1 );
 
         ArrayList<MeasurementDTO> listOfMeasures = new ArrayList<MeasurementDTO>();
-        listOfMeasures.add(new MeasurementDTO(measure1));
+        //listOfMeasures.add(new MeasurementDTO(measure1));
         listOfMeasures.add(new MeasurementDTO(measure2));
         listOfMeasures.add(new MeasurementDTO(measure3));
         listOfMeasures.add(new MeasurementDTO(measure4));
@@ -222,6 +292,9 @@ public class AddNewRecipeFragment extends Fragment {
         ingredient4EditText.setText("");
         ingredient5EditText.setText("");
         instructionsEditText.setText("");
+        measureDynamic.setText("");
+        unitDynamic.setText("");
+        ingredientDynamic.setText("");
     }
 
     @Override

@@ -4,7 +4,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,16 +21,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.List;
-
 import dk.au.mad22spring.group04.cibusapp.R;
-import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionWithComponentsDTO;
-import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipesList.UserRecipesListFragment;
+import dk.au.mad22spring.group04.cibusapp.ui.interfaces.UserRecipeSelectorInterface;
 
 public class UserRecipeDetailsFragment extends Fragment {
 
@@ -49,30 +43,42 @@ public class UserRecipeDetailsFragment extends Fragment {
     private ImageView imgRecipe;
 
     private UserRecipeDetailsViewModel detailsViewModel;
-    private static long recipeId;
+    private RecipeWithSectionsAndInstructionsDTO recipe;
+    private static int recipeIndex;
+
+    private UserRecipeSelectorInterface recipeSelectorInterface;
 
     public static UserRecipeDetailsFragment newInstance() {
         return new UserRecipeDetailsFragment();
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_recipe_details_fragment, container, false);
 
-        //Pass arguments inspiration: https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
-        recipeId = getArguments().getLong(String.valueOf(Constants.RECIPE_NAME));
         setUIWidgets(view);
+
+        detailsViewModel = new ViewModelProvider(this).get(UserRecipeDetailsViewModel.class);
+        RecipeWithSectionsAndInstructionsDTO fetchedRecipe = detailsViewModel.getFullRecipeByIndex(recipeIndex);
+
+        if(detailsViewModel.recipeWithSectionsAndInstructionsDTO == null){
+            detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
+        } else if (detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.idRecipe != fetchedRecipe.recipe.idRecipe){
+            detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
+        }
+
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        detailsViewModel = new ViewModelProvider(this).get(UserRecipeDetailsViewModel.class);
 
-        detailsViewModel.getFullRecipeById(recipeId).observe(getViewLifecycleOwner(), new Observer<RecipeWithSectionsAndInstructionsDTO>() {
+
+        //recipe = detailsViewModel.getFullRecipeByIndex(recipeIndex);
+        setUIData();
+       /* detailsViewModel.getFullRecipeByIndex(recipeId).observe(getViewLifecycleOwner(), new Observer<RecipeWithSectionsAndInstructionsDTO>() {
             @Override
             public void onChanged(RecipeWithSectionsAndInstructionsDTO recipeWithSectionsAndInstructionsDTO) {
                 if(detailsViewModel.recipeWithSectionsAndInstructionsDTO == null || recipeId != detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getIdRecipe()){
@@ -80,8 +86,23 @@ public class UserRecipeDetailsFragment extends Fragment {
                 }
                 setUIData();
             }
-        });
+        });*/
         listeners();
+    }
+
+    //Master Detail inspiration: Demo from lecture "FragmentsArnieMovies"
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            recipeSelectorInterface = (UserRecipeSelectorInterface) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement UserRecipe interface");
+        }
+    }
+
+    public void setSelectedRecipe(int index){
+        recipeIndex = index;
     }
 
     private void setUIWidgets(View view){
@@ -137,9 +158,12 @@ public class UserRecipeDetailsFragment extends Fragment {
 
     private void onDelete() {
         detailsViewModel.deleteFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO);
-        getParentFragmentManager().beginTransaction()
-                .replace(R.id.mainActitvityFragmentHolder, UserRecipesListFragment.newInstance())
-                .commit();
+        recipeSelectorInterface.onBackFromUserRecipeDetails();
+
+        //TODO: call interface
+        /*getParentFragmentManager().beginTransaction()
+                .replace(R.id.mainActivityListLayout, UserRecipesListFragment.newInstance())
+                .commit();*/
     }
 
     private void onShare() {
@@ -148,9 +172,11 @@ public class UserRecipeDetailsFragment extends Fragment {
 
     private void onSave() {
         detailsViewModel.updateFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe);
-        getParentFragmentManager().beginTransaction()
-                .replace(R.id.mainActitvityFragmentHolder, UserRecipesListFragment.newInstance())
-                .commit();
+        recipeSelectorInterface.onBackFromUserRecipeDetails();
+        //TODO: call interface
+        /*getParentFragmentManager().beginTransaction()
+                .replace(R.id.mainActivityListLayout, UserRecipesListFragment.newInstance())
+                .commit();*/
     }
 
     private void setUIData(){
@@ -188,7 +214,7 @@ public class UserRecipeDetailsFragment extends Fragment {
 
     //Fejler med timing...
     private void getIngredients(){
-        detailsViewModel.getIngredientMeasurementText(detailsViewModel.recipeWithSectionsAndInstructionsDTO).observe(this, new Observer<String>() {
+        detailsViewModel.getIngredientMeasurementText(detailsViewModel.recipeWithSectionsAndInstructionsDTO).observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 txtIngredients.setText(s);

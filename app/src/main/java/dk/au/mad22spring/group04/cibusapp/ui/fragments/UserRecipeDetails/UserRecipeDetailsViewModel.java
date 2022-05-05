@@ -26,7 +26,6 @@ public class UserRecipeDetailsViewModel extends AndroidViewModel {
     Repository repoInstance;
 
     public RecipeWithSectionsAndInstructionsDTO recipeWithSectionsAndInstructionsDTO;
-    public SectionWithComponentsDTO sectionWithComponentsDTO;
     final MutableLiveData<String> ingredientMeasurementText;
 
     public UserRecipeDetailsViewModel(@NonNull Application application) {
@@ -35,9 +34,9 @@ public class UserRecipeDetailsViewModel extends AndroidViewModel {
         ingredientMeasurementText = new MutableLiveData<String>("");
     }
 
-    public LiveData<RecipeWithSectionsAndInstructionsDTO> getFullRecipeById(long recipeId){
-        repoInstance.setFullRecipeByName(recipeId);
-        return repoInstance.getFullRecipeFromDB();
+    public RecipeWithSectionsAndInstructionsDTO getFullRecipeByIndex(int index){
+   /*    *//**//* repoInsta*//**//*nce.setFullRecipeByName(recipeId);*/
+        return repoInstance.getFullRecipeFromDB(index);
     }
 
     public LiveData<String> getIngredientMeasurementText(RecipeWithSectionsAndInstructionsDTO recipe){

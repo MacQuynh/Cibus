@@ -20,7 +20,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="40dp"
         android:text="@string/email_textView"
-        android:textSize="@dimen/text_textView"
+        style="@style/custom_text"
         app:layout_constraintEnd_toStartOf="@+id/login_email_editText"
         app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/password_textView"
-        android:textSize="@dimen/text_textView"
+        style="@style/custom_text"
         app:layout_constraintStart_toStartOf="@+id/login_email_textView"
         app:layout_constraintTop_toBottomOf="@+id/login_email_textView" />
 
@@ -43,7 +43,7 @@
         android:hint="@string/email_editText"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
-        android:textSize="@dimen/hint_text_size"
+        style="@style/hint_text"
         app:layout_constraintBottom_toBottomOf="@+id/login_email_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
         android:hint="@string/password_editText"
         android:inputType="textPassword"
         android:minHeight="48dp"
-        android:textSize="@dimen/hint_text_size"
+        style="@style/hint_text"
         app:layout_constraintBottom_toBottomOf="@+id/login_password_textView"
         app:layout_constraintStart_toStartOf="@+id/login_email_editText"
         app:layout_constraintTop_toTopOf="@+id/login_password_textView" />
@@ -85,8 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_header_textview"
-        android:textSize="@dimen/heading_size"
-        android:textStyle="bold"
+        style="@style/headings"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

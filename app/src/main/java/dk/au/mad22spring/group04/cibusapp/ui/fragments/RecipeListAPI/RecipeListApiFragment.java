@@ -1,5 +1,6 @@
-package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPI;
+package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,8 +21,11 @@ import dk.au.mad22spring.group04.cibusapp.R;
 import dk.au.mad22spring.group04.cibusapp.databinding.RecipeListApiFragmentBinding;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.model.Result;
+import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiViewModel;
 import dk.au.mad22spring.group04.cibusapp.ui.adapters.ApiListAdapter;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPIDetails.RecipeListApiDetailsFragment;
+import dk.au.mad22spring.group04.cibusapp.ui.interfaces.ApiRecipeSelectorInterface;
+import dk.au.mad22spring.group04.cibusapp.ui.interfaces.UserRecipeSelectorInterface;
 
 public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IApiItemClickedListener {
 
@@ -32,6 +36,8 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
     private ApiListAdapter adapter;
     private RecyclerView recyclerView;
 
+    private ApiRecipeSelectorInterface apiRecipeSelectorInterface;
+    
     //Reference: https://stackoverflow.com/questions/2665993/is-is-possible-to-make-a-method-execute-only-once - boolean to make sure initial list only get called once.
     private boolean alreadyExecuted = false;
 
@@ -75,6 +81,17 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
         recyclerView.setAdapter(adapter);
     }
 
+    //Master Detail inspiration: Demo from lecture "FragmentsArnieMovies"
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            apiRecipeSelectorInterface = (ApiRecipeSelectorInterface) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement UserRecipe interface");
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -86,7 +103,9 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
     public void onApiItemClicked(int index) {
         Result result = adapter.getRecipeByIndex(index);
 
-        Bundle bundle = new Bundle();
+        apiRecipeSelectorInterface.onApiRecipeSelected(index);
+
+       /* Bundle bundle = new Bundle();
         if (result != null) {
             bundle.putString(Constants.RECIPE_OBJECT, result.getName());
             bundle.putInt(Constants.INDEX_OBJECT, index);
@@ -97,6 +116,6 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
         fragment.setArguments(bundle);
 
         activity.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.mainActitvityFragmentHolder, fragment).addToBackStack(null).commit();
+                .replace(R.id.mainActivityDetailLayout, fragment).addToBackStack(null).commit();*/
     }
 }

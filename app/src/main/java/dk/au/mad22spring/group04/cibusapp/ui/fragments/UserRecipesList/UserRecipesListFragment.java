@@ -1,9 +1,9 @@
 package dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipesList;
 
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,18 +21,22 @@ import android.widget.TextView;
 import java.util.List;
 
 import dk.au.mad22spring.group04.cibusapp.R;
-import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
+import dk.au.mad22spring.group04.cibusapp.ui.interfaces.UserRecipeSelectorInterface;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 import dk.au.mad22spring.group04.cibusapp.ui.adapters.UserRecipesListAdapter;
-import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipeDetails.UserRecipeDetailsFragment;
 
 public class UserRecipesListFragment extends Fragment implements UserRecipesListAdapter.IUserRecipeItemClickListener{
 
     private UserRecipesListViewModel userRecipeVM;
     private UserRecipesListAdapter adapter;
+
+    //UI Widgets
     private RecyclerView rcvUserRecipes;
     private TextView searchText;
     private Button searchBtn;
+
+    private UserRecipeSelectorInterface recipeSelectorInterface;
+
 
     public static UserRecipesListFragment newInstance() {
         return new UserRecipesListFragment();
@@ -57,10 +61,14 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
         rcvUserRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
         rcvUserRecipes.setAdapter(adapter);
 
+
         userRecipeVM = new ViewModelProvider(this).get(UserRecipesListViewModel.class);
         userRecipeVM.getUserRecipes().observe(getViewLifecycleOwner(), new Observer<List<RecipeWithSectionsAndInstructionsDTO>>() {
             @Override
             public void onChanged(List<RecipeWithSectionsAndInstructionsDTO> recipeWithSectionsAndInstructionsDTOS) {
+                if (recipeWithSectionsAndInstructionsDTOS.size() <= 0){
+                    userRecipeVM.addDefaultRecipes();
+                }
                 adapter.updateUserRecipeList(recipeWithSectionsAndInstructionsDTOS);
             }
         });
@@ -76,6 +84,17 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
 
     }
 
+    //Master Detail inspiration: Demo from lecture "FragmentsArnieMovies"
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            recipeSelectorInterface = (UserRecipeSelectorInterface) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement UserRecipe interface");
+        }
+    }
+
     private void onSearch() {
         String text = searchText.getText().toString();
         userRecipeVM.searchRecipes(text);
@@ -83,16 +102,10 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
 
     @Override
     public void onUserRecipeClicked(int index) {
-        long recipeId = userRecipeVM.getRecipeByIndex(index).recipe.getIdRecipe();
+        recipeSelectorInterface.onUserRecipeSelected(index);
+    }
 
-        //Pass arguments inspiration: https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
-        Bundle bundle = new Bundle();
-        bundle.putLong(String.valueOf(Constants.RECIPE_NAME), recipeId);
-        UserRecipeDetailsFragment userRecipeDetailsFragment = new UserRecipeDetailsFragment().newInstance();
-        userRecipeDetailsFragment.setArguments(bundle);
+    public void setRecipes(){
 
-        getParentFragmentManager().beginTransaction()
-                .replace(R.id.mainActitvityFragmentHolder, userRecipeDetailsFragment)
-                .commit();
     }
 }

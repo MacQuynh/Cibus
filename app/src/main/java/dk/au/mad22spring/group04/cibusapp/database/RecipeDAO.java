@@ -41,9 +41,9 @@ public interface RecipeDAO {
     @Query("SELECT * FROM RECIPEDTO WHERE name like :searchText AND userId like :userId")
     public ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> getRecipesWithSectionsAndInstructionsFromSearch(String searchText, String userId);
 
-    @Transaction
-    @Query("SELECT * FROM RECIPEDTO WHERE idRecipe like :id")
-    public ListenableFuture<RecipeWithSectionsAndInstructionsDTO> getFullRecipeById(long id);
+/*    @Transaction
+    @Query("SELECT * FROM RECIPEDTO WHERE  like :id")
+    public ListenableFuture<RecipeWithSectionsAndInstructionsDTO> getFullRecipeByIndex(int index);*/
 
     @Transaction
     @Query("SELECT * FROM SectionDTO")
@@ -131,5 +131,25 @@ public interface RecipeDAO {
     @Delete
     void deleteIngredient(IngredientDTO ingredientDTO);
 
+    @Query("DELETE FROM ComponentDTO")
+    void deleteAllComponents();
+
+    @Query("DELETE FROM IngredientDTO")
+    void deleteAllingre();
+
+    @Query("DELETE FROM InstructionDTO")
+    void deleteAllinstr();
+
+    @Query("DELETE FROM MeasurementDTO")
+    void deleteAllmeas();
+
+    @Query("DELETE FROM RecipeDTO")
+    void deleteAllrecipe();
+
+    @Query("DELETE FROM sectiondto")
+    void deleteAllsecti();
+
+    @Query("DELETE FROM UnitDTO")
+    void deleteAlluni();
 
 }

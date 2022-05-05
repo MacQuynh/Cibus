@@ -21,11 +21,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import dk.au.mad22spring.group04.cibusapp.R;
-import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
-import dk.au.mad22spring.group04.cibusapp.interfaces.UserRecipeSelectorInterface;
+import dk.au.mad22spring.group04.cibusapp.ui.interfaces.UserRecipeSelectorInterface;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 import dk.au.mad22spring.group04.cibusapp.ui.adapters.UserRecipesListAdapter;
-import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipeDetails.UserRecipeDetailsFragment;
 
 public class UserRecipesListFragment extends Fragment implements UserRecipesListAdapter.IUserRecipeItemClickListener{
 
@@ -63,10 +61,14 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
         rcvUserRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
         rcvUserRecipes.setAdapter(adapter);
 
+
         userRecipeVM = new ViewModelProvider(this).get(UserRecipesListViewModel.class);
         userRecipeVM.getUserRecipes().observe(getViewLifecycleOwner(), new Observer<List<RecipeWithSectionsAndInstructionsDTO>>() {
             @Override
             public void onChanged(List<RecipeWithSectionsAndInstructionsDTO> recipeWithSectionsAndInstructionsDTOS) {
+                if (recipeWithSectionsAndInstructionsDTOS.size() <= 0){
+                    userRecipeVM.addDefaultRecipes();
+                }
                 adapter.updateUserRecipeList(recipeWithSectionsAndInstructionsDTOS);
             }
         });
@@ -100,7 +102,10 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
 
     @Override
     public void onUserRecipeClicked(int index) {
-        long recipeId = userRecipeVM.getRecipeByIndex(index).recipe.getIdRecipe();
-        recipeSelectorInterface.onUserRecipeSelected(recipeId);
+        recipeSelectorInterface.onUserRecipeSelected(index);
+    }
+
+    public void setRecipes(){
+
     }
 }

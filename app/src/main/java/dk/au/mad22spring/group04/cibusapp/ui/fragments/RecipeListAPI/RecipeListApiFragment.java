@@ -1,5 +1,6 @@
 package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,8 @@ import dk.au.mad22spring.group04.cibusapp.model.Result;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiViewModel;
 import dk.au.mad22spring.group04.cibusapp.ui.adapters.ApiListAdapter;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPIDetails.RecipeListApiDetailsFragment;
+import dk.au.mad22spring.group04.cibusapp.ui.interfaces.ApiRecipeSelectorInterface;
+import dk.au.mad22spring.group04.cibusapp.ui.interfaces.UserRecipeSelectorInterface;
 
 public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IApiItemClickedListener {
 
@@ -31,9 +34,12 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
     private RecipeListApiFragmentBinding binding;
     private RecipeListApiViewModel vm;
     private ApiListAdapter adapter;
-    private List<Result> resultList;
-
     private RecyclerView recyclerView;
+
+    private ApiRecipeSelectorInterface apiRecipeSelectorInterface;
+    
+    //Reference: https://stackoverflow.com/questions/2665993/is-is-possible-to-make-a-method-execute-only-once - boolean to make sure initial list only get called once.
+    private boolean alreadyExecuted = false;
 
     public static RecipeListApiFragment newInstance() {
         return new RecipeListApiFragment();
@@ -48,6 +54,10 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
         searchButton();
 
         vm = new ViewModelProvider(this).get(RecipeListApiViewModel.class);
+        if (!alreadyExecuted) {
+            vm.getInitialList();
+            alreadyExecuted = true;
+        }
         vm.getInitialListBack().observe(getViewLifecycleOwner(), results -> adapter.updateListOfRecipe(results));
         recyclerView = binding.recycleviewListAPI;
         return view;
@@ -66,10 +76,20 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        vm.getInitialList();
         adapter = new ApiListAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+    }
+
+    //Master Detail inspiration: Demo from lecture "FragmentsArnieMovies"
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            apiRecipeSelectorInterface = (ApiRecipeSelectorInterface) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement UserRecipe interface");
+        }
     }
 
     @Override
@@ -81,11 +101,11 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
     //Reference: https://stackoverflow.com/questions/28984879/how-to-open-a-different-fragment-on-recyclerview-onclick
     @Override
     public void onApiItemClicked(int index) {
-        Log.d(TAG, "onApiItemClicked: " + index);
-
         Result result = adapter.getRecipeByIndex(index);
 
-        Bundle bundle = new Bundle();
+        apiRecipeSelectorInterface.onApiRecipeSelected(index);
+
+       /* Bundle bundle = new Bundle();
         if (result != null) {
             bundle.putString(Constants.RECIPE_OBJECT, result.getName());
             bundle.putInt(Constants.INDEX_OBJECT, index);
@@ -96,6 +116,6 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
         fragment.setArguments(bundle);
 
         activity.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.mainActivityDetailLayout, fragment).addToBackStack(null).commit();
+                .replace(R.id.mainActivityDetailLayout, fragment).addToBackStack(null).commit();*/
     }
 }

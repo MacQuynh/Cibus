@@ -55,12 +55,13 @@ public class Repository {
 
     private MutableLiveData<List<Instruction>> listInstructionMutable;
     private MutableLiveData<List<Component>> listSectionMutable;
-    private MutableLiveData<List<Result>> recipeList;
+    private MutableLiveData<Recipes> recipeList;
     private MutableLiveData<Result> recipeApi;
     private MutableLiveData<RecipeDTO> recipeMutable;
     final MutableLiveData<List<RecipeWithSectionsAndInstructionsDTO>> recipesDB;
-    final MutableLiveData<RecipeWithSectionsAndInstructionsDTO> recipeDB;
+    private RecipeWithSectionsAndInstructionsDTO recipeDB;
     final MutableLiveData<String> ingredientMeasurementText;
+    final MutableLiveData<List<ComponentWithMeasurementsAndIngredientDTO>> componentDB;
 
 
     private RecipeDTO finalRecipeFromAPI; //TODO Refactor
@@ -71,6 +72,7 @@ public class Repository {
 
     //Context - used to inform the user if the recipe already exist
     private Context context;
+    private String mySearch;
 
     //Singleton pattern to make sure there is only one instance of the Repository in use
     public static Repository getRepositoryInstance(Application app) {
@@ -86,14 +88,14 @@ public class Repository {
         db = RecipeDatabase.getDatabase(app.getApplicationContext());
         listSectionMutable = new MutableLiveData<List<Component>>();
         listInstructionMutable = new MutableLiveData<List<Instruction>>();
-        recipeList = new MutableLiveData<List<Result>>();
+        recipeList = new MutableLiveData<Recipes>();
         recipeApi = new MutableLiveData<Result>();
         recipeMutable = new MutableLiveData<>();
         executor = Executors.newSingleThreadExecutor();                //executor for background processing
         retrofitClient = new RetrofitClient();
         recipesDB = new MutableLiveData<List<RecipeWithSectionsAndInstructionsDTO>>();
-        recipeDB = new MutableLiveData<RecipeWithSectionsAndInstructionsDTO>();
         ingredientMeasurementText = new MutableLiveData<String>("");
+        componentDB = new MutableLiveData<List<ComponentWithMeasurementsAndIngredientDTO>>();
         this.application = app;
     }
 
@@ -105,7 +107,7 @@ public class Repository {
         return instance;
     }
 
-    public LiveData<List<Result>> getInitialListBack() {
+    public LiveData<Recipes> getInitialListBack() {
         return recipeList;
     }
 
@@ -114,8 +116,7 @@ public class Repository {
             @Override
             public void onResponse(@NonNull Call<Recipes> call, @NonNull Response<Recipes> response) {
                 if (response.isSuccessful() && response.body() != null) {
-
-                    List<Result> list = getResults(response);
+                    Recipes list = response.body();
                     recipeList.postValue(list);
                 }
             }
@@ -128,7 +129,7 @@ public class Repository {
     }
 
     public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> getAllUserRecipes() {
-       /* executor.execute(new Runnable() {
+/*        executor.execute(new Runnable() {
             @Override
             public void run() {
                 db.recipeDAO().deleteAllingre();
@@ -140,11 +141,17 @@ public class Repository {
                 db.recipeDAO().deleteAllComponents();
             }
         });*/
+
         return recipesDB;
+    }
+    public void updateDBRecipes(){
+       searchAllUserRecipes(mySearch);
     }
 
     public void searchAllUserRecipes(String searchText) {
+        mySearch = searchText;
         //inspiration for searching for part of word https://stackoverflow.com/questions/61948455/android-room-query-text-matches-exactly-the-search-string-or-start-with-search
+
         ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> list = db.recipeDAO().getRecipesWithSectionsAndInstructionsFromSearch(searchText + "%", Constants.USER_ID);
         list.addListener(() -> {
             try {
@@ -171,8 +178,52 @@ public class Repository {
     }*/
 
     public RecipeWithSectionsAndInstructionsDTO getFullRecipeFromDB(int index) {
-        return recipesDB.getValue().get(index);
+        recipeDB = recipesDB.getValue().get(index);
+        return recipeDB;
     }
+
+    public void setSectionWithComponentDB() {
+        int sectionId = recipeDB.sections.get(0).idSection;
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                ListenableFuture<List<ComponentWithMeasurementsAndIngredientDTO>> sectionWithComponentsDTO = db.recipeDAO().getComponentsFromSectionIdFuture(sectionId);
+                sectionWithComponentsDTO.addListener(()->{
+                    try {
+                        componentDB.postValue(sectionWithComponentsDTO.get());
+
+                    } catch (Exception e){
+                        Log.e(TAG, "run: ", e);
+                    }
+
+                }, ContextCompat.getMainExecutor(application.getApplicationContext()));
+            }
+        });
+    }
+
+    public LiveData<List<ComponentWithMeasurementsAndIngredientDTO>> getSectionWithComponentDB(){
+        return componentDB;
+    }
+
+
+
+
+/*    public void getFullRecipeFromDBById(long id) {
+        ListenableFuture<RecipeWithSectionsAndInstructionsDTO> rec = db.recipeDAO().findRecipeById(id);
+        rec.addListener(()->{
+            try {
+                recipeDB.postValue(rec.get());
+            } catch (Exception e) {
+                Log.e(Constants.TAG_REPOSITORY, "Error loading Recipe: ", e);
+            }
+
+        }, ContextCompat.getMainExecutor(application.getApplicationContext()));
+        //return recipesDB.getValue().get(index);
+    }
+
+    public LiveData<RecipeWithSectionsAndInstructionsDTO> getRecipeFromDB(){
+        return recipeDB;
+    }*/
 
     public void addRecipesDefault() {
         retrofitClient.getInstance().getJsonApi().getRandomRecipesFromTheLast30min().enqueue(new Callback<Recipes>() {
@@ -203,9 +254,9 @@ public class Repository {
                             result.getId(),
                             result.getName(),
                             result.getThumbnailUrl(),
-                            0,
-                            0,
-                            0,
+                            result.getTotalTimeMinutes(),
+                            result.getCookTimeMinutes(),
+                            result.getPrepTimeMinutes(),
                             result.getCountry(),
                             result.getNumServings(),
                             result.getDescription(),
@@ -270,76 +321,6 @@ public class Repository {
 
     }
 
-    public void addRecipesDefault2() {
-
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                RecipeDTO recipe1 = new RecipeDTO(null,
-                        "Tærte4",
-                        "",
-                        120,
-                        100,
-                        10,
-                        "Italy",
-                        4,
-                        "Let’s make the viral TikTok green goddess salad, but purple! With additions like purple kale and purple cabbage, this salad has all of the elements to make a delicious and colorful meal!",
-                        1543254,
-                        26352454,
-                        0,
-                        Constants.USER_ID
-                );
-                long idRecipe1 = db.recipeDAO().addRecipe(recipe1);
-
-                InstructionDTO instruc1 = new InstructionDTO("Instruction text 1", 1111, 2222, 1);
-                instruc1.recipeCreatorId = idRecipe1;
-                db.recipeDAO().addInstruction(instruc1);
-                InstructionDTO instruc2 = new InstructionDTO("Instruction text 2", 1111, 2222, 2);
-                instruc2.recipeCreatorId = idRecipe1;
-                db.recipeDAO().addInstruction(instruc2);
-
-                SectionDTO section1 = new SectionDTO("Section 1", 1);
-                section1.recipeCreatorIdForSection = idRecipe1;
-                long idSection1 = db.recipeDAO().addSection(section1);
-
-                ComponentDTO component1 = new ComponentDTO(1, "Component 1");
-                component1.sectionCreatorId = idSection1;
-                long idComponent1 = db.recipeDAO().addComponent(component1);
-
-                MeasurementDTO measure1 = new MeasurementDTO("2");
-                measure1.componentCreatorId = idComponent1;
-                long idMeasurement1 = db.recipeDAO().addMeasurement(measure1);
-
-                UnitDTO unit1 = new UnitDTO("g", "grams", "gram");
-                unit1.measurementCreatorId = idMeasurement1;
-                db.recipeDAO().addUnit(unit1);
-
-                IngredientDTO ingre1 = new IngredientDTO("Meat", "Meat", "Meat");
-                ingre1.componentCreatorIdForIngredient = idComponent1;
-                db.recipeDAO().addIngredient(ingre1);
-
-                ComponentDTO component2 = new ComponentDTO(1, "Component 1");
-                component2.sectionCreatorId = idSection1;
-                long idComponent2 = db.recipeDAO().addComponent(component2);
-
-                MeasurementDTO measure2 = new MeasurementDTO("5");
-                measure2.componentCreatorId = idComponent2;
-                long idMeasurement2 = db.recipeDAO().addMeasurement(measure2);
-
-                UnitDTO unit2 = new UnitDTO("ml", "grams", "gram");
-                unit2.measurementCreatorId = idMeasurement2;
-                db.recipeDAO().addUnit(unit2);
-
-                IngredientDTO ingre2 = new IngredientDTO("Milk", "Milk", "Milk");
-                ingre2.componentCreatorIdForIngredient = idComponent2;
-                db.recipeDAO().addIngredient(ingre2);
-            }
-        });
-
-
-        Log.d(Constants.TAG_REPOSITORY, "addRecipesDefault: ");
-    }
-
     public void updateFullRecipe(RecipeDTO recipe) {
         executor.execute(new Runnable() {
             @Override
@@ -353,7 +334,7 @@ public class Repository {
         searchRecipesFromString(search_text);
     }
 
-    public LiveData<List<Result>> searchRecipes() {
+    public LiveData<Recipes> searchRecipes() {
         return recipeList;
     }
 
@@ -362,7 +343,7 @@ public class Repository {
             @Override
             public void onResponse(@NonNull Call<Recipes> call, @NonNull Response<Recipes> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Result> list = getResults(response);
+                    Recipes list = response.body();
                     recipeList.postValue(list);
                 }
             }
@@ -401,10 +382,10 @@ public class Repository {
     }
 
     public Result getRecipeFromApiByIndex(int index) {
-        return recipeList.getValue().get(index);
+        return recipeList.getValue().getResults().get(index);
     }
 
-    //TODO: not used
+    /*//TODO: not used
     public void getRecipeByName(String name) {
         RetrofitClient.getInstance().getJsonApi().getRecipeFromSearchString(name).enqueue(new Callback<Recipes>() {
             @Override
@@ -412,7 +393,7 @@ public class Repository {
                 if (response.isSuccessful() && response.body() != null) {
 
                     try {
-                        /*Recipe*/
+                        *//*Recipe*//*
                         RecipeDTO recipeDTO = null;
                         List<Instruction> instructionList = new ArrayList<>();
                         List<Component> componentList = new ArrayList<>();
@@ -442,7 +423,7 @@ public class Repository {
                             );
                         }
 
-                        /*Instruction*/
+                        *//*Instruction*//*
                         for (Instruction instruction : response.body().getResults().get(0).getInstructions()) {
                             Instruction i = new Instruction();
                             i.setDisplayText(instruction.getDisplayText());
@@ -453,7 +434,7 @@ public class Repository {
                             instructionList.add(i);
                         }
 
-                        /*Section & Component*/
+                        *//*Section & Component*//*
                         try {
                             for (Component component : response.body().getResults().get(0).getSections().get(0).getComponents()) {
                                 Component c = new Component();
@@ -481,7 +462,7 @@ public class Repository {
                 Log.d(TAG, "onFailure: ");
             }
         });
-    }
+    }*/
 
     public LiveData<RecipeDTO> getRecipe() {
         return recipeMutable;
@@ -510,7 +491,7 @@ public class Repository {
                     unitDTO.measurementCreatorId = idMeasurement;
                     db.recipeDAO().addUnit(unitDTO);
 
-                    if (listOfIngredientDTO.size() <= i + 1) {
+                    if (listOfIngredientDTO.size() >= i + 1) {
                         IngredientDTO ingredientDTO = listOfIngredientDTO.get(i);
                         ingredientDTO.componentCreatorIdForIngredient = idComponent;
                         db.recipeDAO().addIngredient(ingredientDTO);
@@ -550,61 +531,6 @@ public class Repository {
         });
     }
 
-    //Overrides last text, som returns only last measurement with ingredient and unit.
-    //Is not reset when tapping into same/new recipe
-    public void setIngredientMeasurementText(RecipeWithSectionsAndInstructionsDTO recipe) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                for (SectionDTO section :
-                        recipe.sections) {
-                    List<ComponentDTO> sectionWithComponents = db.recipeDAO().getComponentsFromSectionId(section.idSection);
-                    for (ComponentDTO component :
-                            sectionWithComponents) {
-                        ListenableFuture<List<MeasurementDTO>> measurementDTOS = db.recipeDAO().getMeasurementsFromComponentIdFuture(component.idComponent);
-                        measurementDTOS.addListener(() -> {
-                            try {
-                                String t = ingredientMeasurementText.getValue();
-                                t += measurementDTOS.get().get(0).getQuantity() + " ";
-                                ingredientMeasurementText.postValue(t);
-
-                                ListenableFuture<UnitDTO> unitDTO = db.recipeDAO().getUnitFromMeasurementIdFuture(measurementDTOS.get().get(0).idMeasurement);
-                                unitDTO.addListener(() -> {
-                                    try {
-                                        String tUnit = ingredientMeasurementText.getValue();
-                                        tUnit += unitDTO.get().getName() + " ";
-                                        ingredientMeasurementText.postValue(tUnit);
-                                    } catch (Exception e) {
-                                        Log.e(TAG, "Failed getting unitDTO: ", e);
-                                    }
-                                }, ContextCompat.getMainExecutor(application.getApplicationContext()));
-
-                                ListenableFuture<IngredientDTO> ingredientDTO = db.recipeDAO().getIngredientFromComponentIdFuture(component.idComponent);
-                                ingredientDTO.addListener(() -> {
-                                    try {
-                                        String tIngre = ingredientMeasurementText.getValue();
-                                        tIngre += ingredientDTO.get().getName() + "\n";
-                                        ingredientMeasurementText.postValue(tIngre);
-                                    } catch (Exception e) {
-                                        Log.e(TAG, "Failed getting ingredientDTO: ", e);
-                                    }
-                                }, ContextCompat.getMainExecutor(application.getApplicationContext()));
-
-                            } catch (Exception e) {
-                                Log.e(TAG, "Failed getting measurementDTOS: ", e);
-                            }
-                        }, ContextCompat.getMainExecutor(application.getApplicationContext()));
-                    }
-                }
-            }
-        });
-    }
-
-    public LiveData<String> getIngredientMeasurementText() {
-        return ingredientMeasurementText;
-    }
-
-
     public LiveData<List<Instruction>> getInstruction() {
         return listInstructionMutable;
     }
@@ -613,10 +539,10 @@ public class Repository {
         return listSectionMutable;
     }
 
-    //TODO: not used
+ /*   //TODO: not used
     public void getRecipe(String name) {
         getRecipeByName(name);
-    }
+    }*/
 
     public void addRecipeFromAPItoDB(String recipeAddedDB) {
         retrofitClient.getJsonApi().getRecipeFromSearchString(recipeAddedDB).enqueue(new Callback<Recipes>() {
@@ -638,7 +564,9 @@ public class Repository {
                 if (recipeMutable != null) {
                     recipeDTO = new RecipeDTO(null, response.body().getResults().get(0).getName(),
                             response.body().getResults().get(0).getThumbnailUrl(),
-                            totalTimeMinutes.floatValue(), cookTimeMinutes.floatValue(), prepTimeMinutes.floatValue(),
+                            response.body().getResults().get(0).getTotalTimeMinutes(),
+                            response.body().getResults().get(0).getCookTimeMinutes(),
+                            response.body().getResults().get(0).getPrepTimeMinutes(),
                             response.body().getResults().get(0).getCountry(),
                             response.body().getResults().get(0).getNumServings(),
                             response.body().getResults().get(0).getDescription(),

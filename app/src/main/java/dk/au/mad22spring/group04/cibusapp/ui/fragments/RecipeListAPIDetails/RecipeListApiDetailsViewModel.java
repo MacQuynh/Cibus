@@ -27,11 +27,11 @@ public class RecipeListApiDetailsViewModel extends AndroidViewModel {
     }
 
     //Can be deleted:
-/*    public void getRecipeByName (String name){
+ /*   public void getRecipeByName (String name){
         repository.getRecipe(name);
 
-    }
-    public LiveData<RecipeDTO> getRecipeByName() {
+    }*/
+  /*  public LiveData<RecipeDTO> getRecipeByName() {
         return repository.getRecipe();
     }
 

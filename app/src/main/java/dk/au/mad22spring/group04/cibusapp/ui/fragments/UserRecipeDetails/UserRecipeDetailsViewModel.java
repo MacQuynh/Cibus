@@ -35,20 +35,32 @@ public class UserRecipeDetailsViewModel extends AndroidViewModel {
     }
 
     public RecipeWithSectionsAndInstructionsDTO getFullRecipeByIndex(int index){
-   /*    *//**//* repoInsta*//**//*nce.setFullRecipeByName(recipeId);*/
         return repoInstance.getFullRecipeFromDB(index);
     }
 
-    public LiveData<String> getIngredientMeasurementText(RecipeWithSectionsAndInstructionsDTO recipe){
-        repoInstance.setIngredientMeasurementText(recipe);
-        return repoInstance.getIngredientMeasurementText();
+/*    public LiveData<RecipeWithSectionsAndInstructionsDTO> getFullRecipeById(long id){
+        repoInstance.getFullRecipeFromDBById(id);
+        return repoInstance.getRecipeFromDB();
+    }*/
+
+ /*   public String getIngredientText(){
+        return repoInstance.getSectionWithComponentDB();
+    }*/
+
+    public LiveData<List<ComponentWithMeasurementsAndIngredientDTO>> getComponent(){
+        return repoInstance.getSectionWithComponentDB();
+    }
+    public void setComponent(){
+        repoInstance.setSectionWithComponentDB();
     }
 
     public void updateFullRecipe(RecipeDTO recipe){
         repoInstance.updateFullRecipe(recipe);
+        repoInstance.updateDBRecipes();
     }
 
     public void deleteFullRecipe(RecipeWithSectionsAndInstructionsDTO recipe) {
         repoInstance.deleteFullRecipe(recipe);
+        repoInstance.updateDBRecipes();
     }
 }

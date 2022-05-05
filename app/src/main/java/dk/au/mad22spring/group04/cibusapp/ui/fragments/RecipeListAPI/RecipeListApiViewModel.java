@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
+import dk.au.mad22spring.group04.cibusapp.model.Recipes;
 import dk.au.mad22spring.group04.cibusapp.model.Result;
 import dk.au.mad22spring.group04.cibusapp.model.repository.Repository;
 
@@ -25,7 +26,7 @@ public class RecipeListApiViewModel extends AndroidViewModel {
         repository.getInitialListFromAPI();
     }
 
-    public LiveData<List<Result>> getInitialListBack() {
+    public LiveData<Recipes> getInitialListBack() {
         return repository.getInitialListBack();
     }
 

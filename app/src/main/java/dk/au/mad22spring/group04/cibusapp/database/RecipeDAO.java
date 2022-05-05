@@ -39,11 +39,14 @@ public interface RecipeDAO {
 
     @Transaction
     @Query("SELECT * FROM RECIPEDTO WHERE name like :searchText AND userId like :userId")
-    public ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> getRecipesWithSectionsAndInstructionsFromSearch(String searchText, String userId);
+    public ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>>  getRecipesWithSectionsAndInstructionsFromSearch(String searchText, String userId);
 
     @Query("SELECT * FROM RecipeDTO")
-    public List<RecipeDTO> getAllRecipesFromDB();
+    List<RecipeDTO> getAllRecipesFromDB();
 
+    @Transaction
+    @Query("SELECT * FROM RecipeDTO WHERE idRecipe like :id")
+    ListenableFuture<RecipeWithSectionsAndInstructionsDTO> findRecipeById(long id);
 
     /*@Transaction
     @Query("SELECT * FROM RECIPEDTO WHERE  like :id")
@@ -59,7 +62,7 @@ public interface RecipeDAO {
 
     @Transaction
     @Query("SELECT * FROM ComponentDTO WHERE sectionCreatorId like :id")
-    public ListenableFuture<List<ComponentDTO>> getComponentsFromSectionIdFuture(int id);
+    public ListenableFuture<List<ComponentWithMeasurementsAndIngredientDTO>> getComponentsFromSectionIdFuture(int id);
 
     @Transaction
     @Query("SELECT * FROM IngredientDTO WHERE componentCreatorIdForIngredient like :id")

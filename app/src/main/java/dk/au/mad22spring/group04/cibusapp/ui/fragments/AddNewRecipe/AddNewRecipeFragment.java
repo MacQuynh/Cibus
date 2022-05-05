@@ -8,8 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +18,8 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import dk.au.mad22spring.group04.cibusapp.MainActivity;
 import dk.au.mad22spring.group04.cibusapp.R;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.MeasurementDTO;
@@ -48,11 +44,6 @@ public class AddNewRecipeFragment extends Fragment {
     List<EditText>allDynamicUnits = new ArrayList<EditText>();
     List<EditText>allDynamicIngredients = new ArrayList<EditText>();
 
-    //String measure1 = "";
-
-    public static AddNewRecipeFragment newInstance() {
-        return new AddNewRecipeFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -103,7 +94,7 @@ public class AddNewRecipeFragment extends Fragment {
         });
     }
 
-    //Code adapted from https://stackoverflow.com/questions/37764422/add-edittext-dynamically-with-if-possible-string-id-into-a-fragment
+    // Code adapted from https://stackoverflow.com/questions/37764422/add-edittext-dynamically-with-if-possible-string-id-into-a-fragment
     // Code adapted from https://stackoverflow.com/questions/41865416/android-dynamically-or-programmatically-add-two-edittext-in-one-line-and-make-t
     private void addFieldsDynamically() {
         Context context = getActivity();
@@ -119,10 +110,6 @@ public class AddNewRecipeFragment extends Fragment {
         measureDynamic.setLayoutParams(new LinearLayout.LayoutParams(0,ViewGroup.LayoutParams.WRAP_CONTENT, 0.6f));
         linearLayout.addView(measureDynamic);
 
-       //For testing
-        int measureDynamicId = measureDynamic.getId();
-        Log.d(TAG, "addFieldsDynamically: measureID: " + measureDynamicId);
-
         unitDynamic = new EditText(context);
         allDynamicUnits.add(unitDynamic);
         unitDynamic.setHint(R.string.unit_editText);
@@ -130,10 +117,6 @@ public class AddNewRecipeFragment extends Fragment {
         unitDynamic.setId(numberOfEditTexts);
         unitDynamic.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0.7f));
         linearLayout.addView(unitDynamic);
-
-        //For testing
-        int unitDynamicId = unitDynamic.getId();
-        Log.d(TAG, "addFieldsDynamically: unitID" + unitDynamicId);
 
         ingredientDynamic = new EditText(context);
         allDynamicIngredients.add(ingredientDynamic);
@@ -143,11 +126,7 @@ public class AddNewRecipeFragment extends Fragment {
         ingredientDynamic.setLayoutParams(new LinearLayout.LayoutParams(0,ViewGroup.LayoutParams.WRAP_CONTENT, 1.5f));
         linearLayout.addView(ingredientDynamic);
 
-        //For testing
-        int ingredientDynamicId = ingredientDynamic.getId();
-        Log.d(TAG, "addFieldsDynamically: IngredientId: " + ingredientDynamicId );
-
-        LinearLayout layout = (LinearLayout)getView().findViewById(R.id.addNew_linearLayout);
+       LinearLayout layout = (LinearLayout)getView().findViewById(R.id.addNew_linearLayout);
         layout.addView(linearLayout);
 
     }

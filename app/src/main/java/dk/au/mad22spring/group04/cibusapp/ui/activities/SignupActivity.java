@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,11 +72,9 @@ public class SignupActivity extends AppCompatActivity {
         signupViewModel.createUserAccount(name, email, password, new SignupHandler() {
             @Override
             public void onSuccess(String name, String email) {
-                Log.d(TAG, "onSuccess: " + email);
                 displayToast(getString(R.string.msg_you_are_now_signed_up));
                 goToStartPage();
             }
-
             @Override
             public void onError() {
                 displayToast(getString(R.string.msg_signup_failed));

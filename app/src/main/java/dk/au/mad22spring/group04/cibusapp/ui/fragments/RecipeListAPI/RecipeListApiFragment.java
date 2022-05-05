@@ -73,7 +73,7 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
         recyclerView.setAdapter(adapter);
     }
 
-    //Master Detail inspiration: Demo from lecture "FragmentsArnieMovies"
+    //Master Detail inspiration: Demo "FragmentsArnieMovies" from lecture
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -90,24 +90,9 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
         binding = null;
     }
 
-    //Reference: https://stackoverflow.com/questions/28984879/how-to-open-a-different-fragment-on-recyclerview-onclick
     @Override
     public void onApiItemClicked(int index) {
-        Result result = adapter.getRecipeByIndex(index);
-
         apiRecipeSelectorInterface.onApiRecipeSelected(index);
 
-       /* Bundle bundle = new Bundle();
-        if (result != null) {
-            bundle.putString(Constants.RECIPE_OBJECT, result.getName());
-            bundle.putInt(Constants.INDEX_OBJECT, index);
-        }
-
-        AppCompatActivity activity = (AppCompatActivity) recyclerView.getContext();
-        Fragment fragment = new RecipeListApiDetailsFragment();
-        fragment.setArguments(bundle);
-
-        activity.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.mainActivityDetailLayout, fragment).addToBackStack(null).commit();*/
     }
 }

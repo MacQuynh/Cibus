@@ -29,20 +29,9 @@ public class UserRecipesListViewModel extends AndroidViewModel {
         }
         return recipes;
     }
-/*    public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> searchRecipes(String searchText){
-        recipes = repoInstance.searchAllUserRecipes(searchText);
-        if(recipes == null){
-            recipes = new MutableLiveData<List<RecipeWithSectionsAndInstructionsDTO>>();
-        }
-        return recipes;
-    }*/
 
     public void searchRecipes(String searchText){
         repoInstance.searchAllUserRecipes(searchText);
-    }
-
-    public RecipeWithSectionsAndInstructionsDTO getRecipeByIndex(int index){
-        return recipes.getValue().get(index);
     }
 
     public void addDefaultRecipes(){

@@ -1,4 +1,4 @@
-package dk.au.mad22spring.group04.cibusapp;
+package dk.au.mad22spring.group04.cibusapp.service;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -18,6 +18,8 @@ import com.google.common.util.concurrent.ListenableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import dk.au.mad22spring.group04.cibusapp.MainActivity;
+import dk.au.mad22spring.group04.cibusapp.R;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.repository.Repository;

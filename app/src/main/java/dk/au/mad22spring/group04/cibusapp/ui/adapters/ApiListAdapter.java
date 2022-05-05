@@ -60,11 +60,6 @@ public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListV
             holder.total_cooking_time.setText("No total cooking time");
         } else
             holder.total_cooking_time.setText("Total time: " + listOfRecipes.getResults().get(position).getCookTimeMinutes().toString() + " min");
-       /* if (listOfRecipes.get(position).getUserRatings().getCountPositive().toString() == null) {
-            holder.rating.setText("0.0");
-        } else {
-            holder.rating.setText(listOfRecipes.get(position).getUserRatings().getScore().toString());
-        }*/
         holder.country_code.setText(listOfRecipes.getResults().get(position).getCountry());
         Glide.with(holder.imgRecipe.getContext()).load(listOfRecipes.getResults().get(position).getThumbnailUrl()).into(holder.imgRecipe);
 

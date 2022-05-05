@@ -84,7 +84,7 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
 
     }
 
-    //Master Detail inspiration: Demo from lecture "FragmentsArnieMovies"
+    //Master Detail inspiration: Demo "FragmentsArnieMovies" from lecture
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -104,9 +104,5 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
     public void onUserRecipeClicked(int index) {
         int id = userRecipeVM.recipes.getValue().get(index).recipe.idRecipe;
         recipeSelectorInterface.onUserRecipeSelected(id);
-    }
-
-    public void setRecipes(){
-
     }
 }

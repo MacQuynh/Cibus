@@ -42,15 +42,6 @@ public class UserRecipeDetailsViewModel extends AndroidViewModel {
         return repoInstance.getFirstRecipeFromDB();
     }
 
-    /*    public LiveData<RecipeWithSectionsAndInstructionsDTO> getFullRecipeById(long id){
-        repoInstance.getFullRecipeFromDBById(id);
-        return repoInstance.getRecipeFromDB();
-    }*/
-
- /*   public String getIngredientText(){
-        return repoInstance.getSectionWithComponentDB();
-    }*/
-
     public LiveData<List<ComponentWithMeasurementsAndIngredientDTO>> getComponent(){
         return repoInstance.getSectionWithComponentDB();
     }
@@ -60,7 +51,6 @@ public class UserRecipeDetailsViewModel extends AndroidViewModel {
 
     public void updateFullRecipe(RecipeDTO recipe){
         repoInstance.updateFullRecipe(recipe);
-        //repoInstance.updateDBRecipes();
     }
 
     public void deleteFullRecipe(RecipeWithSectionsAndInstructionsDTO recipe) {

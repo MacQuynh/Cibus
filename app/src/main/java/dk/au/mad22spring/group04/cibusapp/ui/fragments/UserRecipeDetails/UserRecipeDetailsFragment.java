@@ -45,8 +45,7 @@ public class UserRecipeDetailsFragment extends Fragment {
     private ImageView imgRecipe;
 
     private UserRecipeDetailsViewModel detailsViewModel;
-    private RecipeWithSectionsAndInstructionsDTO recipe;
-    private static int recipeId = 0;
+    private static int recipeId;
     private String ingredientMeasurementText = "";
 
 
@@ -63,6 +62,13 @@ public class UserRecipeDetailsFragment extends Fragment {
 
         setUIWidgets(view);
 
+        detailsViewModel = new ViewModelProvider(getActivity()).get(UserRecipeDetailsViewModel.class);
+
+        if(recipeId == 0){
+            RecipeWithSectionsAndInstructionsDTO recipe = detailsViewModel.getFirstRecipeFromDB();
+
+            setSelectedRecipe(recipe.recipe.idRecipe);
+        }
         return view;
     }
 
@@ -70,11 +76,7 @@ public class UserRecipeDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        detailsViewModel = new ViewModelProvider(getActivity()).get(UserRecipeDetailsViewModel.class);
 
-        RecipeWithSectionsAndInstructionsDTO recipe = detailsViewModel.getFirstRecipeFromDB();
-
-        setSelectedRecipe(recipe.recipe.idRecipe);
 
         detailsViewModel.getComponent().observe(getViewLifecycleOwner(), new Observer<List<ComponentWithMeasurementsAndIngredientDTO>>() {
             @Override
@@ -98,7 +100,7 @@ public class UserRecipeDetailsFragment extends Fragment {
         listeners();
     }
 
-    //Master Detail inspiration: Demo from lecture "FragmentsArnieMovies"
+    //Master Detail inspiration: Demo "FragmentsArnieMovies" from lecture
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -141,7 +143,6 @@ public class UserRecipeDetailsFragment extends Fragment {
         btnDelete = view.findViewById(R.id.userRecipeDetail_btnDelete);
         btnSave = view.findViewById(R.id.userRecipeDetail_btnSave);
         btnShare = view.findViewById(R.id.userRecipeDetail_btnShare);
-
     }
 
     private void listeners(){

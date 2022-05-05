@@ -26,7 +26,6 @@ public class RecipeListApiDetailsFragment extends Fragment {
     public Result recipe;
 
     private String recipeObject;
-    private Integer indexObject;
 
     private static int recipeIndex = 0;
 
@@ -39,45 +38,6 @@ public class RecipeListApiDetailsFragment extends Fragment {
         View view = binding.getRoot();
         vm = new ViewModelProvider(getActivity()).get(RecipeListApiDetailsViewModel.class);
         setSelectedRecipe(recipeIndex);
-        //recipe = vm.getRecipeByIndex(recipeIndex);
-
-        /*//TODO: Slet bundle og get by index i stedet
-        Bundle bundle = this.getArguments();
-        recipeObject = bundle.get(Constants.RECIPE_OBJECT).toString();
-        indexObject = bundle.getInt(Constants.INDEX_OBJECT, 0);
-
-        if (recipeObject != null) {
-            vm.getRecipeByName(recipeObject);
-        }
-
-        vm.getRecipeByName().observe(getViewLifecycleOwner(), recipeDTO -> {
-            recipeSetup(recipeDTO);
-        });
-
-        vm.getInstruction().observe(getViewLifecycleOwner(), instructions -> {
-            //Reference to StringBuilder: https://localcoder.org/beginner-java-netbeans-how-do-i-display-for-loop-in-jlabel
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < instructions.size(); i++) {
-                stringBuilder.append(i + 1 + ") ").append(instructions.get(i).getDisplayText())
-                        .append("\n\n");
-                binding.recipeListApiDetailsInstructions.setText(stringBuilder);
-            }
-        });
-
-        vm.getSection().observe(getViewLifecycleOwner(), sections -> {
-            //Sections and components
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < sections.size(); i++) {
-                sb.append(sections.get(i).getIngredient().getName())
-                        .append(":")
-                        .append(" ").append(sections.get(i).getMeasurements().get(0).getQuantity())
-                        .append(" ")
-                        .append(sections.get(i).getMeasurements().get(0).getUnit().getDisplaySingular()).append("\n\n");
-                binding.recipeListApiDetailsIngredients.setText(sb);
-            }
-        });*/
-
 
         saveButton();
         backButton();
@@ -149,9 +109,6 @@ public class RecipeListApiDetailsFragment extends Fragment {
                 binding.recipeListApiDetailsIngredients.setText(sb);
             }
         }
-
-
-
     }
 
     private void backButton() {

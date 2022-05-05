@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CibusApp">
         <service
-            android:name=".RecipeService"
+            android:name=".service.RecipeService"
             android:enabled="true"
             android:exported="true"></service>
 

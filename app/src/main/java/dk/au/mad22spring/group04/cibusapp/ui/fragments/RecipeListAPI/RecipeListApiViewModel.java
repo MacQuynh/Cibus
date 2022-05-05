@@ -14,7 +14,6 @@ import dk.au.mad22spring.group04.cibusapp.model.repository.Repository;
 
 public class RecipeListApiViewModel extends AndroidViewModel {
 
-    private LiveData<List<RecipeDTO>> recipeList;
     private Repository repository;
 
     public RecipeListApiViewModel(Application application) {

@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">Cibus</string>
+    <string name="app_name" translatable="false">Cibus</string>
     <string name="msg_email_is_invalid">Email is invalid</string>
     <string name="msg_password_is_invalid">Password is invalid</string>
     <string name="msg_email_or_password_is_invalid">Invalid email or password, password must be at least 6 characters</string>
     <string name="msg_you_are_now_signed_up">You are now signed up</string>
-    <string name="email_textView">Email</string>
+    <string name="email_textView" translatable="false">Email</string>
     <string name="password_textView">Password</string>
     <string name="back_btn">Back</string>
     <string name="signup_btn">Signup</string>
@@ -32,7 +32,7 @@
     <string name="measure_textView">Measure</string>
     <string name="measureHeading_textview">Measure:</string>
     <string name="measurements_editText">Number</string>
-    <string name="unit_editText">ml/dl/g</string>
+    <string name="unit_editText" translatable="false">ml/dl/g</string>
     <string name="ingredient_editText">Enter ingredient</string>
     <string name="instructionsHeading_textView">Instructions:</string>
     <string name="instructions_editText">Enter instructions</string>

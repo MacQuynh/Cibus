@@ -20,6 +20,7 @@ import java.util.List;
 
 import dk.au.mad22spring.group04.cibusapp.databinding.RecipeListApiDetailsFragmentBinding;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
+import dk.au.mad22spring.group04.cibusapp.model.Component;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.Result;
 import dk.au.mad22spring.group04.cibusapp.model.Section;
@@ -119,9 +120,45 @@ public class RecipeListApiDetailsFragment extends Fragment {
         }
         binding.recipeListApiDetailsCountry.setText(recipe.getCountry());
         binding.recipeListApiDetailsDescription.setText(recipe.getDescription());
-/*        binding.recipeListApiDetailsPrepTime.setText(String.format("%s min", Double.toString(recipeDTO.getPrepTimeMinutes())));
-        binding.recipeListApiDetailsCookTime.setText(String.format("%s min", Double.toString(recipeDTO.getCookTimeMinutes())));
-        binding.recipeListApiDetailsTotalTime.setText(String.format("%s min", Double.toString(recipeDTO.getTotalTimeMinutes())));*/
+        if(recipe.getPrepTimeMinutes()!=null){
+            binding.recipeListApiDetailsPrepTime.setText(String.format("%s min", Double.toString(recipe.getPrepTimeMinutes())));
+        } else {
+            binding.recipeListApiDetailsPrepTime.setText("?");
+        }
+        if(recipe.getCookTimeMinutes()!=null){
+            binding.recipeListApiDetailsCookTime.setText(String.format("%s min", Double.toString(recipe.getCookTimeMinutes())));
+        } else {
+            binding.recipeListApiDetailsCookTime.setText("?");
+        }
+        if(recipe.getTotalTimeMinutes()!=null){
+            binding.recipeListApiDetailsTotalTime.setText(String.format("%s min", Double.toString(recipe.getTotalTimeMinutes())));
+        } else {
+            binding.recipeListApiDetailsTotalTime.setText("?");
+        }
+
+        //Reference to StringBuilder: https://localcoder.org/beginner-java-netbeans-how-do-i-display-for-loop-in-jlabel
+        StringBuilder stringBuilderInstructions = new StringBuilder();
+        for (int i = 0; i < recipe.getInstructions().size(); i++) {
+            stringBuilderInstructions.append(i + 1 + ") ").append(recipe.getInstructions().get(i).getDisplayText())
+                    .append("\n\n");
+            binding.recipeListApiDetailsInstructions.setText(stringBuilderInstructions);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        if(recipe.getSections() != null){
+            List<Component> componentList = recipe.getSections().get(0).getComponents();
+            for (int i = 0; i < componentList.size(); i++) {
+                sb.append(componentList.get(i).getIngredient().getName())
+                        .append(":")
+                        .append(" ").append(componentList.get(i).getMeasurements().get(0).getQuantity())
+                        .append(" ")
+                        .append(componentList.get(i).getMeasurements().get(0).getUnit().getDisplaySingular()).append("\n\n");
+                binding.recipeListApiDetailsIngredients.setText(sb);
+            }
+        }
+
+
+
     }
 
     private void backButton() {

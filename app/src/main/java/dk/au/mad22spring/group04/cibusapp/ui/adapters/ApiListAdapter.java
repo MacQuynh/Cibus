@@ -15,12 +15,13 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import dk.au.mad22spring.group04.cibusapp.R;
+import dk.au.mad22spring.group04.cibusapp.model.Recipes;
 import dk.au.mad22spring.group04.cibusapp.model.Result;
 
 //Inspired by the recycleView video from L3 - Demo 2: RecyclerView in action
 
 public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListViewHolder> {
-    private List<Result> listOfRecipes;
+    private Recipes listOfRecipes;
 
     public interface IApiItemClickedListener {
         void onApiItemClicked(int index);
@@ -32,13 +33,13 @@ public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListV
         this.listener = listener;
     }
 
-    public void updateListOfRecipe(List<Result> lists) {
+    public void updateListOfRecipe(Recipes lists) {
         listOfRecipes = lists;
         notifyDataSetChanged();
     }
 
     public Result getRecipeByIndex(int index) {
-        return listOfRecipes.get(index);
+        return listOfRecipes.getResults().get(index);
     }
 
     @NonNull
@@ -53,26 +54,26 @@ public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListV
     @Override
     public void onBindViewHolder(@NonNull ApiListViewHolder holder, int position) {
 
-        holder.recipe_title.setText(listOfRecipes.get(position).getName());
-        holder.total_cooking_time.setText(listOfRecipes.get(position).getCountry());
-        if (listOfRecipes.get(position).getCookTimeMinutes() == null) {
+        holder.recipe_title.setText(listOfRecipes.getResults().get(position).getName());
+        holder.total_cooking_time.setText(listOfRecipes.getResults().get(position).getCountry());
+        if (listOfRecipes.getResults().get(position).getCookTimeMinutes() == null) {
             holder.total_cooking_time.setText("No total cooking time");
         } else
-            holder.total_cooking_time.setText("Total time: " + listOfRecipes.get(position).getCookTimeMinutes().toString() + " min");
+            holder.total_cooking_time.setText("Total time: " + listOfRecipes.getResults().get(position).getCookTimeMinutes().toString() + " min");
        /* if (listOfRecipes.get(position).getUserRatings().getCountPositive().toString() == null) {
             holder.rating.setText("0.0");
         } else {
             holder.rating.setText(listOfRecipes.get(position).getUserRatings().getScore().toString());
         }*/
-        holder.country_code.setText(listOfRecipes.get(position).getCountry());
-        Glide.with(holder.imgRecipe.getContext()).load(listOfRecipes.get(position).getThumbnailUrl()).into(holder.imgRecipe);
+        holder.country_code.setText(listOfRecipes.getResults().get(position).getCountry());
+        Glide.with(holder.imgRecipe.getContext()).load(listOfRecipes.getResults().get(position).getThumbnailUrl()).into(holder.imgRecipe);
 
     }
 
     @Override
     public int getItemCount() {
         if (listOfRecipes != null) {
-            return listOfRecipes.size();
+            return listOfRecipes.getResults().size();
         } else return 0;
     }
 

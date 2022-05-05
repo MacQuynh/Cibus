@@ -46,7 +46,7 @@ public class Result {
     private String thumbnailAltText;
     @SerializedName("total_time_minutes")
     @Expose
-    private Object totalTimeMinutes;
+    private Double totalTimeMinutes;
     @SerializedName("promotion")
     @Expose
     private String promotion;
@@ -70,7 +70,7 @@ public class Result {
     private List<Credit> credits = null;
     @SerializedName("cook_time_minutes")
     @Expose
-    private Object cookTimeMinutes;
+    private Double cookTimeMinutes;
     @SerializedName("country")
     @Expose
     private String country;
@@ -82,7 +82,7 @@ public class Result {
     private Brand brand;
     @SerializedName("prep_time_minutes")
     @Expose
-    private Object prepTimeMinutes;
+    private Double prepTimeMinutes;
     @SerializedName("video_id")
     @Expose
     private Integer videoId;
@@ -255,11 +255,11 @@ public class Result {
         this.thumbnailAltText = thumbnailAltText;
     }
 
-    public Object getTotalTimeMinutes() {
+    public Double getTotalTimeMinutes() {
         return totalTimeMinutes;
     }
 
-    public void setTotalTimeMinutes(Object totalTimeMinutes) {
+    public void setTotalTimeMinutes(Double totalTimeMinutes) {
         this.totalTimeMinutes = totalTimeMinutes;
     }
 
@@ -319,11 +319,11 @@ public class Result {
         this.credits = credits;
     }
 
-    public Object getCookTimeMinutes() {
+    public Double getCookTimeMinutes() {
         return cookTimeMinutes;
     }
 
-    public void setCookTimeMinutes(Object cookTimeMinutes) {
+    public void setCookTimeMinutes(Double cookTimeMinutes) {
         this.cookTimeMinutes = cookTimeMinutes;
     }
 
@@ -351,11 +351,11 @@ public class Result {
         this.brand = brand;
     }
 
-    public Object getPrepTimeMinutes() {
+    public Double getPrepTimeMinutes() {
         return prepTimeMinutes;
     }
 
-    public void setPrepTimeMinutes(Object prepTimeMinutes) {
+    public void setPrepTimeMinutes(Double prepTimeMinutes) {
         this.prepTimeMinutes = prepTimeMinutes;
     }
 

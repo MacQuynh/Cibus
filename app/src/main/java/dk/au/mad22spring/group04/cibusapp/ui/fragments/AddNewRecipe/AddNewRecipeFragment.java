@@ -165,25 +165,25 @@ public class AddNewRecipeFragment extends Fragment {
         }
 
         String cookTimeString = cookTimeEditText.getText().toString();
-        Float cookTime = 0.0f;
+        Double cookTime = 0.0;
         try{
-            cookTime = Float.valueOf(cookTimeString);
+            cookTime = Double.valueOf(cookTimeString);
         } catch (NumberFormatException e){
             e.printStackTrace();
         }
 
         String prepTimeString = prepTimeEditText.getText().toString();
-        Float prepTime = 0.0f;
+        Double prepTime = 0.0;
         try{
-            prepTime = Float.valueOf(prepTimeString);
+            prepTime = Double.valueOf(prepTimeString);
         } catch (NumberFormatException e){
             e.printStackTrace();
         }
 
         String totalTimeString = totalTimeEditText.getText().toString();
-        Float totalTime = 0.0f;
+        Double totalTime = 0.0;
         try{
-            totalTime = Float.valueOf(totalTimeString);
+            totalTime = Double.valueOf(totalTimeString);
         } catch (NumberFormatException e){
             e.printStackTrace();
         }

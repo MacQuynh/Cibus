@@ -20,11 +20,11 @@ public class RecipeDTO {
 
     private String thumbnailUrl;
 
-    private float totalTimeMinutes;
+    private Double totalTimeMinutes;
 
-    private float cookTimeMinutes;
+    private Double cookTimeMinutes;
 
-    private float prepTimeMinutes;
+    private Double prepTimeMinutes;
 
     private String country;
 
@@ -51,9 +51,9 @@ public class RecipeDTO {
     public RecipeDTO(Integer apiId,
                      String name,
                      String thumbnailUrl,
-                     float totalTimeMinutes,
-                     float cookTimeMinutes,
-                     float prepTimeMinutes,
+                     Double totalTimeMinutes,
+                     Double cookTimeMinutes,
+                     Double prepTimeMinutes,
                      String country,
                      Integer numServings,
                      String description,
@@ -108,27 +108,27 @@ public class RecipeDTO {
         this.thumbnailUrl = thumbnailUrl;
     }
 
-    public float getTotalTimeMinutes() {
+    public Double getTotalTimeMinutes() {
         return totalTimeMinutes;
     }
 
-    public void setTotalTimeMinutes(float totalTimeMinutes) {
+    public void setTotalTimeMinutes(Double totalTimeMinutes) {
         this.totalTimeMinutes = totalTimeMinutes;
     }
 
-    public float getCookTimeMinutes() {
+    public Double getCookTimeMinutes() {
         return cookTimeMinutes;
     }
 
-    public void setCookTimeMinutes(float cookTimeMinutes) {
+    public void setCookTimeMinutes(Double cookTimeMinutes) {
         this.cookTimeMinutes = cookTimeMinutes;
     }
 
-    public float getPrepTimeMinutes() {
+    public Double getPrepTimeMinutes() {
         return prepTimeMinutes;
     }
 
-    public void setPrepTimeMinutes(float prepTimeMinutes) {
+    public void setPrepTimeMinutes(Double prepTimeMinutes) {
         this.prepTimeMinutes = prepTimeMinutes;
     }
 

@@ -11,12 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.google.android.material.navigation.NavigationBarView;
-
-import java.util.List;
-
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
-import dk.au.mad22spring.group04.cibusapp.model.Result;
 import dk.au.mad22spring.group04.cibusapp.ui.interfaces.ApiRecipeSelectorInterface;
 import dk.au.mad22spring.group04.cibusapp.ui.interfaces.UserRecipeSelectorInterface;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.AddNewRecipe.AddNewRecipeFragment;
@@ -323,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                     recipeFullLandScape.setVisibility(View.GONE);
                     dividerLandscape.setVisibility(View.VISIBLE);
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.mainActivityDetailLayout, recipeListApiFragment, RECIPE_API_LIST_FRAG)
+                            .replace(R.id.mainActivityListLayout, recipeListApiFragment, RECIPE_API_LIST_FRAG)
                             .commit();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.mainActivityDetailLayout, recipeListApiDetailsFragment, RECIPE_API_DETAIL_FRAG)

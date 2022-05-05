@@ -19,8 +19,8 @@
 
             <ImageView
                 android:id="@+id/imageViewAPI"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recipe_list_api_details_NameHeader"
@@ -29,21 +29,20 @@
 
             <TextView
                 android:id="@+id/recipe_list_api_details_NameHeader"
+                style="@style/headings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textSize="24sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/recipe_list_api_details_ingrediense"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/ingredientsHeading_textView"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recipeListApiDetailsDescription" />
 
@@ -53,17 +52,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
+                style="@style/custom_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recipe_list_api_details_ingrediense" />
 
             <TextView
                 android:id="@+id/recipe_list_api_details_instruction_title"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/instructionsHeading_textView"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recipeListApiDetailsIngredients" />
 
@@ -72,17 +72,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="TextView"
+                style="@style/custom_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recipe_list_api_details_instruction_title" />
 
             <TextView
                 android:id="@+id/textView8"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/country_header"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView11"
                 app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -92,6 +93,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 android:text="TextView"
+                style="@style/custom_text"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
                 app:layout_constraintTop_toTopOf="@+id/textView8" />
 
@@ -101,16 +103,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="TextView"
+                style="@style/custom_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageViewAPI" />
 
             <TextView
                 android:id="@+id/textView11"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="@string/number_of_servings"
-                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/imageViewAPI"
                 app:layout_constraintTop_toTopOf="@+id/imageViewAPI" />
 
@@ -120,16 +123,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="TextView"
+                style="@style/custom_text"
                 app:layout_constraintStart_toEndOf="@+id/textView11"
                 app:layout_constraintTop_toTopOf="@+id/textView11" />
 
             <TextView
                 android:id="@+id/textView13"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/preparation_time"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView8"
                 app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -139,17 +143,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="TextView"
+                style="@style/custom_text"
                 app:layout_constraintStart_toEndOf="@+id/textView13"
                 app:layout_constraintTop_toTopOf="@+id/textView13"
                 tools:text="60 min" />
 
             <TextView
                 android:id="@+id/textView15"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/cook_time"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView13"
                 app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
@@ -159,17 +164,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="TextView"
+                style="@style/custom_text"
                 app:layout_constraintStart_toEndOf="@+id/textView15"
                 app:layout_constraintTop_toTopOf="@+id/textView15"
                 tools:text="60 min" />
 
             <TextView
                 android:id="@+id/textView17"
+                style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/total_time"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView15"
                 app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
@@ -178,6 +184,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                style="@style/custom_text"
                 app:layout_constraintStart_toEndOf="@+id/textView17"
                 app:layout_constraintTop_toTopOf="@+id/textView17"
                 tools:text="120 min" />

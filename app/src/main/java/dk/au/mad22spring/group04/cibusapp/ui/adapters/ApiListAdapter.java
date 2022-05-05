@@ -79,7 +79,7 @@ public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListV
 
     public class ApiListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         //Init activity
-        TextView recipe_title, total_cooking_time, country_code, rating;
+        TextView recipe_title, total_cooking_time, country_code;
         ImageView imgRecipe;
 
         IApiItemClickedListener listener;
@@ -90,7 +90,6 @@ public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListV
             recipe_title = itemView.findViewById(R.id.header_recipe_title);
             total_cooking_time = itemView.findViewById(R.id.cooking_time);
             country_code = itemView.findViewById(R.id.country_code);
-            rating = itemView.findViewById(R.id.rating_details);
             imgRecipe = itemView.findViewById(R.id.api_recipe_img);
 
             listener = apiItemClickedListener;

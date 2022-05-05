@@ -8,7 +8,7 @@
     android:layout_marginLeft="16dp"
     android:layout_marginTop="16dp"
     android:layout_marginRight="16dp"
-    tools:context=".ui.fragments.RecipeListAPI.RecipeListApiFragment">
+    tools:context=".ui.fragments.RecipeListApi.RecipeListApiFragment">
 
 
     <Button
@@ -24,11 +24,15 @@
         android:id="@+id/api_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/search_button"
         android:layout_alignBottom="@+id/search_button"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
         android:layout_toEndOf="@+id/search_button"
-        android:minHeight="48dp"
-        android:text="lasagna" />
+        android:hint="@string/search"
+        android:minHeight="48dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleviewListAPI"

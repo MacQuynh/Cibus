@@ -15,7 +15,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.AddNewRecipe.AddNewRecipeFragment;
-import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPI.RecipeListApiFragment;
+import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPIDetails.RecipeListApiDetailsFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipeDetails.UserRecipeDetailsFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipesList.UserRecipesListFragment;

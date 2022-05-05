@@ -10,16 +10,19 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.Result;
 import dk.au.mad22spring.group04.cibusapp.ui.interfaces.ApiRecipeSelectorInterface;
@@ -38,9 +41,14 @@ import dk.au.mad22spring.group04.cibusapp.ui.viewModels.MainActivityViewModel;
 //Master Detail inspiration: Demo from lecture "FragmentsArnieMovies"
 public class MainActivity extends AppCompatActivity implements UserRecipeSelectorInterface, ApiRecipeSelectorInterface {
 
+    private static final String TAG = "MainActivity";
+
     public enum PhoneOrientation {PORTRAIT, LANDSCAPE}
+
     private PhoneOrientation phoneOrientation;
+
     public enum Mode {USER_RECIPE_LIST, USER_RECIPE_DETAILS, API_RECIPE_LIST, API_RECIPE_DETAILS, ADD_RECIPE} //TODO: add rest of modes (api)
+
     private Mode mode;
 
     //UI Widgets
@@ -85,10 +93,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
         setContentView(R.layout.activity_main);
 
         recipeService = new RecipeService();
-        //Start foreground service:
-        Intent foregroundServiceIntent = new Intent(this, RecipeService.class);
-        startService(foregroundServiceIntent);
-
+        mainVM = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         //view setup:
         navigationBarView = findViewById(R.id.bottomNavigationView);
@@ -99,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
         dividerLandscape = findViewById(R.id.mainActivityDivider);
 
         //determine orientation
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             phoneOrientation = PhoneOrientation.PORTRAIT;
         } else {
             phoneOrientation = PhoneOrientation.LANDSCAPE;
@@ -118,18 +123,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
         });*/
 
 
-        String menuFragment = getIntent().getStringExtra("menuFragment");
-        if (menuFragment != null) {
-            switch (menuFragment) {
-                case "favoritesMenuItem":
-                    Fragment fragment = new UserRecipeDetailsFragment();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.mainActivityDetailLayout, fragment).commit();
-                    break;
-            }
-        }
-
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             selectedUserRecipeIndex = 0;
             selectedApiRecipeIndex = 0;
             mode = Mode.API_RECIPE_LIST;
@@ -149,31 +143,31 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                     .add(R.id.mainActivityListLayout, userRecipesListFragment, USER_RECIPE_LIST_FRAG)
                     .replace(R.id.mainActivityListLayout, recipeListApiFragment, RECIPE_API_LIST_FRAG)
                     .commit();
-        } else{
+        } else {
 
             mode = (Mode) savedInstanceState.getSerializable(Constants.MODE);
-            if(mode == null){
+            if (mode == null) {
                 mode = Mode.API_RECIPE_LIST;
             }
 
             recipeListApiFragment = (RecipeListApiFragment) getSupportFragmentManager().findFragmentByTag(RECIPE_API_LIST_FRAG);
-            if(recipeListApiFragment == null){
+            if (recipeListApiFragment == null) {
                 recipeListApiFragment = new RecipeListApiFragment();
             }
             recipeListApiDetailsFragment = (RecipeListApiDetailsFragment) getSupportFragmentManager().findFragmentByTag(RECIPE_API_DETAIL_FRAG);
-            if(recipeListApiDetailsFragment == null){
+            if (recipeListApiDetailsFragment == null) {
                 recipeListApiDetailsFragment = new RecipeListApiDetailsFragment();
             }
             userRecipesListFragment = (UserRecipesListFragment) getSupportFragmentManager().findFragmentByTag(USER_RECIPE_LIST_FRAG);
-            if(userRecipesListFragment== null){
+            if (userRecipesListFragment == null) {
                 userRecipesListFragment = new UserRecipesListFragment();
             }
             userRecipeDetailsFragment = (UserRecipeDetailsFragment) getSupportFragmentManager().findFragmentByTag(USER_RECIPE_DETAIL_FRAG);
-            if(userRecipeDetailsFragment == null){
+            if (userRecipeDetailsFragment == null) {
                 userRecipeDetailsFragment = new UserRecipeDetailsFragment();
             }
             addNewRecipeFragment = (AddNewRecipeFragment) getSupportFragmentManager().findFragmentByTag(ADD_RECIPE_FRAG);
-            if(addNewRecipeFragment == null){
+            if (addNewRecipeFragment == null) {
                 addNewRecipeFragment = new AddNewRecipeFragment();
             }
             updateFragmentView(mode);
@@ -184,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.user:
                         mode = Mode.USER_RECIPE_LIST;
                         switchFragment();
@@ -202,13 +196,15 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
             }
         });
 
-
+        //Start foreground service:
+        Intent foregroundServiceIntent = new Intent(this, RecipeService.class);
+        startService(foregroundServiceIntent);
     }
 
     @Override
     public void onBackPressed() {
         if (phoneOrientation == PhoneOrientation.PORTRAIT) {
-            switch (mode){
+            switch (mode) {
                 case USER_RECIPE_LIST:
                 case ADD_RECIPE:
                 case API_RECIPE_DETAILS:
@@ -221,8 +217,8 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                     finish();
                     break;
             }
-        } else  {
-            switch (mode){
+        } else {
+            switch (mode) {
                 case USER_RECIPE_LIST:
                 case USER_RECIPE_DETAILS:
                 case ADD_RECIPE:
@@ -267,14 +263,14 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
         switchFragment();
     }
 
-    private void updateFragmentView(Mode mode){
+    private void updateFragmentView(Mode mode) {
         this.mode = mode;
         switchFragment();
     }
 
     private void switchFragment() {
         if (phoneOrientation == PhoneOrientation.PORTRAIT) {
-            switch (mode){
+            switch (mode) {
                 case USER_RECIPE_LIST:
                     recipeList.setVisibility(View.VISIBLE);
                     recipeDetails.setVisibility(View.GONE);
@@ -295,7 +291,8 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                     getSupportFragmentManager().beginTransaction()
                             .remove(addNewRecipeFragment)
                             .commit();
-                    getSupportFragmentManager().executePendingTransactions();getSupportFragmentManager().beginTransaction()
+                    getSupportFragmentManager().executePendingTransactions();
+                    getSupportFragmentManager().beginTransaction()
                             .replace(R.id.mainActivityListLayout, addNewRecipeFragment, ADD_RECIPE_FRAG)
                             .commit();
                     break;
@@ -314,8 +311,8 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                             .commit();
                     break;
             }
-        } else  {
-            switch (mode){
+        } else {
+            switch (mode) {
                 case USER_RECIPE_LIST:
                 case USER_RECIPE_DETAILS:
                     recipeList.setVisibility(View.VISIBLE);

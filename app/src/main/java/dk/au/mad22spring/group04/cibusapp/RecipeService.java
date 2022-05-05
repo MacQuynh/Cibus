@@ -49,7 +49,7 @@ public class RecipeService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        notification = getRandomNotification("", 0);
+        notification = getRandomNotification("", -1);
         //call to startForeground will promote this Service to a foreground service (needs manifest permission)
         //also require the notification to be set, so that user can always see that Service is running in the background
         startForeground(NOTIFICATION_ID, notification);
@@ -58,14 +58,13 @@ public class RecipeService extends Service {
         if (!started) {
             try {
                 //Hack - to make it work.
-                Thread.sleep(100);
+                Thread.sleep(1000);
                 started = true;
                 getUpdateRecipeServiceLoop();
             } catch (Exception e) {
                 Log.d(TAG, "onStartCommand: " + e);
             }
         }
-
 
         //returning START_STICKY will make the Service restart again eventually if it gets killed off (e.g. due to resources)
         return START_STICKY;
@@ -85,8 +84,8 @@ public class RecipeService extends Service {
                     if (randomRecipeFromDB.getName() == null) {
                         Log.d(TAG, "getUpdateRecipeServiceLoop: " + "Something went wrong");
                     } else {
-                        notificationManager.notify(NOTIFICATION_ID, getRandomNotification((randomRecipeFromDB.getName() + " : " + randomRecipeFromDB.getDescription()), randomRecipeFromDB.getIdRecipe()));
-                        Log.d(TAG, "run: " + randomRecipeFromDB.getName() + " : " + randomRecipeFromDB.getDescription());
+                        notificationManager.notify(NOTIFICATION_ID, getRandomNotification((randomRecipeFromDB.getName() + " : " + randomRecipeFromDB.getDescription()), randomRecipeFromDB.idRecipe));
+                        Log.d(TAG, "run: " + randomRecipeFromDB.getName() + " : " + randomRecipeFromDB.getDescription() + "ID: " + randomRecipeFromDB.idRecipe);
                     }
                     Thread.sleep(60000);
 
@@ -101,7 +100,7 @@ public class RecipeService extends Service {
         });
     }
 
-    private Notification getRandomNotification(String s, int id) {
+    private Notification getRandomNotification(String s, int i) {
         //check for Android version - whether we need to create a notification channel (from Android 0 and up, API 26)
         if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(SERVICE_CHANNEL, "Foreground Service", NotificationManager.IMPORTANCE_LOW);
@@ -111,8 +110,8 @@ public class RecipeService extends Service {
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.putExtra("menuFragment", "favoritesMenuItem");
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        intent.putExtra("menuFragment", i);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
 
         //build the notification
         Notification notification = new NotificationCompat.Builder(this, SERVICE_CHANNEL)
@@ -120,7 +119,7 @@ public class RecipeService extends Service {
                 .setContentText(s)
                 .setSmallIcon(R.drawable.default_recipe_image)
                 .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
+                .setAutoCancel(false)
                 .setColor(getResources().getColor(R.color.ic_add_recipe_background))
                 .build();
         return notification;

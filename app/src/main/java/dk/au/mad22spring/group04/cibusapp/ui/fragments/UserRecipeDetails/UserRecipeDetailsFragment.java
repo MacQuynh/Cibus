@@ -194,10 +194,10 @@ public class UserRecipeDetailsFragment extends Fragment {
 
         if(detailsViewModel.recipeWithSectionsAndInstructionsDTO == null){
             detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
-            detailsViewModel.setComponent();
+            detailsViewModel.setComponent(fetchedRecipe.recipe.idRecipe);
         } else if (detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.idRecipe != fetchedRecipe.recipe.idRecipe){
             detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
-            detailsViewModel.setComponent();
+            detailsViewModel.setComponent(fetchedRecipe.recipe.idRecipe);
         }
 
 

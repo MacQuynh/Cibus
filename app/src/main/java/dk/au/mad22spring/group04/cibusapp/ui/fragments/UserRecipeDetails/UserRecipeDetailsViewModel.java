@@ -1,25 +1,17 @@
 package dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipeDetails;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.common.util.concurrent.ListenableFuture;
-
 import java.util.List;
 
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentWithMeasurementsAndIngredientDTO;
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionWithComponentsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.repository.Repository;
 
 public class UserRecipeDetailsViewModel extends AndroidViewModel {
@@ -34,12 +26,19 @@ public class UserRecipeDetailsViewModel extends AndroidViewModel {
         ingredientMeasurementText = new MutableLiveData<String>("");
     }
 
-    public RecipeWithSectionsAndInstructionsDTO getFullRecipeById(int id){
-        return repoInstance.getFullRecipeFromDB(id);
+    public LiveData<RecipeWithSectionsAndInstructionsDTO> getFullRecipeById(Integer id) {
+        if (id != null) {
+            repoInstance.setFullRecipeFromDB(id);
+        } else {
+            repoInstance.setFirstRecipeFromDB();
+        }
+
+        return repoInstance.getRecipeFromDB();
     }
 
-    public RecipeWithSectionsAndInstructionsDTO getFirstRecipeFromDB() {
-        return repoInstance.getFirstRecipeFromDB();
+    public LiveData<RecipeWithSectionsAndInstructionsDTO> getRecipeFromDB() {
+        repoInstance.setFirstRecipeFromDB();
+        return repoInstance.getRecipeFromDB();
     }
 
     /*    public LiveData<RecipeWithSectionsAndInstructionsDTO> getFullRecipeById(long id){
@@ -51,14 +50,15 @@ public class UserRecipeDetailsViewModel extends AndroidViewModel {
         return repoInstance.getSectionWithComponentDB();
     }*/
 
-    public LiveData<List<ComponentWithMeasurementsAndIngredientDTO>> getComponent(){
+    public LiveData<List<ComponentWithMeasurementsAndIngredientDTO>> getComponent() {
         return repoInstance.getSectionWithComponentDB();
     }
-    public void setComponent(){
+
+    public void setComponent() {
         repoInstance.setSectionWithComponentDB();
     }
 
-    public void updateFullRecipe(RecipeDTO recipe){
+    public void updateFullRecipe(RecipeDTO recipe) {
         repoInstance.updateFullRecipe(recipe);
         repoInstance.updateDBRecipes();
     }

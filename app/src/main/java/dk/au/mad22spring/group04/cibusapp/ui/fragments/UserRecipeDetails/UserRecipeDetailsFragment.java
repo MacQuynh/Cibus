@@ -46,7 +46,7 @@ public class UserRecipeDetailsFragment extends Fragment {
 
     private UserRecipeDetailsViewModel detailsViewModel;
     private RecipeWithSectionsAndInstructionsDTO recipe;
-    private static int recipeId = 0;
+    private static int recipeId;
     private String ingredientMeasurementText = "";
 
 
@@ -72,9 +72,7 @@ public class UserRecipeDetailsFragment extends Fragment {
 
         detailsViewModel = new ViewModelProvider(getActivity()).get(UserRecipeDetailsViewModel.class);
 
-        RecipeWithSectionsAndInstructionsDTO recipe = detailsViewModel.getFirstRecipeFromDB();
 
-        setSelectedRecipe(recipe.recipe.idRecipe);
 
         detailsViewModel.getComponent().observe(getViewLifecycleOwner(), new Observer<List<ComponentWithMeasurementsAndIngredientDTO>>() {
             @Override
@@ -82,11 +80,11 @@ public class UserRecipeDetailsFragment extends Fragment {
                 ingredientMeasurementText = "";
                 for (ComponentWithMeasurementsAndIngredientDTO component :
                         componentWithMeasurementsAndIngredientDTOS) {
-                    if(component.measurements != null){
+                    if (component.measurements != null) {
 
                         ingredientMeasurementText += component.measurements.get(0).getQuantity() + " ";
                     }
-                    if(component.ingredient != null){
+                    if (component.ingredient != null) {
                         ingredientMeasurementText += component.ingredient.getName() + "\n";
 
                     }
@@ -112,20 +110,20 @@ public class UserRecipeDetailsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        setUIData();
+        getFullRecipeById();
     }
 
-    public void setSelectedRecipe(int id){
+    public void setSelectedRecipe(int id) {
         recipeId = id;
 
-        if(detailsViewModel != null){
-            setUIData();
+        if (detailsViewModel != null) {
+            getFullRecipeById();
         }
     }
 
-    private void setUIWidgets(View view){
+    private void setUIWidgets(View view) {
         imgRecipe = view.findViewById(R.id.userRecipeDetail_img);
-        
+
         txtRecipeName = view.findViewById(R.id.userRecipeDetail_NameHeader);
         txtNumOfServings = view.findViewById(R.id.userRecipeDetail_servings);
         txtCountry = view.findViewById(R.id.userRecipeDetail_Country);
@@ -144,7 +142,7 @@ public class UserRecipeDetailsFragment extends Fragment {
 
     }
 
-    private void listeners(){
+    private void listeners() {
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
@@ -177,7 +175,7 @@ public class UserRecipeDetailsFragment extends Fragment {
     private void onDelete() {
         detailsViewModel.deleteFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO);
         recipeSelectorInterface.onBackFromUserRecipeDetails();
-        setSelectedRecipe(recipeId -1);
+        setSelectedRecipe(recipeId - 1);
     }
 
     private void onShare() {
@@ -189,26 +187,16 @@ public class UserRecipeDetailsFragment extends Fragment {
         recipeSelectorInterface.onBackFromUserRecipeDetails();
     }
 
-    private void setUIData(){
-        RecipeWithSectionsAndInstructionsDTO fetchedRecipe = detailsViewModel.getFullRecipeById(recipeId);
+    private void setUIData() {
 
-        if(detailsViewModel.recipeWithSectionsAndInstructionsDTO == null){
-            detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
-            detailsViewModel.setComponent();
-        } else if (detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.idRecipe != fetchedRecipe.recipe.idRecipe){
-            detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
-            detailsViewModel.setComponent();
-        }
-
-
-        if(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getApiId() == null){
+        if (detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getApiId() == null) {
             //get color resource: https://www.codegrepper.com/code-examples/java/get+color+resource+android
             btnShare.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.disabledGrey));
             btnShare.setClickable(false);
         }
-        
-        if(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getThumbnailUrl().equals("") 
-                || detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getThumbnailUrl() == null){
+
+        if (detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getThumbnailUrl().equals("")
+                || detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getThumbnailUrl() == null) {
             imgRecipe.setImageResource(R.drawable.default_recipe_image);
         } else {
             Glide.with(imgRecipe.getContext()).load(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getThumbnailUrl()).into(imgRecipe);
@@ -225,9 +213,9 @@ public class UserRecipeDetailsFragment extends Fragment {
         ratingBar.setRating(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getUserRatings());
 
         String instructionText = "";
-        if(detailsViewModel.recipeWithSectionsAndInstructionsDTO.instructions.size() > 0){
+        if (detailsViewModel.recipeWithSectionsAndInstructionsDTO.instructions.size() > 0) {
             for (int i = 0; i < detailsViewModel.recipeWithSectionsAndInstructionsDTO.instructions.size(); i++) {
-                if(!detailsViewModel.recipeWithSectionsAndInstructionsDTO.instructions.get(i).getDisplayText().equals("")) {
+                if (!detailsViewModel.recipeWithSectionsAndInstructionsDTO.instructions.get(i).getDisplayText().equals("")) {
                     instructionText += i + ": " + detailsViewModel.recipeWithSectionsAndInstructionsDTO.instructions.get(i).getDisplayText() + "\n";
                 }
             }
@@ -237,5 +225,25 @@ public class UserRecipeDetailsFragment extends Fragment {
             txtInstructions.setText(String.format(getResources().getString(R.string.instructions_empty)));
         }
 
+    }
+
+    private void getFullRecipeById() {
+        detailsViewModel.getFullRecipeById(recipeId).observe(getViewLifecycleOwner(), new Observer<RecipeWithSectionsAndInstructionsDTO>() {
+            @Override
+            public void onChanged(RecipeWithSectionsAndInstructionsDTO recipeWithSectionsAndInstructionsDTO) {
+                setSelectedRecipe(recipeWithSectionsAndInstructionsDTO.recipe.idRecipe);
+                if (detailsViewModel.recipeWithSectionsAndInstructionsDTO == null) {
+                    detailsViewModel.recipeWithSectionsAndInstructionsDTO = recipeWithSectionsAndInstructionsDTO;
+                    detailsViewModel.setComponent();
+                } else if (detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.idRecipe != recipeWithSectionsAndInstructionsDTO.recipe.idRecipe) {
+                    detailsViewModel.recipeWithSectionsAndInstructionsDTO = recipeWithSectionsAndInstructionsDTO;
+                    detailsViewModel.setComponent();
+                }
+            }
+        });
+
+        if (detailsViewModel.recipeWithSectionsAndInstructionsDTO != null) {
+            setUIData();
+        }
     }
 }

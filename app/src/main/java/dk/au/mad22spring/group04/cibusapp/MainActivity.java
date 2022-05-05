@@ -3,6 +3,7 @@ package dk.au.mad22spring.group04.cibusapp;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
             }
         });*/
 
+
         if (savedInstanceState == null) {
             mode = Mode.API_RECIPE_LIST;
 
@@ -157,6 +159,13 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
             updateFragmentView(mode);
         }
 
+        int menuFragment = getIntent().getIntExtra("menuFragment", -1);
+        if (menuFragment != -1) {
+            mainVM.getUserRecipes();
+            userRecipeDetailsFragment.setSelectedRecipe(menuFragment);
+            mode = Mode.USER_RECIPE_DETAILS;
+            switchFragment();
+        }
 
         //https://stackoverflow.com/questions/68021770/setonnavigationitemselectedlistener-deprecated
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {

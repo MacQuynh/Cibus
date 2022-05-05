@@ -60,7 +60,7 @@ public class Repository {
     private MutableLiveData<Result> recipeApi;
     private MutableLiveData<RecipeDTO> recipeMutable;
     final MutableLiveData<List<RecipeWithSectionsAndInstructionsDTO>> recipesDB;
-    private RecipeWithSectionsAndInstructionsDTO recipeDB;
+    final MutableLiveData<RecipeWithSectionsAndInstructionsDTO> recipeDB;
     final MutableLiveData<String> ingredientMeasurementText;
     final MutableLiveData<List<ComponentWithMeasurementsAndIngredientDTO>> componentDB;
 
@@ -87,6 +87,7 @@ public class Repository {
     private Repository(Application app) {
         this.context = app;
         db = RecipeDatabase.getDatabase(app.getApplicationContext());
+        recipeDB = new MutableLiveData<RecipeWithSectionsAndInstructionsDTO>();
         listSectionMutable = new MutableLiveData<List<Component>>();
         listInstructionMutable = new MutableLiveData<List<Instruction>>();
         recipeList = new MutableLiveData<Recipes>();
@@ -179,21 +180,28 @@ public class Repository {
         }, ContextCompat.getMainExecutor(application.getApplicationContext()));
     }*/
 
-    public RecipeWithSectionsAndInstructionsDTO getFullRecipeFromDB(int id) {
-        List<RecipeWithSectionsAndInstructionsDTO> list = recipesDB.getValue();
+    public void setFullRecipeFromDB(int id) {
+        ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> listFuture = db.recipeDAO().getRecipesWithSectionsAndInstructionsFromSearch(mySearch, Constants.USER_ID);
+        listFuture.addListener(() -> {
+            try {
+                List<RecipeWithSectionsAndInstructionsDTO> list = listFuture.get();
 
-        RecipeWithSectionsAndInstructionsDTO finalRecipe = null;
-        for (RecipeWithSectionsAndInstructionsDTO recipe : list
-        ) {
-            if (recipe.recipe.idRecipe == id) {
-                finalRecipe = recipe;
-                break;
+                for (RecipeWithSectionsAndInstructionsDTO recipe : list
+                ) {
+                    if (recipe.recipe.idRecipe == id) {
+                        recipeDB.postValue(recipe);
+                        break;
+                    }
+
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "getFirstRecipeFromDB: ", e);
             }
+        }, ContextCompat.getMainExecutor(application.getApplicationContext()));
 
-        }
-
-        return finalRecipe;
     }
+
+
 
     public void setSectionWithComponentDB() {
    /*    int sectionId = recipeDB.sections.get(0).idSection;
@@ -703,8 +711,19 @@ public class Repository {
         return recipesFromDB.get(randomIndex);
     }
 
-    public RecipeWithSectionsAndInstructionsDTO getFirstRecipeFromDB() {
-        return recipesDB.getValue().get(0);
+    public void setFirstRecipeFromDB() {
+        ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> list = db.recipeDAO().getRecipesWithSectionsAndInstructionsFromSearch(mySearch, Constants.USER_ID);
+        list.addListener(() -> {
+            try {
+                recipeDB.postValue(list.get().get(0));
+            } catch (Exception e) {
+                Log.e(TAG, "getFirstRecipeFromDB: ", e);
+            }
+        }, ContextCompat.getMainExecutor(application.getApplicationContext()));
 
+    }
+
+    public LiveData<RecipeWithSectionsAndInstructionsDTO> getRecipeFromDB() {
+        return recipeDB;
     }
 }

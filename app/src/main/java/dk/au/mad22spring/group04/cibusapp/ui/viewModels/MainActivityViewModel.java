@@ -27,12 +27,12 @@ public class MainActivityViewModel extends AndroidViewModel {
         repoInstance = Repository.getRepositoryInstance(application);
     }
 
-    public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> getUserRecipes() {
-        recipes = repoInstance.getAllUserRecipes();
+    public void getUserRecipes() {
+      /*  recipes = repoInstance.getAllUserRecipes();
         if (recipes == null) {
             recipes = new MutableLiveData<List<RecipeWithSectionsAndInstructionsDTO>>();
-        }
-        return recipes;
+        }*/
+        repoInstance.searchAllUserRecipes("");
     }
 
     public void addDefaultRecipes() {

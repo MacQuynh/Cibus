@@ -143,11 +143,17 @@ public class Repository {
                 db.recipeDAO().deleteAllComponents();
             }
         });*/
+        //return db.recipeDAO().getRecipeWithSectionsAndInstructions();
+
         return recipesDB;
     }
 
-    public void searchAllUserRecipes(String searchText) {
+    public void  searchAllUserRecipes(String searchText) {
+        /*recipesDB = db.recipeDAO().getRecipesWithSectionsAndInstructionsFromSearch(searchText + "%", Constants.USER_ID);
+        return recipesDB;*/
+
         //inspiration for searching for part of word https://stackoverflow.com/questions/61948455/android-room-query-text-matches-exactly-the-search-string-or-start-with-search
+
         ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> list = db.recipeDAO().getRecipesWithSectionsAndInstructionsFromSearch(searchText + "%", Constants.USER_ID);
         list.addListener(() -> {
             try {

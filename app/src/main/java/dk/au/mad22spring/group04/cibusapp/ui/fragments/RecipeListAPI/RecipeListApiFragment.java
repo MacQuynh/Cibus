@@ -53,7 +53,7 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
 
         searchButton();
 
-        vm = new ViewModelProvider(this).get(RecipeListApiViewModel.class);
+        vm = new ViewModelProvider(getActivity()).get(RecipeListApiViewModel.class);
         if (!alreadyExecuted) {
             vm.getInitialList();
             alreadyExecuted = true;

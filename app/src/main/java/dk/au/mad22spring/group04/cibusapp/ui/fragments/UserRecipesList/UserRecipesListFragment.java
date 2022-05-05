@@ -62,7 +62,7 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
         rcvUserRecipes.setAdapter(adapter);
 
 
-        userRecipeVM = new ViewModelProvider(this).get(UserRecipesListViewModel.class);
+        userRecipeVM = new ViewModelProvider(getActivity()).get(UserRecipesListViewModel.class);
         userRecipeVM.getUserRecipes().observe(getViewLifecycleOwner(), new Observer<List<RecipeWithSectionsAndInstructionsDTO>>() {
             @Override
             public void onChanged(List<RecipeWithSectionsAndInstructionsDTO> recipeWithSectionsAndInstructionsDTOS) {

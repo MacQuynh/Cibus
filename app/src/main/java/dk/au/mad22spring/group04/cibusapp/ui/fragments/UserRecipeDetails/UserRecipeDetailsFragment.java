@@ -44,7 +44,7 @@ public class UserRecipeDetailsFragment extends Fragment {
 
     private UserRecipeDetailsViewModel detailsViewModel;
     private RecipeWithSectionsAndInstructionsDTO recipe;
-    private static int recipeIndex;
+    private static int recipeIndex = 0;
 
     private UserRecipeSelectorInterface recipeSelectorInterface;
 
@@ -59,14 +59,8 @@ public class UserRecipeDetailsFragment extends Fragment {
 
         setUIWidgets(view);
 
-        detailsViewModel = new ViewModelProvider(this).get(UserRecipeDetailsViewModel.class);
-        RecipeWithSectionsAndInstructionsDTO fetchedRecipe = detailsViewModel.getFullRecipeByIndex(recipeIndex);
-
-        if(detailsViewModel.recipeWithSectionsAndInstructionsDTO == null){
-            detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
-        } else if (detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.idRecipe != fetchedRecipe.recipe.idRecipe){
-            detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
-        }
+        detailsViewModel = new ViewModelProvider(getActivity()).get(UserRecipeDetailsViewModel.class);
+        setSelectedRecipe(recipeIndex);
 
         return view;
     }
@@ -77,7 +71,6 @@ public class UserRecipeDetailsFragment extends Fragment {
 
 
         //recipe = detailsViewModel.getFullRecipeByIndex(recipeIndex);
-        setUIData();
        /* detailsViewModel.getFullRecipeByIndex(recipeId).observe(getViewLifecycleOwner(), new Observer<RecipeWithSectionsAndInstructionsDTO>() {
             @Override
             public void onChanged(RecipeWithSectionsAndInstructionsDTO recipeWithSectionsAndInstructionsDTO) {
@@ -101,8 +94,18 @@ public class UserRecipeDetailsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUIData();
+    }
+
     public void setSelectedRecipe(int index){
         recipeIndex = index;
+
+        if(detailsViewModel != null){
+            setUIData();
+        }
     }
 
     private void setUIWidgets(View view){
@@ -180,6 +183,14 @@ public class UserRecipeDetailsFragment extends Fragment {
     }
 
     private void setUIData(){
+        RecipeWithSectionsAndInstructionsDTO fetchedRecipe = detailsViewModel.getFullRecipeByIndex(recipeIndex);
+
+        if(detailsViewModel.recipeWithSectionsAndInstructionsDTO == null){
+            detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
+        } else if (detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.idRecipe != fetchedRecipe.recipe.idRecipe){
+            detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
+        }
+
         if(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getApiId() == null){
             //get color resource: https://www.codegrepper.com/code-examples/java/get+color+resource+android
             btnShare.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.disabledGrey));

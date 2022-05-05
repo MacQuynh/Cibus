@@ -34,7 +34,7 @@ public class RecipeListApiDetailsFragment extends Fragment {
     private String recipeObject;
     private Integer indexObject;
 
-    private static int recipeIndex;
+    private static int recipeIndex = 0;
 
 
     @Override
@@ -43,9 +43,9 @@ public class RecipeListApiDetailsFragment extends Fragment {
 
         binding = RecipeListApiDetailsFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        vm = new ViewModelProvider(this).get(RecipeListApiDetailsViewModel.class);
-
-        recipe = vm.getRecipeByIndex(recipeIndex);
+        vm = new ViewModelProvider(getActivity()).get(RecipeListApiDetailsViewModel.class);
+        setSelectedRecipe(recipeIndex);
+        //recipe = vm.getRecipeByIndex(recipeIndex);
 
         /*//TODO: Slet bundle og get by index i stedet
         Bundle bundle = this.getArguments();
@@ -84,7 +84,6 @@ public class RecipeListApiDetailsFragment extends Fragment {
             }
         });*/
 
-        recipeSetup();
 
         saveButton();
         backButton();
@@ -94,6 +93,10 @@ public class RecipeListApiDetailsFragment extends Fragment {
 
     public void setSelectedRecipe(int index){
         recipeIndex = index;
+
+        if(vm != null){
+            recipeSetup();
+        }
     }
     
     private void saveButton() {
@@ -107,6 +110,8 @@ public class RecipeListApiDetailsFragment extends Fragment {
     }
 
     private void recipeSetup() {
+        recipe = vm.getRecipeByIndex(recipeIndex);
+
         Glide.with(binding.imageViewAPI.getContext()).load(recipe.getThumbnailUrl()).into(binding.imageViewAPI);
         binding.recipeListApiDetailsNameHeader.setText(recipe.getName());
         if(recipe.getNumServings() != null){

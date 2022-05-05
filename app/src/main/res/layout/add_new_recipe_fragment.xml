@@ -16,7 +16,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="false"
-            android:layout_marginTop="0dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginBottom="0dp">
 
             <TextView
@@ -149,9 +151,9 @@
             <EditText
                 android:id="@+id/addNew_unit1_editText"
                 style="@style/hint_text"
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:ems="10"
                 android:hint="@string/unit_editText"
                 android:inputType="textPersonName"
@@ -163,7 +165,7 @@
             <EditText
                 android:id="@+id/addNew_unit2_editText"
                 style="@style/hint_text"
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/unit_editText"
@@ -176,7 +178,7 @@
             <EditText
                 android:id="@+id/addNew_unit3_editText"
                 style="@style/hint_text"
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/unit_editText"
@@ -184,12 +186,13 @@
                 android:minHeight="48dp"
                 app:layout_constraintBottom_toBottomOf="@+id/addNew_measure3_editText"
                 app:layout_constraintStart_toStartOf="@+id/addNew_unit2_editText"
-                app:layout_constraintTop_toTopOf="@+id/addNew_measure3_editText" />
+                app:layout_constraintTop_toTopOf="@+id/addNew_measure3_editText"
+                app:layout_constraintVertical_bias="0.0" />
 
             <EditText
                 android:id="@+id/addNew_unit4_editText"
                 style="@style/hint_text"
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/unit_editText"
@@ -202,7 +205,7 @@
             <EditText
                 android:id="@+id/addNew_unit5_editText"
                 style="@style/hint_text"
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/unit_editText"
@@ -217,8 +220,8 @@
                 style="@style/hint_text"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="24dp"
                 android:ems="10"
                 android:hint="@string/ingredient_editText"
                 android:inputType="textPersonName"
@@ -294,7 +297,7 @@
                 style="@style/subHeadings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="8dp"
                 android:text="@string/instructionsHeading_textView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_linearLayout" />
@@ -302,15 +305,15 @@
             <EditText
                 android:id="@+id/addNew_instructions_editText"
                 style="@style/hint_text"
-                android:layout_width="350dp"
+                android:layout_width="310dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="24dp"
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="@string/instructions_editText"
                 android:inputType="textMultiLine"
                 android:minHeight="48dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/addNew_addField_btn_"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/addNew_instructionsHeading_textView"
                 app:layout_constraintTop_toBottomOf="@+id/addNew_instructionsHeading_textView" />
@@ -415,6 +418,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="1"
                 android:text="@string/addFields_btn"
                 app:layout_constraintEnd_toEndOf="@+id/addNew_ingredient5_editText"

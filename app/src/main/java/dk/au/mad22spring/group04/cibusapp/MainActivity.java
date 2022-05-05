@@ -267,6 +267,9 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                     recipeDetails.setVisibility(View.GONE);
                     recipeList.setVisibility(View.VISIBLE);
                     getSupportFragmentManager().beginTransaction()
+                            .remove(addNewRecipeFragment)
+                            .commit();
+                    getSupportFragmentManager().executePendingTransactions();getSupportFragmentManager().beginTransaction()
                             .replace(R.id.mainActivityListLayout, addNewRecipeFragment, ADD_RECIPE_FRAG)
                             .commit();
                     break;
@@ -305,6 +308,10 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                     recipeList.setVisibility(View.GONE);
                     recipeFullLandScape.setVisibility(View.VISIBLE);
                     dividerLandscape.setVisibility(View.GONE);
+                    getSupportFragmentManager().beginTransaction()
+                            .remove(addNewRecipeFragment)
+                            .commit();
+                    getSupportFragmentManager().executePendingTransactions();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.mainActivityFullLayout, addNewRecipeFragment, ADD_RECIPE_FRAG)
                             .commit();

@@ -2,6 +2,8 @@ package dk.au.mad22spring.group04.cibusapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -83,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
         setContentView(R.layout.activity_main);
 
         recipeService = new RecipeService();
+        //Start foreground service:
+        Intent foregroundServiceIntent = new Intent(this, RecipeService.class);
+        startService(foregroundServiceIntent);
+
 
         //view setup:
         navigationBarView = findViewById(R.id.bottomNavigationView);
@@ -110,6 +116,18 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                 }
             }
         });*/
+
+
+        String menuFragment = getIntent().getStringExtra("menuFragment");
+        if (menuFragment != null) {
+            switch (menuFragment) {
+                case "favoritesMenuItem":
+                    Fragment fragment = new UserRecipeDetailsFragment();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.mainActivityDetailLayout, fragment).commit();
+                    break;
+            }
+        }
 
         if(savedInstanceState == null){
             selectedUserRecipeIndex = 0;
@@ -161,9 +179,6 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
             updateFragmentView(mode);
         }
 
-        //Start foreground service:
-        Intent foregroundServiceIntent = new Intent(this, RecipeService.class);
-        startService(foregroundServiceIntent);
 
         //https://stackoverflow.com/questions/68021770/setonnavigationitemselectedlistener-deprecated
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {

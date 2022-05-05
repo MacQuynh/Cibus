@@ -131,7 +131,7 @@ public class Repository {
     }
 
     public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> getAllUserRecipes() {
-        executor.execute(new Runnable() {
+       /* executor.execute(new Runnable() {
             @Override
             public void run() {
                 db.recipeDAO().deleteAllingre();
@@ -142,7 +142,7 @@ public class Repository {
                 db.recipeDAO().deleteAlluni();
                 db.recipeDAO().deleteAllComponents();
             }
-        });
+        });*/
         return recipesDB;
     }
 

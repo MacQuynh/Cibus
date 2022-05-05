@@ -105,12 +105,35 @@
 
     <TextView
         android:id="@+id/signup_header_textView"
+        style="@style/headings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="@string/Signup_header_textView"
-        style="@style/headings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_subHeading_textView" />
+
+    <TextView
+        android:id="@+id/signup_appName_textView"
+        style="@style/appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:text="@string/app_name"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/signup_subHeading_textView"
+        style="@style/subHeadings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:text="@string/subHeading"
+        app:layout_constraintEnd_toEndOf="@+id/signup_appName_textView"
+        app:layout_constraintStart_toStartOf="@+id/signup_appName_textView"
+        app:layout_constraintTop_toBottomOf="@+id/signup_appName_textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

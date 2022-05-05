@@ -205,7 +205,7 @@ public class AddNewRecipeFragment extends Fragment {
             e.printStackTrace();
         }
 
-/*        String measure1 = measure1EditText.getText().toString();
+        String measure1 = measure1EditText.getText().toString();
         String measure2 = measure2EditText.getText().toString();
         String measure3 = measure3EditText.getText().toString();
         String measure4 = measure4EditText.getText().toString();
@@ -221,10 +221,10 @@ public class AddNewRecipeFragment extends Fragment {
         String ingredient4 = ingredient4EditText.getText().toString();
         String ingredient5 = ingredient5EditText.getText().toString();
 
-        */
+
         String instructions = instructionsEditText.getText().toString();
 
-        String[] dynamicMeasure = new String[allDynamicMeasures.size()];
+        /*String[] dynamicMeasure = new String[allDynamicMeasures.size()];
         //int [] measureId = new int[allDynamicMeasures.size()];
         for (int i = 0; i < allDynamicMeasures.size(); i++){
             //measureId[i] = allDynamicMeasures.get(i).getId();
@@ -263,7 +263,7 @@ public class AddNewRecipeFragment extends Fragment {
         String ingredient3 = dynamicIngredient[2];
         String ingredient4 = dynamicIngredient[3];
         String ingredient5 = dynamicIngredient[4];
-
+*/
 
 
 /*

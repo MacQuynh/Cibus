@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CibusApp</string>
+    <string name="app_name">Cibus</string>
     <string name="msg_email_is_invalid">Email is invalid</string>
     <string name="msg_password_is_invalid">Password is invalid</string>
     <string name="msg_email_or_password_is_invalid">Invalid email or password, password must be at least 6 characters</string>
@@ -50,4 +50,5 @@
     <string name="share">Share</string>
     <string name="addFields_btn">Add Fields</string>
     <string name="unit">Unit:</string>
+    <string name="subHeading">A world of recipes</string>
 </resources>

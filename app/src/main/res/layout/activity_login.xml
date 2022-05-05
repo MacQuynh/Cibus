@@ -82,12 +82,35 @@
 
     <TextView
         android:id="@+id/login_header_textView"
+        style="@style/headings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/login_header_textview"
-        style="@style/headings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_subHeading_textView" />
+
+    <TextView
+        android:id="@+id/login_appName_textView"
+        style="@style/appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="@string/app_name"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/login_subHeading_textView"
+        style="@style/subHeadings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:text="@string/subHeading"
+        app:layout_constraintEnd_toEndOf="@+id/login_appName_textView"
+        app:layout_constraintStart_toStartOf="@+id/login_appName_textView"
+        app:layout_constraintTop_toBottomOf="@+id/login_appName_textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

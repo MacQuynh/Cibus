@@ -127,7 +127,7 @@ public class Repository {
     }
 
     public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> getAllUserRecipes() {
-        executor.execute(new Runnable() {
+       /* executor.execute(new Runnable() {
             @Override
             public void run() {
                 db.recipeDAO().deleteAllingre();
@@ -138,7 +138,7 @@ public class Repository {
                 db.recipeDAO().deleteAlluni();
                 db.recipeDAO().deleteAllComponents();
             }
-        });
+        });*/
         return recipesDB;
     }
 
@@ -509,7 +509,7 @@ public class Repository {
                     unitDTO.measurementCreatorId = idMeasurement;
                     db.recipeDAO().addUnit(unitDTO);
 
-                    if (listOfIngredientDTO.size() <= i + 1) {
+                    if (listOfIngredientDTO.size() >= i + 1) {
                         IngredientDTO ingredientDTO = listOfIngredientDTO.get(i);
                         ingredientDTO.componentCreatorIdForIngredient = idComponent;
                         db.recipeDAO().addIngredient(ingredientDTO);

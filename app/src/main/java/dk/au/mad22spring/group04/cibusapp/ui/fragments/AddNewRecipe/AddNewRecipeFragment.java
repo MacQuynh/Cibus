@@ -110,7 +110,7 @@ public class AddNewRecipeFragment extends Fragment {
         LinearLayout linearLayout = new LinearLayout(context);
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        //List<EditText>allDynamicMeasures = new ArrayList<EditText>();
+
         measureDynamic = new EditText(context);
         allDynamicMeasures.add(measureDynamic);
         measureDynamic.setHint(R.string.measurements_editText);
@@ -119,19 +119,10 @@ public class AddNewRecipeFragment extends Fragment {
         measureDynamic.setLayoutParams(new LinearLayout.LayoutParams(0,ViewGroup.LayoutParams.WRAP_CONTENT, 0.6f));
         linearLayout.addView(measureDynamic);
 
-
-      /*  measureDynamic = new EditText(context);
-        measureDynamic.setHint(R.string.measurements_editText);
-        measureDynamic.setTextSize(16);
-        measureDynamic.setLayoutParams(new LinearLayout.LayoutParams(0,ViewGroup.LayoutParams.WRAP_CONTENT, 0.6f));
-        measureDynamic.setId(numberOfEditTexts);*/
-
        //For testing
         int measureDynamicId = measureDynamic.getId();
         Log.d(TAG, "addFieldsDynamically: measureID: " + measureDynamicId);
 
-
-        //List<EditText>allDynamicUnits = new ArrayList<EditText>();
         unitDynamic = new EditText(context);
         allDynamicUnits.add(unitDynamic);
         unitDynamic.setHint(R.string.unit_editText);
@@ -144,8 +135,6 @@ public class AddNewRecipeFragment extends Fragment {
         int unitDynamicId = unitDynamic.getId();
         Log.d(TAG, "addFieldsDynamically: unitID" + unitDynamicId);
 
-
-        //List<EditText>allDynamicIngredients = new ArrayList<EditText>();
         ingredientDynamic = new EditText(context);
         allDynamicIngredients.add(ingredientDynamic);
         ingredientDynamic.setHint(R.string.ingredient_editText);
@@ -157,12 +146,6 @@ public class AddNewRecipeFragment extends Fragment {
         //For testing
         int ingredientDynamicId = ingredientDynamic.getId();
         Log.d(TAG, "addFieldsDynamically: IngredientId: " + ingredientDynamicId );
-
-
-
-        //linearLayout.addView(measureDynamic);
-        //linearLayout.addView(unitDynamic);
-        //linearLayout.addView(ingredientDynamic);
 
         LinearLayout layout = (LinearLayout)getView().findViewById(R.id.addNew_linearLayout);
         layout.addView(linearLayout);
@@ -205,82 +188,43 @@ public class AddNewRecipeFragment extends Fragment {
             e.printStackTrace();
         }
 
-        String measure1 = measure1EditText.getText().toString();
-        String measure2 = measure2EditText.getText().toString();
-        String measure3 = measure3EditText.getText().toString();
-        String measure4 = measure4EditText.getText().toString();
-        String measure5 = measure5EditText.getText().toString();
-        String unit1 = unit1EditText.getText().toString();
-        String unit2 = unit2EditText.getText().toString();
-        String unit3 = unit3EditText.getText().toString();
-        String unit4 = unit4EditText.getText().toString();
-        String unit5 = unit5EditText.getText().toString();
-        String ingredient1 = ingredient1EditText.getText().toString();
-        String ingredient2 = ingredient2EditText.getText().toString();
-        String ingredient3 = ingredient3EditText.getText().toString();
-        String ingredient4 = ingredient4EditText.getText().toString();
-        String ingredient5 = ingredient5EditText.getText().toString();
-
-
         String instructions = instructionsEditText.getText().toString();
 
-        /*String[] dynamicMeasure = new String[allDynamicMeasures.size()];
-        //int [] measureId = new int[allDynamicMeasures.size()];
+        //List of measurements
+        ArrayList<MeasurementDTO> listOfMeasures = new ArrayList<MeasurementDTO>();
+        listOfMeasures.add(new MeasurementDTO(measure1EditText.getText().toString()));
+        listOfMeasures.add(new MeasurementDTO(measure2EditText.getText().toString()));
+        listOfMeasures.add(new MeasurementDTO(measure3EditText.getText().toString()));
+        listOfMeasures.add(new MeasurementDTO(measure4EditText.getText().toString()));
+        listOfMeasures.add(new MeasurementDTO(measure5EditText.getText().toString()));
+
         for (int i = 0; i < allDynamicMeasures.size(); i++){
-            //measureId[i] = allDynamicMeasures.get(i).getId();
-            dynamicMeasure[i] = allDynamicMeasures.get(i).getText().toString();
-            //Log.d(TAG, "addNewRecipeToLibrary: measureId: " + measureId[i]);
-            Log.d(TAG, "addNewRecipeToLibrary: dynamicMeasure: " + dynamicMeasure[i]);
+            listOfMeasures.add(new MeasurementDTO(allDynamicMeasures.get(i).getText().toString()));
         }
 
-        String measure1 = dynamicMeasure[0];
-        String measure2 = dynamicMeasure[1];
-        String measure3 = dynamicMeasure[2];
-        String measure4 = dynamicMeasure[3];
-        String measure5 = dynamicMeasure[4];
+        //List of units
+        ArrayList<UnitDTO> listOfUnits = new ArrayList<UnitDTO>();
+        listOfUnits.add(new UnitDTO(unit1EditText.getText().toString(),"",""));
+        listOfUnits.add(new UnitDTO(unit2EditText.getText().toString(),"",""));
+        listOfUnits.add(new UnitDTO(unit3EditText.getText().toString(),"",""));
+        listOfUnits.add(new UnitDTO(unit4EditText.getText().toString(),"",""));
+        listOfUnits.add(new UnitDTO(unit5EditText.getText().toString(),"",""));
 
-        String[] dynamicUnit = new String[allDynamicUnits.size()];
         for (int i = 0; i < allDynamicUnits.size(); i++){
-            dynamicUnit[i] = allDynamicUnits.get(i).getText().toString();
-            Log.d(TAG, "addNewRecipeToLibrary: dynamicUnit: " + dynamicUnit[i]);
+            listOfUnits.add(new UnitDTO(allDynamicUnits.get(i).getText().toString(),"",""));
         }
 
-        String unit1 = dynamicUnit[0];
-        String unit2 = dynamicUnit[1];
-        String unit3 = dynamicUnit[2];
-        String unit4 = dynamicUnit[3];
-        String unit5 = dynamicUnit[4];
+        //List of ingredients
+        ArrayList<IngredientDTO> listOfIngredients = new ArrayList<IngredientDTO>();
+        listOfIngredients.add(new IngredientDTO(ingredient1EditText.getText().toString(),"",""));
+        listOfIngredients.add(new IngredientDTO(ingredient2EditText.getText().toString(),"",""));
+        listOfIngredients.add(new IngredientDTO(ingredient3EditText.getText().toString(),"",""));
+        listOfIngredients.add(new IngredientDTO(ingredient4EditText.getText().toString(),"",""));
+        listOfIngredients.add(new IngredientDTO(ingredient5EditText.getText().toString(),"",""));
 
-        String[] dynamicIngredient = new String[allDynamicIngredients.size()];
         for (int i = 0; i < allDynamicIngredients.size(); i++){
-            dynamicIngredient[i] = allDynamicIngredients.get(i).getText().toString();
-            Log.d(TAG, "addNewRecipeToLibrary: dynamicIngredient: " + dynamicIngredient[i]);
+            listOfIngredients.add(new IngredientDTO(allDynamicIngredients.get(i).getText().toString(),"", ""));
         }
-
-
-        String ingredient1 = dynamicIngredient[0];
-        String ingredient2 = dynamicIngredient[1];
-        String ingredient3 = dynamicIngredient[2];
-        String ingredient4 = dynamicIngredient[3];
-        String ingredient5 = dynamicIngredient[4];
-*/
-
-
-/*
-        Log.d(TAG, "addNewRecipeToLibrary: measureId1:" +measureId[0]);
-        Log.d(TAG, "addNewRecipeToLibrary: measureId2:" +measureId[1]);
-        Log.d(TAG, "addNewRecipeToLibrary: measureId3:" +measureId[2]);*/
-
-
-
-        /*int id = measureDynamic.getId();
-        String measure1 = "";
-        if(id == 1){
-            measure1 = measureDynamic.getText().toString();
-            Log.d(TAG, "addNewRecipeToLibrary: measure1" +measure1);
-        }*/
-
-
 
         RecipeDTO recipeDTO = new RecipeDTO(null, recipeName,"", totalTime, cookTime, prepTime, "", numberOfServings, "",1619608605, 1651144605,0, Constants.USER_ID);
 
@@ -288,31 +232,9 @@ public class AddNewRecipeFragment extends Fragment {
 
         SectionDTO sectionDTO = new SectionDTO("",1 );
 
-        ArrayList<MeasurementDTO> listOfMeasures = new ArrayList<MeasurementDTO>();
-        listOfMeasures.add(new MeasurementDTO(measure1));
-        listOfMeasures.add(new MeasurementDTO(measure2));
-        listOfMeasures.add(new MeasurementDTO(measure3));
-        listOfMeasures.add(new MeasurementDTO(measure4));
-        listOfMeasures.add(new MeasurementDTO(measure5));
-
-        ArrayList<UnitDTO> listOfUnits = new ArrayList<UnitDTO>();
-        listOfUnits.add(new UnitDTO(unit1,"",""));
-        listOfUnits.add(new UnitDTO(unit2,"",""));
-        listOfUnits.add(new UnitDTO(unit3,"",""));
-        listOfUnits.add(new UnitDTO(unit4,"",""));
-        listOfUnits.add(new UnitDTO(unit5,"",""));
-
-        ArrayList<IngredientDTO> listOfIngredients = new ArrayList<IngredientDTO>();
-        listOfIngredients.add(new IngredientDTO(ingredient1,"", ""));
-        listOfIngredients.add(new IngredientDTO(ingredient2,"", ""));
-        listOfIngredients.add(new IngredientDTO(ingredient3,"", ""));
-        listOfIngredients.add(new IngredientDTO(ingredient4,"", ""));
-        listOfIngredients.add(new IngredientDTO(ingredient5,"", ""));
-
         addNewRecipeViewModel.addNewRecipeToLibrary(recipeDTO,instructionDTO,sectionDTO,listOfMeasures,listOfUnits,listOfIngredients);
 
         clearInputFieldsAfterRecipeIsAdded();
-
     }
 
     private void clearInputFieldsAfterRecipeIsAdded() {
@@ -340,26 +262,16 @@ public class AddNewRecipeFragment extends Fragment {
 
 
         for (int i = 0; i < allDynamicMeasures.size(); i++){
-            //measureDynamic.setText("");
             allDynamicMeasures.get(i).getText().clear();
         }
 
         for (int i = 0; i < allDynamicUnits.size(); i++){
-            //unitDynamic.setText("");
             allDynamicUnits.get(i).getText().clear();
         }
 
-
-
         for (int i = 0; i < allDynamicIngredients.size(); i++){
             allDynamicIngredients.get(i).getText().clear();
-           // ingredientDynamic.setText("");
-           // ingredientDynamic.getText().clear();
         }
-
-        // measureDynamic.setText("");
-        //unitDynamic.setText("");
-        //ingredientDynamic.setText("");
     }
 
     @Override

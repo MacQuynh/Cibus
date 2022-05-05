@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -71,12 +72,17 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
     private int selectedUserRecipeIndex;
     private int selectedApiRecipeIndex;
 
+    //Foreground service:
+    RecipeService recipeService;
+
     private MainActivityViewModel mainVM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        recipeService = new RecipeService();
 
         //view setup:
         navigationBarView = findViewById(R.id.bottomNavigationView);
@@ -155,6 +161,10 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
             updateFragmentView(mode);
         }
 
+        //Start foreground service:
+        Intent foregroundServiceIntent = new Intent(this, RecipeService.class);
+        startService(foregroundServiceIntent);
+
         //https://stackoverflow.com/questions/68021770/setonnavigationitemselectedlistener-deprecated
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -176,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
                 return true;
             }
         });
+
 
     }
 

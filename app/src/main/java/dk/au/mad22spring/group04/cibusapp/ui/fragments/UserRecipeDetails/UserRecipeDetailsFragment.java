@@ -21,7 +21,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.List;
+
 import dk.au.mad22spring.group04.cibusapp.R;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentWithMeasurementsAndIngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
 import dk.au.mad22spring.group04.cibusapp.ui.interfaces.UserRecipeSelectorInterface;
@@ -45,6 +48,8 @@ public class UserRecipeDetailsFragment extends Fragment {
     private UserRecipeDetailsViewModel detailsViewModel;
     private RecipeWithSectionsAndInstructionsDTO recipe;
     private static int recipeIndex = 0;
+    private String ingredientMeasurementText = "";
+
 
     private UserRecipeSelectorInterface recipeSelectorInterface;
 
@@ -59,9 +64,6 @@ public class UserRecipeDetailsFragment extends Fragment {
 
         setUIWidgets(view);
 
-        detailsViewModel = new ViewModelProvider(getActivity()).get(UserRecipeDetailsViewModel.class);
-        setSelectedRecipe(recipeIndex);
-
         return view;
     }
 
@@ -69,17 +71,28 @@ public class UserRecipeDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        detailsViewModel = new ViewModelProvider(getActivity()).get(UserRecipeDetailsViewModel.class);
+        setSelectedRecipe(recipeIndex);
 
-        //recipe = detailsViewModel.getFullRecipeByIndex(recipeIndex);
-       /* detailsViewModel.getFullRecipeByIndex(recipeId).observe(getViewLifecycleOwner(), new Observer<RecipeWithSectionsAndInstructionsDTO>() {
+        detailsViewModel.getComponent().observe(getViewLifecycleOwner(), new Observer<List<ComponentWithMeasurementsAndIngredientDTO>>() {
             @Override
-            public void onChanged(RecipeWithSectionsAndInstructionsDTO recipeWithSectionsAndInstructionsDTO) {
-                if(detailsViewModel.recipeWithSectionsAndInstructionsDTO == null || recipeId != detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getIdRecipe()){
-                    detailsViewModel.recipeWithSectionsAndInstructionsDTO = recipeWithSectionsAndInstructionsDTO;
+            public void onChanged(List<ComponentWithMeasurementsAndIngredientDTO> componentWithMeasurementsAndIngredientDTOS) {
+                ingredientMeasurementText = "";
+                for (ComponentWithMeasurementsAndIngredientDTO component :
+                        componentWithMeasurementsAndIngredientDTOS) {
+                    if(component.measurements != null){
+
+                        ingredientMeasurementText += component.measurements.get(0).getQuantity() + " ";
+                    }
+                    if(component.ingredient != null){
+                        ingredientMeasurementText += component.ingredient.getName() + "\n";
+
+                    }
                 }
-                setUIData();
+                txtIngredients.setText(ingredientMeasurementText);
             }
-        });*/
+        });
+
         listeners();
     }
 
@@ -162,11 +175,7 @@ public class UserRecipeDetailsFragment extends Fragment {
     private void onDelete() {
         detailsViewModel.deleteFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO);
         recipeSelectorInterface.onBackFromUserRecipeDetails();
-
-        //TODO: call interface
-        /*getParentFragmentManager().beginTransaction()
-                .replace(R.id.mainActivityListLayout, UserRecipesListFragment.newInstance())
-                .commit();*/
+        setSelectedRecipe(recipeIndex-1);
     }
 
     private void onShare() {
@@ -176,10 +185,6 @@ public class UserRecipeDetailsFragment extends Fragment {
     private void onSave() {
         detailsViewModel.updateFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe);
         recipeSelectorInterface.onBackFromUserRecipeDetails();
-        //TODO: call interface
-        /*getParentFragmentManager().beginTransaction()
-                .replace(R.id.mainActivityListLayout, UserRecipesListFragment.newInstance())
-                .commit();*/
     }
 
     private void setUIData(){
@@ -187,9 +192,12 @@ public class UserRecipeDetailsFragment extends Fragment {
 
         if(detailsViewModel.recipeWithSectionsAndInstructionsDTO == null){
             detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
+            detailsViewModel.setComponent();
         } else if (detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.idRecipe != fetchedRecipe.recipe.idRecipe){
             detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
+            detailsViewModel.setComponent();
         }
+
 
         if(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getApiId() == null){
             //get color resource: https://www.codegrepper.com/code-examples/java/get+color+resource+android
@@ -215,41 +223,17 @@ public class UserRecipeDetailsFragment extends Fragment {
         ratingBar.setRating(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getUserRatings());
 
         String instructionText = "";
-        for (int i = 0; i < detailsViewModel.recipeWithSectionsAndInstructionsDTO.instructions.size(); i++) {
-            instructionText += i + ": " + detailsViewModel.recipeWithSectionsAndInstructionsDTO.instructions.get(i).getDisplayText() + "\n";
-        }
-        txtInstructions.setText(instructionText);
-
-        getIngredients();
-    }
-
-    //Fejler med timing...
-    private void getIngredients(){
-        detailsViewModel.getIngredientMeasurementText(detailsViewModel.recipeWithSectionsAndInstructionsDTO).observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                txtIngredients.setText(s);
+        if(detailsViewModel.recipeWithSectionsAndInstructionsDTO.instructions.size() > 0){
+            for (int i = 0; i < detailsViewModel.recipeWithSectionsAndInstructionsDTO.instructions.size(); i++) {
+                if(!detailsViewModel.recipeWithSectionsAndInstructionsDTO.instructions.get(i).getDisplayText().equals("")) {
+                    instructionText += i + ": " + detailsViewModel.recipeWithSectionsAndInstructionsDTO.instructions.get(i).getDisplayText() + "\n";
+                }
             }
-        });
+            txtInstructions.setText(instructionText);
+        }
+        if (instructionText.equals("")) {
+            txtInstructions.setText(String.format(getResources().getString(R.string.instructions_empty)));
+        }
+
     }
-
-    private void getIngredients2(){
-        String ingredientText = "";
-        for (SectionDTO section:
-                detailsViewModel.recipeWithSectionsAndInstructionsDTO.sections) {
-/*            int id = section.idSection;
-            List<ComponentDTO> componentDTOS = detailsViewModel.getSectionWithComponent(id);
-            for (ComponentDTO component :
-                    componentDTOS) {*/
-           /* List<IngredientDTO> ingredientDTOS = detailsViewModel.getIngredientFromComponentId(section.idSection);
-            for (IngredientDTO ingredient :
-                    ingredientDTOS) {
-                ingredientText += ingredient.getName() + "\n";
-            }*/
-            /*}*/
-        };
-        txtIngredients.setText(ingredientText);
-    }
-
-
 }

@@ -27,7 +27,7 @@ public class RecipeListApiDetailsViewModel extends AndroidViewModel {
     }
 
     //Can be deleted:
-/*    public void getRecipeByName (String name){
+    public void getRecipeByName (String name){
         repository.getRecipe(name);
 
     }
@@ -41,7 +41,7 @@ public class RecipeListApiDetailsViewModel extends AndroidViewModel {
 
     public LiveData<List<Component>> getSection() {
         return repository.getSectionWithComponentAPI();
-    }*/
+    }
 
     public Result getRecipeByIndex(int index){
         return repository.getRecipeFromApiByIndex(index);

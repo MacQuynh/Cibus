@@ -46,7 +46,7 @@ public interface RecipeDAO {
 
     @Transaction
     @Query("SELECT * FROM RecipeDTO WHERE idRecipe like :id")
-    ListenableFuture<RecipeDTO> findRecipeByIndex(int id);
+    ListenableFuture<RecipeWithSectionsAndInstructionsDTO> findRecipeById(long id);
 
     /*@Transaction
     @Query("SELECT * FROM RECIPEDTO WHERE  like :id")
@@ -62,7 +62,7 @@ public interface RecipeDAO {
 
     @Transaction
     @Query("SELECT * FROM ComponentDTO WHERE sectionCreatorId like :id")
-    public ListenableFuture<List<ComponentDTO>> getComponentsFromSectionIdFuture(int id);
+    public ListenableFuture<List<ComponentWithMeasurementsAndIngredientDTO>> getComponentsFromSectionIdFuture(int id);
 
     @Transaction
     @Query("SELECT * FROM IngredientDTO WHERE componentCreatorIdForIngredient like :id")

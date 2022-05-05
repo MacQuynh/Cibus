@@ -36,7 +36,7 @@
     <string name="ingredient_editText">Enter ingredient</string>
     <string name="instructionsHeading_textView">Instructions:</string>
     <string name="instructions_editText">Enter instructions</string>
-    <string name="addBtn">Add</string>
+    <string name="addBtn">Add Recipe</string>
     <string name="recipeName_hint">Enter name</string>   
     <string name="time_editView">In minutes</string>
     <string name="numberOfServings_editText">Enter number</string>

@@ -102,7 +102,8 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
 
     @Override
     public void onUserRecipeClicked(int index) {
-        recipeSelectorInterface.onUserRecipeSelected(index);
+        int id = userRecipeVM.recipes.getValue().get(index).recipe.idRecipe;
+        recipeSelectorInterface.onUserRecipeSelected(id);
     }
 
     public void setRecipes(){

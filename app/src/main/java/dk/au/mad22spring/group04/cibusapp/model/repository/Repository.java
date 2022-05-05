@@ -24,6 +24,7 @@ import dk.au.mad22spring.group04.cibusapp.database.RecipeDatabase;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.model.Component;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
+import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentWithMeasurementsAndIngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.InstructionDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.MeasurementDTO;
@@ -129,7 +130,7 @@ public class Repository {
     }
 
     public LiveData<List<RecipeWithSectionsAndInstructionsDTO>> getAllUserRecipes() {
-/*        executor.execute(new Runnable() {
+        /*executor.execute(new Runnable() {
             @Override
             public void run() {
                 db.recipeDAO().deleteAllingre();
@@ -144,8 +145,9 @@ public class Repository {
 
         return recipesDB;
     }
-    public void updateDBRecipes(){
-       searchAllUserRecipes(mySearch);
+
+    public void updateDBRecipes() {
+        searchAllUserRecipes(mySearch);
     }
 
     public void searchAllUserRecipes(String searchText) {
@@ -177,31 +179,42 @@ public class Repository {
         }, ContextCompat.getMainExecutor(application.getApplicationContext()));
     }*/
 
-    public RecipeWithSectionsAndInstructionsDTO getFullRecipeFromDB(int index) {
-        recipeDB = recipesDB.getValue().get(index);
-        return recipeDB;
+    public RecipeWithSectionsAndInstructionsDTO getFullRecipeFromDB(int id) {
+        List<RecipeWithSectionsAndInstructionsDTO> list = recipesDB.getValue();
+
+        RecipeWithSectionsAndInstructionsDTO finalRecipe = null;
+        for (RecipeWithSectionsAndInstructionsDTO recipe : list
+        ) {
+            if (recipe.recipe.idRecipe == id) {
+                finalRecipe = recipe;
+                break;
+            }
+
+        }
+
+        return finalRecipe;
     }
 
     public void setSectionWithComponentDB() {
-        int sectionId = recipeDB.sections.get(0).idSection;
+   /*    int sectionId = recipeDB.sections.get(0).idSection;
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 ListenableFuture<List<ComponentWithMeasurementsAndIngredientDTO>> sectionWithComponentsDTO = db.recipeDAO().getComponentsFromSectionIdFuture(sectionId);
-                sectionWithComponentsDTO.addListener(()->{
+                sectionWithComponentsDTO.addListener(() -> {
                     try {
                         componentDB.postValue(sectionWithComponentsDTO.get());
 
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         Log.e(TAG, "run: ", e);
                     }
 
                 }, ContextCompat.getMainExecutor(application.getApplicationContext()));
             }
-        });
+        });*/
     }
 
-    public LiveData<List<ComponentWithMeasurementsAndIngredientDTO>> getSectionWithComponentDB(){
+    public LiveData<List<ComponentWithMeasurementsAndIngredientDTO>> getSectionWithComponentDB() {
         return componentDB;
     }
 
@@ -688,5 +701,10 @@ public class Repository {
         int randomIndex = randomNumber.nextInt(high);
 
         return recipesFromDB.get(randomIndex);
+    }
+
+    public RecipeWithSectionsAndInstructionsDTO getFirstRecipeFromDB() {
+        return recipesDB.getValue().get(0);
+
     }
 }

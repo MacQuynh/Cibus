@@ -1,4 +1,4 @@
-package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi;
+package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPI;
 
 import android.app.Application;
 

@@ -34,11 +34,15 @@ public class UserRecipeDetailsViewModel extends AndroidViewModel {
         ingredientMeasurementText = new MutableLiveData<String>("");
     }
 
-    public RecipeWithSectionsAndInstructionsDTO getFullRecipeByIndex(int index){
-        return repoInstance.getFullRecipeFromDB(index);
+    public RecipeWithSectionsAndInstructionsDTO getFullRecipeById(int id){
+        return repoInstance.getFullRecipeFromDB(id);
     }
 
-/*    public LiveData<RecipeWithSectionsAndInstructionsDTO> getFullRecipeById(long id){
+    public RecipeWithSectionsAndInstructionsDTO getFirstRecipeFromDB() {
+        return repoInstance.getFirstRecipeFromDB();
+    }
+
+    /*    public LiveData<RecipeWithSectionsAndInstructionsDTO> getFullRecipeById(long id){
         repoInstance.getFullRecipeFromDBById(id);
         return repoInstance.getRecipeFromDB();
     }*/

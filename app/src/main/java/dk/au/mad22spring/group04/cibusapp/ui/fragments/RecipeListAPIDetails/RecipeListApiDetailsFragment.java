@@ -1,9 +1,6 @@
 package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPIDetails;
 
-import static dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiFragment.TAG;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
@@ -19,11 +15,8 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import dk.au.mad22spring.group04.cibusapp.databinding.RecipeListApiDetailsFragmentBinding;
-import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.model.Component;
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeDTO;
 import dk.au.mad22spring.group04.cibusapp.model.Result;
-import dk.au.mad22spring.group04.cibusapp.model.Section;
 
 public class RecipeListApiDetailsFragment extends Fragment {
 

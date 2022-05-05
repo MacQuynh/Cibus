@@ -187,7 +187,21 @@ public class UserRecipeDetailsFragment extends Fragment {
         recipeSelectorInterface.onBackFromUserRecipeDetails();
     }
 
+<<<<<<< HEAD
     private void setUIData() {
+=======
+    private void setUIData(){
+        RecipeWithSectionsAndInstructionsDTO fetchedRecipe = detailsViewModel.getFullRecipeById(recipeId);
+
+        if(detailsViewModel.recipeWithSectionsAndInstructionsDTO == null){
+            detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
+            detailsViewModel.setComponent(fetchedRecipe.recipe.idRecipe);
+        } else if (detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.idRecipe != fetchedRecipe.recipe.idRecipe){
+            detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
+            detailsViewModel.setComponent(fetchedRecipe.recipe.idRecipe);
+        }
+
+>>>>>>> 6ba2ca4a22c6d452ca40be81d63d9c593c09d9fe
 
         if (detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getApiId() == null) {
             //get color resource: https://www.codegrepper.com/code-examples/java/get+color+resource+android

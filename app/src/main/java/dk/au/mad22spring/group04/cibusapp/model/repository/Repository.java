@@ -201,10 +201,26 @@ public class Repository {
 
     }
 
+<<<<<<< HEAD
 
 
     public void setSectionWithComponentDB() {
    /*    int sectionId = recipeDB.sections.get(0).idSection;
+=======
+    public void setSectionWithComponentDB(int recipeId) {
+        List<RecipeWithSectionsAndInstructionsDTO> recipeList = recipesDB.getValue();
+
+        RecipeWithSectionsAndInstructionsDTO finalRecipe = null;
+        for (RecipeWithSectionsAndInstructionsDTO recipe : recipeList
+        ) {
+            if (recipe.recipe.idRecipe == recipeId) {
+                finalRecipe = recipe;
+                break;
+            }
+
+        }
+       int sectionId = finalRecipe.sections.get(0).idSection;
+>>>>>>> 6ba2ca4a22c6d452ca40be81d63d9c593c09d9fe
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -219,7 +235,7 @@ public class Repository {
 
                 }, ContextCompat.getMainExecutor(application.getApplicationContext()));
             }
-        });*/
+        });
     }
 
     public LiveData<List<ComponentWithMeasurementsAndIngredientDTO>> getSectionWithComponentDB() {

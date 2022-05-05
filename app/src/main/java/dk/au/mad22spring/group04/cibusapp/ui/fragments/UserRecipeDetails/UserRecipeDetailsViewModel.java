@@ -53,9 +53,14 @@ public class UserRecipeDetailsViewModel extends AndroidViewModel {
     public LiveData<List<ComponentWithMeasurementsAndIngredientDTO>> getComponent() {
         return repoInstance.getSectionWithComponentDB();
     }
+<<<<<<< HEAD
 
     public void setComponent() {
         repoInstance.setSectionWithComponentDB();
+=======
+    public void setComponent(int recipeId){
+        repoInstance.setSectionWithComponentDB(recipeId);
+>>>>>>> 6ba2ca4a22c6d452ca40be81d63d9c593c09d9fe
     }
 
     public void updateFullRecipe(RecipeDTO recipe) {

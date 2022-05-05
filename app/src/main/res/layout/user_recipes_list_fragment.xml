@@ -27,8 +27,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="0dp"
         android:text="@string/user_list_header"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        style="@style/headings"
         tools:text="@string/user_list_header" />
 
     <EditText

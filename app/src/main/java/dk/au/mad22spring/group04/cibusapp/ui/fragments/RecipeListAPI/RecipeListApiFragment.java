@@ -1,4 +1,4 @@
-package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPI;
+package dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import dk.au.mad22spring.group04.cibusapp.databinding.RecipeListApiFragmentBinding;
 import dk.au.mad22spring.group04.cibusapp.model.Result;
 import dk.au.mad22spring.group04.cibusapp.ui.adapters.ApiListAdapter;
-import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPI.RecipeListApiViewModel;
+import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiViewModel;
 import dk.au.mad22spring.group04.cibusapp.ui.interfaces.ApiRecipeSelectorInterface;
 
 public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IApiItemClickedListener {

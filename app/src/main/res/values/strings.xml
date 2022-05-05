@@ -52,4 +52,5 @@
     <string name="unit">Unit:</string>
     <string name="subHeading">A world of recipes</string>
     <string name="instructions_empty">There are no instructions...</string>
+    <string name="ratingBar">Rating Bar</string>
 </resources>

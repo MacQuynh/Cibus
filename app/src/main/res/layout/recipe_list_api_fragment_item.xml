@@ -27,6 +27,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ImageContrastCheck"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -35,8 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Test"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        style="@style/listItemHeadings"
         app:layout_constraintStart_toEndOf="@+id/api_recipe_img"
         app:layout_constraintTop_toTopOf="@+id/api_recipe_img" />
 
@@ -45,18 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="code"
+        style="@style/custom_text"
         app:layout_constraintStart_toStartOf="@+id/cooking_time"
         app:layout_constraintTop_toBottomOf="@+id/cooking_time" />
-
-    <TextView
-        android:id="@+id/rating_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Rating"
-        app:layout_constraintEnd_toEndOf="@+id/list_img"
-        app:layout_constraintTop_toTopOf="@+id/list_img" />
 
     <TextView
         android:id="@+id/cooking_time"
@@ -64,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Test"
+        style="@style/custom_text"
         app:layout_constraintStart_toStartOf="@+id/header_recipe_title"
         app:layout_constraintTop_toBottomOf="@+id/header_recipe_title" />
 

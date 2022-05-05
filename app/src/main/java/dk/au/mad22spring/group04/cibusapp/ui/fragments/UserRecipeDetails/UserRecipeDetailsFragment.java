@@ -26,7 +26,6 @@ import java.util.List;
 import dk.au.mad22spring.group04.cibusapp.R;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentWithMeasurementsAndIngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
 import dk.au.mad22spring.group04.cibusapp.ui.interfaces.UserRecipeSelectorInterface;
 
 public class UserRecipeDetailsFragment extends Fragment {
@@ -47,7 +46,7 @@ public class UserRecipeDetailsFragment extends Fragment {
 
     private UserRecipeDetailsViewModel detailsViewModel;
     private RecipeWithSectionsAndInstructionsDTO recipe;
-    private static int recipeIndex = 0;
+    private static int recipeId = 0;
     private String ingredientMeasurementText = "";
 
 
@@ -72,7 +71,10 @@ public class UserRecipeDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         detailsViewModel = new ViewModelProvider(getActivity()).get(UserRecipeDetailsViewModel.class);
-        setSelectedRecipe(recipeIndex);
+
+        RecipeWithSectionsAndInstructionsDTO recipe = detailsViewModel.getFirstRecipeFromDB();
+
+        setSelectedRecipe(recipe.recipe.idRecipe);
 
         detailsViewModel.getComponent().observe(getViewLifecycleOwner(), new Observer<List<ComponentWithMeasurementsAndIngredientDTO>>() {
             @Override
@@ -113,8 +115,8 @@ public class UserRecipeDetailsFragment extends Fragment {
         setUIData();
     }
 
-    public void setSelectedRecipe(int index){
-        recipeIndex = index;
+    public void setSelectedRecipe(int id){
+        recipeId = id;
 
         if(detailsViewModel != null){
             setUIData();
@@ -175,7 +177,7 @@ public class UserRecipeDetailsFragment extends Fragment {
     private void onDelete() {
         detailsViewModel.deleteFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO);
         recipeSelectorInterface.onBackFromUserRecipeDetails();
-        setSelectedRecipe(recipeIndex-1);
+        setSelectedRecipe(recipeId -1);
     }
 
     private void onShare() {
@@ -188,14 +190,14 @@ public class UserRecipeDetailsFragment extends Fragment {
     }
 
     private void setUIData(){
-        RecipeWithSectionsAndInstructionsDTO fetchedRecipe = detailsViewModel.getFullRecipeByIndex(recipeIndex);
+        RecipeWithSectionsAndInstructionsDTO fetchedRecipe = detailsViewModel.getFullRecipeById(recipeId);
 
         if(detailsViewModel.recipeWithSectionsAndInstructionsDTO == null){
             detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
-            detailsViewModel.setComponent();
+            detailsViewModel.setComponent(fetchedRecipe.recipe.idRecipe);
         } else if (detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.idRecipe != fetchedRecipe.recipe.idRecipe){
             detailsViewModel.recipeWithSectionsAndInstructionsDTO = fetchedRecipe;
-            detailsViewModel.setComponent();
+            detailsViewModel.setComponent(fetchedRecipe.recipe.idRecipe);
         }
 
 

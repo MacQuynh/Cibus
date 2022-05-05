@@ -26,7 +26,6 @@ public class UserRecipeDetailsViewModel extends AndroidViewModel {
     Repository repoInstance;
 
     public RecipeWithSectionsAndInstructionsDTO recipeWithSectionsAndInstructionsDTO;
-    public SectionWithComponentsDTO sectionWithComponentsDTO;
     final MutableLiveData<String> ingredientMeasurementText;
 
     public UserRecipeDetailsViewModel(@NonNull Application application) {

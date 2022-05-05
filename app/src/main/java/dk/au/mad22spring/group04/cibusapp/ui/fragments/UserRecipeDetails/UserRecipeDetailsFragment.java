@@ -4,7 +4,6 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,15 +20,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.List;
-
 import dk.au.mad22spring.group04.cibusapp.R;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.ComponentDTO;
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.IngredientDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
 import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionDTO;
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.SectionWithComponentsDTO;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipesList.UserRecipesListFragment;
 
 public class UserRecipeDetailsFragment extends Fragment {
@@ -62,7 +56,7 @@ public class UserRecipeDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.user_recipe_details_fragment, container, false);
 
         //Pass arguments inspiration: https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
-        recipeId = getArguments().getLong(String.valueOf(Constants.RECIPE_NAME));
+        //recipeId = getArguments().getLong(String.valueOf(Constants.USER_RECIPE_ID));
         setUIWidgets(view);
         return view;
     }
@@ -82,6 +76,10 @@ public class UserRecipeDetailsFragment extends Fragment {
             }
         });
         listeners();
+    }
+
+    public void setSelectedRecipe(long id){
+        recipeId = id;
     }
 
     private void setUIWidgets(View view){
@@ -138,7 +136,7 @@ public class UserRecipeDetailsFragment extends Fragment {
     private void onDelete() {
         detailsViewModel.deleteFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO);
         getParentFragmentManager().beginTransaction()
-                .replace(R.id.mainActitvityFragmentHolder, UserRecipesListFragment.newInstance())
+                .replace(R.id.mainActivityListLayout, UserRecipesListFragment.newInstance())
                 .commit();
     }
 
@@ -149,7 +147,7 @@ public class UserRecipeDetailsFragment extends Fragment {
     private void onSave() {
         detailsViewModel.updateFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe);
         getParentFragmentManager().beginTransaction()
-                .replace(R.id.mainActitvityFragmentHolder, UserRecipesListFragment.newInstance())
+                .replace(R.id.mainActivityListLayout, UserRecipesListFragment.newInstance())
                 .commit();
     }
 

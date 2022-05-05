@@ -392,6 +392,8 @@ public class Repository {
         });
     }
 
+    //Overrides last text, som returns only last measurement with ingredient and unit.
+    //Is not reset when tapping into same/new recipe
     public void setIngredientMeasurementText(RecipeWithSectionsAndInstructionsDTO recipe){
         executor.execute(new Runnable() {
             @Override

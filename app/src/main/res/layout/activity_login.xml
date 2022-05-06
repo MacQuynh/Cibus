@@ -86,15 +86,14 @@
 
     <EditText
         android:id="@+id/login_email_editText"
+        style="@style/hint_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
         android:ems="10"
         android:hint="@string/email_editText"
-        android:text="test1@test.dk"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
-        style="@style/hint_text"
         app:layout_constraintBottom_toBottomOf="@+id/login_email_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,14 +101,13 @@
 
     <EditText
         android:id="@+id/login_password_editText"
+        style="@style/hint_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/password_editText"
-        android:text="123456"
         android:inputType="textPassword"
         android:minHeight="48dp"
-        style="@style/hint_text"
         app:layout_constraintBottom_toBottomOf="@+id/login_password_textView"
         app:layout_constraintStart_toStartOf="@+id/login_email_editText"
         app:layout_constraintTop_toTopOf="@+id/login_password_textView" />

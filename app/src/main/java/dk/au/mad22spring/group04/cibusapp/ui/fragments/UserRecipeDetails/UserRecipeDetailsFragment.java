@@ -64,7 +64,7 @@ public class UserRecipeDetailsFragment extends Fragment {
 
         detailsViewModel = new ViewModelProvider(getActivity()).get(UserRecipeDetailsViewModel.class);
 
-        if(recipeId == 0){
+        if(recipeId == 0 ){
             RecipeWithSectionsAndInstructionsDTO recipe = detailsViewModel.getFirstRecipeFromDB();
 
             setSelectedRecipe(recipe.recipe.idRecipe);

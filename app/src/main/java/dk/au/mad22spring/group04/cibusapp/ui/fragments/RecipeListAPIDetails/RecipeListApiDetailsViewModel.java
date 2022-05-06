@@ -28,7 +28,7 @@ public class RecipeListApiDetailsViewModel extends AndroidViewModel {
         return repository.getRecipeFromApiByIndex(index);
     }
 
-    public void addRecipeFromAPItoDB(String recipeToAddDB) {
+    public void addRecipeFromAPItoDB(Result recipeToAddDB) {
         repository.addRecipeFromAPItoDB(recipeToAddDB);
     }
 }

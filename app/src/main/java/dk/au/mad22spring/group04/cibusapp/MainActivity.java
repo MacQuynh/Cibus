@@ -64,10 +64,6 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
     private LinearLayout recipeFullLandScape;
     private View dividerLandscape;
 
-    //lists of data
-    private int selectedUserRecipeId;
-    private int selectedApiRecipeIndex;
-
     //Foreground service:
     RecipeService recipeService;
 
@@ -223,7 +219,6 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
     //UserRecipeSelectorInterface implementations
     @Override
     public void onUserRecipeSelected(int id) {
-        selectedUserRecipeId = id;
         userRecipeDetailsFragment.setSelectedRecipe(id);
         mode = Mode.USER_RECIPE_DETAILS;
         switchFragment();
@@ -238,7 +233,6 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
     //ApiRecipeSelectorInterface implementations
     @Override
     public void onApiRecipeSelected(int index) {
-        selectedApiRecipeIndex = index;
         recipeListApiDetailsFragment.setSelectedRecipe(index);
         mode = Mode.API_RECIPE_DETAILS;
         switchFragment();

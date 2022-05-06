@@ -178,7 +178,10 @@ public class UserRecipeDetailsFragment extends Fragment {
     private void onDelete() {
         detailsViewModel.deleteFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO);
         recipeSelectorInterface.onBackFromUserRecipeDetails();
-        setSelectedRecipe(recipeId -1);
+
+        //Go to first recipe (default)
+        RecipeWithSectionsAndInstructionsDTO recipe = detailsViewModel.getFirstRecipeFromDB();
+        setSelectedRecipe(recipe.recipe.idRecipe);
     }
 
     private void onShare() {

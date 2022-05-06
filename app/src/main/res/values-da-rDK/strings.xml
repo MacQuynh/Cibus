@@ -54,4 +54,6 @@
     <string name="recipe_updated">Opskriften er nu opdateret</string>
     <string name="added_recipe">Opskriften er nu opdateret til dit bibliotek</string>
     <string name="recipe_deleted">Opskriften er nu slettet</string>
+    <string name="no_total_cooking_time">No total cooking time</string>
+    <string name="min">" min"</string>
 </resources>

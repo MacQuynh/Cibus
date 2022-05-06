@@ -109,7 +109,11 @@ public class RecipeListApiDetailsFragment extends Fragment {
 
     private void backButton() {
         //Reference: https://stackoverflow.com/questions/10863572/programmatically-go-back-to-the-previous-fragment-in-the-backstackhttps://stackoverflow.com/questions/10863572/programmatically-go-back-to-the-previous-fragment-in-the-backstack
-        binding.recipeListApiDetailsBtnBack.setOnClickListener(view -> getActivity().onBackPressed());
+        try {
+            binding.recipeListApiDetailsBtnBack.setOnClickListener(view -> getActivity().onBackPressed());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

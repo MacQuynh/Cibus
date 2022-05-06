@@ -18,6 +18,7 @@ public class RetrofitClient {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(ScalarsConverterFactory.create())
+                .client(client)
                 .build();
 
     }

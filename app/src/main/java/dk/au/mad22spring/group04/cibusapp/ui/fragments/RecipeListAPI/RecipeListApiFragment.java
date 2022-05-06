@@ -14,14 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import dk.au.mad22spring.group04.cibusapp.databinding.RecipeListApiFragmentBinding;
-import dk.au.mad22spring.group04.cibusapp.model.Result;
 import dk.au.mad22spring.group04.cibusapp.ui.adapters.ApiListAdapter;
-import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiViewModel;
+import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPI.RecipeListApiViewModel;
 import dk.au.mad22spring.group04.cibusapp.ui.interfaces.ApiRecipeSelectorInterface;
 
 public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IApiItemClickedListener {
 
-    public static final String TAG = "RecipeListApiFragment";
     // Used View binding here bc - laziness: https://developer.android.com/topic/libraries/view-binding#java
     private RecipeListApiFragmentBinding binding;
     private RecipeListApiViewModel vm;

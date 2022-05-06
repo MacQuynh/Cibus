@@ -9,19 +9,18 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.navigation.NavigationBarView;
 
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.service.RecipeService;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.AddNewRecipe.AddNewRecipeFragment;
-import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListAPIDetails.RecipeListApiDetailsFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipeDetails.UserRecipeDetailsFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.fragments.UserRecipesList.UserRecipesListFragment;
 import dk.au.mad22spring.group04.cibusapp.ui.interfaces.ApiRecipeSelectorInterface;
 import dk.au.mad22spring.group04.cibusapp.ui.interfaces.UserRecipeSelectorInterface;
+import dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiFragment;
 
 
 //Navigation bar: https://www.geeksforgeeks.org/bottom-navigation-bar-in-android/
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements UserRecipeSelecto
     // Fragments:
     private UserRecipesListFragment userRecipesListFragment;
     private UserRecipeDetailsFragment userRecipeDetailsFragment;
-    private RecipeListApiFragment recipeListApiFragment;
+    private dk.au.mad22spring.group04.cibusapp.ui.fragments.RecipeListApi.RecipeListApiFragment recipeListApiFragment;
     private RecipeListApiDetailsFragment recipeListApiDetailsFragment;
     private AddNewRecipeFragment addNewRecipeFragment;
 

@@ -19,6 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import dk.au.mad22spring.group04.cibusapp.API.RetrofitClient;
+import dk.au.mad22spring.group04.cibusapp.R;
 import dk.au.mad22spring.group04.cibusapp.database.RecipeDAO;
 import dk.au.mad22spring.group04.cibusapp.database.RecipeDatabase;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
@@ -136,7 +137,7 @@ public class Repository {
                 recipesDB.postValue(list.get());
 
             } catch (Exception e) {
-                Log.e(Constants.TAG_REPOSITORY, "searchAllUserRecipes: ", e);
+                Log.e(Constants.TAG_REPOSITORY, "loading searchAllUserRecipes failed: ", e);
             }
         }, ContextCompat.getMainExecutor(application.getApplicationContext()));
 
@@ -152,7 +153,6 @@ public class Repository {
                 finalRecipe = recipe;
                 break;
             }
-
         }
 
         return finalRecipe;
@@ -295,6 +295,7 @@ public class Repository {
                 db.recipeDAO().updateRecipe(recipe);
             }
         });
+        displayToast(application.getApplicationContext().getString(R.string.recipe_updated));
     }
 
     public void searchRecipes(String search_text) {
@@ -317,31 +318,6 @@ public class Repository {
                 Toast.makeText(context, "Something went wrong while searching", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @NonNull
-    private List<Result> getResults(@NonNull Response<Recipes> response) {
-        List<Result> list = new ArrayList<>();
-        try {
-            for (Result r : response.body().getResults()) {
-                Result rm = new Result();
-                rm.setName(r.getName());
-                rm.setThumbnailUrl(r.getThumbnailUrl());
-                rm.setTotalTimeMinutes(r.getTotalTimeMinutes());
-                rm.setCookTimeMinutes(r.getCookTimeMinutes());
-                rm.setPrepTimeMinutes(r.getPrepTimeMinutes());
-                rm.setCountry(r.getCountry());
-                rm.setNumServings(r.getNumServings());
-                rm.setDescription(r.getDescription());
-                rm.setCreatedAt(r.getCreatedAt());
-                rm.setUpdatedAt(r.getUpdatedAt());
-                rm.setInstructions(r.getInstructions());
-                list.add(rm);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
     }
 
     public Result getRecipeFromApiByIndex(int index) {
@@ -379,6 +355,7 @@ public class Repository {
                 }
             }
         });
+        displayToast(application.getApplicationContext().getString(R.string.added_recipe));
     }
 
     public void deleteFullRecipe(RecipeWithSectionsAndInstructionsDTO recipe) {
@@ -409,142 +386,14 @@ public class Repository {
                 }
             }
         });
+        displayToast(application.getApplicationContext().getString(R.string.recipe_deleted));
     }
 
-    public void addRecipeFromAPItoDB(String recipeAddedDB) {
-        retrofitClient.getJsonApi().getRecipeFromSearchString(recipeAddedDB).enqueue(new Callback<Recipes>() {
-            @Override
-            public void onResponse(Call<Recipes> call, Response<Recipes> response) {
-                /*Recipe*/
-                RecipeDTO recipeDTO = null;
-                totalTimeMinutes = (Double) response.body().getResults().get(0).getTotalTimeMinutes();
-                cookTimeMinutes = (Double) response.body().getResults().get(0).getCookTimeMinutes();
-                prepTimeMinutes = (Double) response.body().getResults().get(0).getPrepTimeMinutes();
-                userRating = response.body().getResults().get(0).getUserRatings().getCountPositive().floatValue();
-
-                if (totalTimeMinutes == null || cookTimeMinutes == null || prepTimeMinutes == null || userRating == null) {
-                    totalTimeMinutes = 0.0;
-                    cookTimeMinutes = 0.0;
-                    prepTimeMinutes = 0.0;
-                    userRating = 0.0f;
-                }
-                if (recipeMutable != null) {
-                    recipeDTO = new RecipeDTO(null, response.body().getResults().get(0).getName(),
-                            response.body().getResults().get(0).getThumbnailUrl(),
-                            response.body().getResults().get(0).getTotalTimeMinutes(),
-                            response.body().getResults().get(0).getCookTimeMinutes(),
-                            response.body().getResults().get(0).getPrepTimeMinutes(),
-                            response.body().getResults().get(0).getCountry(),
-                            response.body().getResults().get(0).getNumServings(),
-                            response.body().getResults().get(0).getDescription(),
-                            response.body().getResults().get(0).getCreatedAt(),
-                            response.body().getResults().get(0).getUpdatedAt(),
-                            userRating,
-                            response.body().getResults().get(0).getId().toString()
-                    );
-                }
-                List<Instruction> instructionList = new ArrayList<>();
-                for (Instruction instruction : response.body().getResults().get(0).getInstructions()) {
-                    Instruction i = new Instruction();
-                    i.setDisplayText(instruction.getDisplayText());
-                    i.setTemperature(instruction.getTemperature());
-                    i.setEndTime(instruction.getEndTime());
-                    i.setStartTime(instruction.getStartTime());
-                    i.setId(instruction.getId());
-                    instructionList.add(i);
-                }
-
-                String instructions = "";
-                StringBuilder stringBuilder = new StringBuilder();
-
-                for (int i = 0; i < instructionList.size(); i++) {
-                    stringBuilder.append(i + 1 + ") ").append(instructionList.get(i).getDisplayText())
-                            .append("\n\n");
-                    instructions = stringBuilder.toString();
-                }
-
-                InstructionDTO instructionDTO = new InstructionDTO(instructions, 00, 00, 1);
-
-                SectionDTO sectionDTO = new SectionDTO("", 1);
-
-                List<MeasurementDTO> measurementDTOS = new ArrayList<MeasurementDTO>();
-                for (Measurement measurement : response.body().getResults().get(0).getSections().get(0).getComponents().get(0).getMeasurements()) {
-                    Measurement m = new Measurement();
-                    m.setId(measurement.getId());
-                    m.setQuantity(measurement.getQuantity());
-                    measurementDTOS.add(new MeasurementDTO(measurement.getQuantity()));
-                }
-
-
-                ArrayList<UnitDTO> listOfUnitsDTO = new ArrayList<UnitDTO>();
-                for (Measurement m : response.body().getResults().get(0).getSections().get(0).getComponents().get(0).getMeasurements()) {
-                    Unit u = new Unit();
-                    u.setName(m.getUnit().getName());
-                    u.setDisplayPlural(m.getUnit().getDisplayPlural());
-                    u.setDisplaySingular(m.getUnit().getDisplaySingular());
-                    listOfUnitsDTO.add(new UnitDTO(u.getName(), u.getDisplayPlural(), u.getDisplaySingular()));
-                }
-
-                ArrayList<IngredientDTO> ingredientDTOS = new ArrayList<IngredientDTO>();
-                for (Component i : response.body().getResults().get(0).getSections().get(0).getComponents()) {
-                    Component c = new Component();
-                    c.setRawText(i.getIngredient().getName());
-                    c.setIngredient(i.getIngredient());
-                    c.setMeasurements(i.getMeasurements());
-                    ingredientDTOS.add(new IngredientDTO(i.getIngredient().getName(), i.getIngredient().getDisplayPlural(), i.getIngredient().getDisplaySingular()));
-                }
-
-                Log.d(TAG, "onResponse: " + listOfUnitsDTO + measurementDTOS + ingredientDTOS);
-
-                RecipeDTO finalRecipeDTO = recipeDTO;
-                try {
-                    executor.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            RecipeDTO recipeDTO = new RecipeDTO(finalRecipeDTO.idRecipe, finalRecipeDTO.getName(), finalRecipeDTO.getThumbnailUrl(),
-                                    finalRecipeDTO.getTotalTimeMinutes(), finalRecipeDTO.getCookTimeMinutes(), finalRecipeDTO.getPrepTimeMinutes(),
-                                    finalRecipeDTO.getCountry(), finalRecipeDTO.getNumServings(), finalRecipeDTO.getDescription(), finalRecipeDTO.getCreatedAtUnix(),
-                                    finalRecipeDTO.getUpdatedAtUnix(), finalRecipeDTO.getUserRatings(), Constants.USER_ID);
-
-                            long idRecipe = db.recipeDAO().addRecipe(recipeDTO);
-
-                            instructionDTO.recipeCreatorId = idRecipe;
-                            db.recipeDAO().addInstruction(instructionDTO);
-
-                            sectionDTO.recipeCreatorIdForSection = idRecipe;
-                            long idSection = db.recipeDAO().addSection(sectionDTO);
-
-
-                            for (int i = 0; i < measurementDTOS.size(); i++) {
-                                ComponentDTO componentDTO = new ComponentDTO(i, "");
-                                componentDTO.sectionCreatorId = idSection;
-                                long idComponent = db.recipeDAO().addComponent(componentDTO);
-                                MeasurementDTO measurementDTO = measurementDTOS.get(i);
-                                measurementDTO.componentCreatorId = idComponent;
-                                long idMeasurement = db.recipeDAO().addMeasurement(measurementDTO);
-                                UnitDTO unitDTO = listOfUnitsDTO.get(i);
-                                unitDTO.measurementCreatorId = idMeasurement;
-                                db.recipeDAO().addUnit(unitDTO);
-
-                                if (ingredientDTOS.size() <= i) {
-                                    IngredientDTO ingredientDTO = ingredientDTOS.get(i);
-                                    ingredientDTO.componentCreatorIdForIngredient = idComponent;
-                                    db.recipeDAO().addIngredient(ingredientDTO);
-                                }
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Recipes> call, Throwable t) {
-                Log.d(TAG, "onFailure: ");
-            }
-        });
-
+    public void addRecipeFromAPItoDB(Result recipeAddedDB) {
+        List<Result> resultList = new ArrayList<>();
+        resultList.add(recipeAddedDB);
+        parseRecipesAndSaveToDB(resultList);
+        displayToast(application.getApplicationContext().getString(R.string.added_recipe));
     }
 
     public RecipeDTO getRandomRecipeFromDB() {
@@ -559,5 +408,9 @@ public class Repository {
 
     public RecipeWithSectionsAndInstructionsDTO getFirstRecipeFromDB() {
         return recipesDB.getValue().get(0);
+    }
+
+    private void displayToast(String message) {
+        Toast.makeText(application.getApplicationContext().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

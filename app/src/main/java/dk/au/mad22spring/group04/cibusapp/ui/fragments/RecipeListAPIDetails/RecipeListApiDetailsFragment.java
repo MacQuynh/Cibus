@@ -25,10 +25,7 @@ public class RecipeListApiDetailsFragment extends Fragment {
 
     public Result recipe;
 
-    private String recipeObject;
-
     private static int recipeIndex = 0;
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -57,8 +54,7 @@ public class RecipeListApiDetailsFragment extends Fragment {
         binding.recipeListApiDetailsBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String recipeTobeAddedtoDB = recipeObject;
-                vm.addRecipeFromAPItoDB(recipeTobeAddedtoDB);
+                vm.addRecipeFromAPItoDB(recipe);
             }
         });
     }

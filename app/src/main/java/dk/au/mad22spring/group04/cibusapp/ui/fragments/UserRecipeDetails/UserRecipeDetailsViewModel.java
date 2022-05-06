@@ -51,6 +51,7 @@ public class UserRecipeDetailsViewModel extends AndroidViewModel {
 
     public void updateFullRecipe(RecipeDTO recipe){
         repoInstance.updateFullRecipe(recipe);
+        repoInstance.updateDBRecipes();
     }
 
     public void deleteFullRecipe(RecipeWithSectionsAndInstructionsDTO recipe) {

@@ -64,7 +64,7 @@ public class UserRecipeDetailsFragment extends Fragment {
 
         detailsViewModel = new ViewModelProvider(getActivity()).get(UserRecipeDetailsViewModel.class);
 
-        if(recipeId == 0){
+        if(recipeId == 0 ){
             RecipeWithSectionsAndInstructionsDTO recipe = detailsViewModel.getFirstRecipeFromDB();
 
             setSelectedRecipe(recipe.recipe.idRecipe);
@@ -178,7 +178,10 @@ public class UserRecipeDetailsFragment extends Fragment {
     private void onDelete() {
         detailsViewModel.deleteFullRecipe(detailsViewModel.recipeWithSectionsAndInstructionsDTO);
         recipeSelectorInterface.onBackFromUserRecipeDetails();
-        setSelectedRecipe(recipeId -1);
+
+        //Go to first recipe (default)
+        RecipeWithSectionsAndInstructionsDTO recipe = detailsViewModel.getFirstRecipeFromDB();
+        setSelectedRecipe(recipe.recipe.idRecipe);
     }
 
     private void onShare() {
@@ -219,9 +222,9 @@ public class UserRecipeDetailsFragment extends Fragment {
         txtNumOfServings.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getNumServings() + "");
         txtCountry.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getCountry());
         txtDescription.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getDescription());
-        txtPrepTime.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getPrepTimeMinutes() + " min");
-        txtCookTime.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getCookTimeMinutes() + " min");
-        txtTotalTime.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getTotalTimeMinutes() + " min");
+        txtPrepTime.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getPrepTimeMinutes() + getResources().getString(R.string.min));
+        txtCookTime.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getCookTimeMinutes() + getResources().getString(R.string.min));
+        txtTotalTime.setText(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getTotalTimeMinutes() + getResources().getString(R.string.min));
 
         ratingBar.setRating(detailsViewModel.recipeWithSectionsAndInstructionsDTO.recipe.getUserRatings());
 

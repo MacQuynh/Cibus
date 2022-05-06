@@ -51,4 +51,6 @@
     <string name="cook_time">Tilberedningstid:</string>
     <string name="ratingBar">Brugerbedømmelse</string>
     <string name="msg_you_are_now_signed_up">Du er nu registreret som bruger</string>
+    <string name="no_total_cooking_time">No total cooking time</string>
+    <string name="min">" min"</string>
 </resources>

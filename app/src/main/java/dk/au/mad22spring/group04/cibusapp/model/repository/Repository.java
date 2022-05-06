@@ -20,7 +20,6 @@ import java.util.concurrent.Executors;
 
 import dk.au.mad22spring.group04.cibusapp.API.RetrofitClient;
 import dk.au.mad22spring.group04.cibusapp.R;
-import dk.au.mad22spring.group04.cibusapp.database.RecipeDAO;
 import dk.au.mad22spring.group04.cibusapp.database.RecipeDatabase;
 import dk.au.mad22spring.group04.cibusapp.helpers.Constants;
 import dk.au.mad22spring.group04.cibusapp.model.Component;
@@ -38,7 +37,6 @@ import dk.au.mad22spring.group04.cibusapp.model.Measurement;
 import dk.au.mad22spring.group04.cibusapp.model.Recipes;
 import dk.au.mad22spring.group04.cibusapp.model.Result;
 import dk.au.mad22spring.group04.cibusapp.model.Section;
-import dk.au.mad22spring.group04.cibusapp.model.Unit;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,14 +57,11 @@ public class Repository {
     final MutableLiveData<String> ingredientMeasurementText;
     final MutableLiveData<List<ComponentWithMeasurementsAndIngredientDTO>> componentDB;
 
-    private Double totalTimeMinutes, cookTimeMinutes, prepTimeMinutes;
-    private Float userRating;
-
     private RetrofitClient retrofitClient;
 
     //Context - used to inform the user if the recipe already exist
     private Context context;
-    private String mySearch;
+    private String searchTextUserRecipes;
 
     //Singleton pattern to make sure there is only one instance of the Repository in use
     public static Repository getRepositoryInstance(Application app) {
@@ -124,11 +119,11 @@ public class Repository {
     }
 
     public void updateDBRecipes() {
-        searchAllUserRecipes(mySearch);
+        searchAllUserRecipes(searchTextUserRecipes);
     }
 
     public void searchAllUserRecipes(String searchText) {
-        mySearch = searchText;
+        searchTextUserRecipes = searchText;
         //inspiration for searching for part of word https://stackoverflow.com/questions/61948455/android-room-query-text-matches-exactly-the-search-string-or-start-with-search
 
         ListenableFuture<List<RecipeWithSectionsAndInstructionsDTO>> list = db.recipeDAO().getRecipesWithSectionsAndInstructionsFromSearch(searchText + "%", Constants.USER_ID);

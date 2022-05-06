@@ -53,4 +53,6 @@
     <string name="subHeading">A world of recipes</string>
     <string name="instructions_empty">There are no instructions...</string>
     <string name="ratingBar">Rating Bar</string>
+    <string name="logo_image_background">Logo image background</string>
+    <string name="logo_image_foreground">Logo image foreground</string>
 </resources>

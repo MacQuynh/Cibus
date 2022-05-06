@@ -1,5 +1,6 @@
 package dk.au.mad22spring.group04.cibusapp.ui.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +24,11 @@ public class UserRecipesListAdapter extends RecyclerView.Adapter<UserRecipesList
 
     private IUserRecipeItemClickListener listener;
     private List<RecipeWithSectionsAndInstructionsDTO> recipeDTOList;
+    Context context;
 
-    public UserRecipesListAdapter(IUserRecipeItemClickListener listener){
+    public UserRecipesListAdapter(IUserRecipeItemClickListener listener, Context context){
         this.listener = listener;
+        this.context = context;
     }
 
     public void updateUserRecipeList(List<RecipeWithSectionsAndInstructionsDTO> list){
@@ -45,7 +48,7 @@ public class UserRecipesListAdapter extends RecyclerView.Adapter<UserRecipesList
     @Override
     public void onBindViewHolder(@NonNull UserRecipeViewHolder holder, int position) {
         if(recipeDTOList.get(position).recipe.getTotalTimeMinutes() != null){
-            holder.txtTotalCookTime.setText(recipeDTOList.get(position).recipe.getTotalTimeMinutes() + " min");
+            holder.txtTotalCookTime.setText(recipeDTOList.get(position).recipe.getTotalTimeMinutes() + context.getApplicationContext().getResources().getString(R.string.min));
         } else{
             holder.txtTotalCookTime.setText("?");
         }

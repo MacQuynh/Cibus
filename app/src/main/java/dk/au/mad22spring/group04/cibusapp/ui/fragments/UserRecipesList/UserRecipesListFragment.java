@@ -57,7 +57,7 @@ public class UserRecipesListFragment extends Fragment implements UserRecipesList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new UserRecipesListAdapter(this);
+        adapter = new UserRecipesListAdapter(this, getContext());
         rcvUserRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
         rcvUserRecipes.setAdapter(adapter);
 

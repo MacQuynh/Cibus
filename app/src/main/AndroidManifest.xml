@@ -16,14 +16,13 @@
         <service
             android:name=".service.RecipeService"
             android:enabled="true"
-            android:exported="true"></service>
-
+            android:exported="true">
+        </service>
         <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

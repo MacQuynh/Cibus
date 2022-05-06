@@ -3,47 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/drawable/ic_logo_cibus.xml" value="0.1835" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/drawable/rectangle_list_background.xml" value="0.1835" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/drawable/solid_rectangle.xml" value="0.2595" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout-land/activity_login.xml" value="0.264" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout-land/activity_main.xml" value="0.3428815733219325" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout-land/activity_signup.xml" value="0.264" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout-land/add_new_recipe_fragment.xml" value="0.2" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout-sw600dp-land/activity_login.xml" value="0.1171875" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout-sw600dp-port/activity_main.xml" value="0.11927083333333334" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout-sw600dp-port/add_new_recipe_fragment.xml" value="0.10400000000000001" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout-sw600dp/activity_login.xml" value="0.2" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout-sw600dp/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout-sw600dp/activity_signup.xml" value="0.176" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout-sw600dp/add_new_recipe_fragment.xml" value="0.16799999999999998" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout/activity_login.xml" value="0.11029411764705882" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout/activity_main.xml" value="0.2916666666666667" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout/activity_signup.xml" value="0.15730337078651685" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout/add_new_recipe_fragment.xml" value="0.264" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout/recipe_list_api_details_fragment.xml" value="0.264" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout/recipe_list_api_fragment.xml" value="0.2916666666666667" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout/recipe_list_api_fragment_item.xml" value="0.3009833262077811" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout/user_recipe_details_fragment.xml" value="0.264" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout/user_recipes_list_fragment.xml" value="0.2916666666666667" />
-        <entry key="..\:/Users/dorte/OneDrive/Documents/IKT8/SWMAD/App_project/Cibus/app/src/main/res/layout/user_recipes_list_fragment_item.xml" value="0.2" />
-        <entry key="..\:/Users/randi/source/repos/MAD_2022/Cibus/app/src/main/res/drawable/default_recipe_image.xml" value="0.276" />
-        <entry key="..\:/Users/randi/source/repos/MAD_2022/Cibus/app/src/main/res/drawable/default_recipe_img.xml" value="0.276" />
-        <entry key="..\:/Users/randi/source/repos/MAD_2022/Cibus/app/src/main/res/drawable/rectangle_list_background.xml" value="0.1915" />
-        <entry key="..\:/Users/randi/source/repos/MAD_2022/Cibus/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/randi/source/repos/MAD_2022/Cibus/app/src/main/res/layout/add_new_recipe_fragment.xml" value="0.33" />
-        <entry key="..\:/Users/randi/source/repos/MAD_2022/Cibus/app/src/main/res/layout/user_recipe_details_fragment.xml" value="0.5" />
-        <entry key="..\:/Users/randi/source/repos/MAD_2022/Cibus/app/src/main/res/layout/user_recipes_list_fragment.xml" value="0.33" />
-        <entry key="..\:/Users/randi/source/repos/MAD_2022/Cibus/app/src/main/res/layout/user_recipes_list_fragment_item.xml" value="0.5" />
-        <entry key="..\:/Users/randi/source/repos/MAD_2022/Cibus/app/src/main/res/menu/bottom_nav_menu.xml" value="0.33" />
-        <entry key="..\:/Users/randi/source/repos/MAD_2022/Cibus/app/src/main/res/mipmap-anydpi-v26/default_recipe_img.xml" value="0.276" />
+        <entry key="..\:/Users/Quynh Trang Mac/source/repos/MAD/Cibus/app/src/main/res/layout/recipe_list_api_details_fragment.xml" value="0.22" />
+        <entry key="..\:/Users/Quynh Trang Mac/source/repos/MAD/Cibus/app/src/main/res/layout/recipe_list_api_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/Quynh Trang Mac/source/repos/MAD/Cibus/app/src/main/res/layout/user_recipes_list_fragment.xml" value="0.3377862595419847" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/build/classes" />
-  </component>
-  <component name="ProjectType">
-    <option name="id" value="Android" />
-  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="15" project-jdk-type="JavaSDK" />
 </project>

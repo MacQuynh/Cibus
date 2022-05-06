@@ -1,5 +1,7 @@
 package dk.au.mad22spring.group04.cibusapp.ui.adapters;
 
+import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import dk.au.mad22spring.group04.cibusapp.model.Result;
 
 public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListViewHolder> {
     private Recipes listOfRecipes;
+    private Context context;
 
     public interface IApiItemClickedListener {
         void onApiItemClicked(int index);
@@ -29,8 +32,10 @@ public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListV
 
     private final IApiItemClickedListener listener;
 
-    public ApiListAdapter(IApiItemClickedListener listener) {
+    public ApiListAdapter(IApiItemClickedListener listener, Context c) {
         this.listener = listener;
+        context = c;
+
     }
 
     public void updateListOfRecipe(Recipes lists) {
@@ -56,10 +61,10 @@ public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListV
 
         holder.recipe_title.setText(listOfRecipes.getResults().get(position).getName());
         holder.total_cooking_time.setText(listOfRecipes.getResults().get(position).getCountry());
-        if (listOfRecipes.getResults().get(position).getCookTimeMinutes() == null) {
+        if (listOfRecipes.getResults().get(position).getCookTimeMinutes().doubleValue() == 0) {
             holder.total_cooking_time.setText(R.string.no_total_cooking_time);
         } else
-            holder.total_cooking_time.setText(R.string.total_time + listOfRecipes.getResults().get(position).getCookTimeMinutes().toString() + R.string.min);
+            holder.total_cooking_time.setText(context.getString(R.string.total_time) + " " + listOfRecipes.getResults().get(position).getCookTimeMinutes().toString() + context.getString(R.string.min));
         holder.country_code.setText(listOfRecipes.getResults().get(position).getCountry());
         Glide.with(holder.imgRecipe.getContext()).load(listOfRecipes.getResults().get(position).getThumbnailUrl()).into(holder.imgRecipe);
 

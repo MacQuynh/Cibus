@@ -10,21 +10,32 @@
     android:layout_marginRight="16dp"
     tools:context=".ui.fragments.RecipeListApi.RecipeListApiFragment">
 
+    <TextView
+        android:id="@+id/txtHeaderAPIRecipes"
+        style="@style/headings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/find_new_recipes"
+        tools:text="@string/find_new_recipes" />
 
     <Button
         android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/txtHeaderAPIRecipes"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="0dp"
         android:text="@string/search" />
 
     <EditText
         android:id="@+id/api_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/search_button"
+        android:layout_below="@+id/txtHeaderAPIRecipes"
         android:layout_alignBottom="@+id/search_button"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="16dp"

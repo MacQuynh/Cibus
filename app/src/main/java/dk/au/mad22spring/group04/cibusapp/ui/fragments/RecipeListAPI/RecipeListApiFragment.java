@@ -27,7 +27,7 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
     private RecyclerView recyclerView;
 
     private ApiRecipeSelectorInterface apiRecipeSelectorInterface;
-    
+
     //Reference: https://stackoverflow.com/questions/2665993/is-is-possible-to-make-a-method-execute-only-once - boolean to make sure initial list only get called once.
     private boolean alreadyExecuted = false;
 
@@ -66,7 +66,7 @@ public class RecipeListApiFragment extends Fragment implements ApiListAdapter.IA
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new ApiListAdapter(this);
+        adapter = new ApiListAdapter(this, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
     }

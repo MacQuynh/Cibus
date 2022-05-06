@@ -1,13 +1,9 @@
 package dk.au.mad22spring.group04.cibusapp.ui.interfaces;
 
-import java.util.List;
 
-import dk.au.mad22spring.group04.cibusapp.model.DTOs.RecipeWithSectionsAndInstructionsDTO;
-
-//Master Detail inspiration: Demo from lecture "FragmentsArnieMovies"
+//Master Detail inspiration: Demo "FragmentsArnieMovies" from lecture
 public interface UserRecipeSelectorInterface {
 
     public void onUserRecipeSelected(int id);
     public void onBackFromUserRecipeDetails();
-    //public List<RecipeWithSectionsAndInstructionsDTO> setMovies();
 }

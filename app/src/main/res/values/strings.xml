@@ -55,4 +55,9 @@
     <string name="ratingBar">Rating Bar</string>
     <string name="logo_image_background">Logo image background</string>
     <string name="logo_image_foreground">Logo image foreground</string>
+    <string name="recipe_updated">The recipe is now updated</string>
+    <string name="added_recipe">The recipe is now added to your library</string>
+    <string name="recipe_deleted">The recipe is now deleted</string>
+    <string name="no_total_cooking_time">No total cooking time</string>
+    <string name="min">" min"</string>
 </resources>

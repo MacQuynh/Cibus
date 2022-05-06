@@ -57,14 +57,9 @@ public class ApiListAdapter extends RecyclerView.Adapter<ApiListAdapter.ApiListV
         holder.recipe_title.setText(listOfRecipes.getResults().get(position).getName());
         holder.total_cooking_time.setText(listOfRecipes.getResults().get(position).getCountry());
         if (listOfRecipes.getResults().get(position).getCookTimeMinutes() == null) {
-            holder.total_cooking_time.setText("No total cooking time");
+            holder.total_cooking_time.setText(R.string.no_total_cooking_time);
         } else
-            holder.total_cooking_time.setText("Total time: " + listOfRecipes.getResults().get(position).getCookTimeMinutes().toString() + " min");
-       /* if (listOfRecipes.get(position).getUserRatings().getCountPositive().toString() == null) {
-            holder.rating.setText("0.0");
-        } else {
-            holder.rating.setText(listOfRecipes.get(position).getUserRatings().getScore().toString());
-        }*/
+            holder.total_cooking_time.setText(R.string.total_time + listOfRecipes.getResults().get(position).getCookTimeMinutes().toString() + R.string.min);
         holder.country_code.setText(listOfRecipes.getResults().get(position).getCountry());
         Glide.with(holder.imgRecipe.getContext()).load(listOfRecipes.getResults().get(position).getThumbnailUrl()).into(holder.imgRecipe);
 

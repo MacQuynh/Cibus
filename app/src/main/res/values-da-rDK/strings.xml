@@ -40,7 +40,7 @@
     <string name="country_header">Land:</string>
     <string name="number_of_servings">Antal portioner:</string>
     <string name="preparation_time">Forberedelsestid:</string>
-    <string name="total_time">Total tid:</string>
+    <string name="total_time">Total tid: </string>
     <string name="delete">Slet</string>
     <string name="save">Gem</string>
     <string name="share">Del</string>
@@ -51,6 +51,8 @@
     <string name="cook_time">Tilberedningstid:</string>
     <string name="ratingBar">Brugerbedømmelse</string>
     <string name="msg_you_are_now_signed_up">Du er nu registreret som bruger</string>
-    <string name="no_total_cooking_time">No total cooking time</string>
+    <string name="no_total_cooking_time">Ingen tid</string>
     <string name="min">" min"</string>
+    <string name="find_new_recipes">Find nye opskrifter her</string>
+
 </resources>
